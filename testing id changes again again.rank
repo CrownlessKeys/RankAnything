@@ -1,0 +1,20 @@
+{
+  "appVersion": "1.0.0",
+  "notes": "",
+  "criteriaCreationCounter": 0,
+  "areDisabledCriteriaHidden": false,
+  "created": "2026-09-13T18:55:49.643191200",
+  "criteria": [],
+  "areDisabledItemsHidden": false,
+  "fileFormatVersion": 1,
+  "itemsCreationCounter": 0,
+  "isOriginal": false,
+  "fileCreated": "2026-09-13T18:56:27.755389700",
+  "modified": "2026-09-13T18:56:27.756389800",
+  "isCriteriaPrecise": false,
+  "projectName": "testing id changes again",
+  "isItemsPrecise": false,
+  "items": [],
+  "rankingMode": "WEIGHTED_ENABLED",
+  "projectId": "8b759d73-1996-4af5-8517-27aa8aee274b"
+}
