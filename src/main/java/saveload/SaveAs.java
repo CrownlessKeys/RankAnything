@@ -23,7 +23,7 @@ final class SaveAs {
 
             Main.isOriginal = Main.fileCreated.equals("Project Not Saved");
             Main.fileCreated = Metadata.now();
-            if (!Main.fileCreated.equals("Project Not Saved")) Main.projectId = ProjectID.generate();
+            if (!Main.isOriginal) Main.projectId = ProjectID.generate();
 
             SaveToFile.save(file, frame, false);
 
