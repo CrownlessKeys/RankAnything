@@ -1,0 +1,84 @@
+{
+  "appVersion": "1.0.0",
+  "notes": "",
+  "criteriaCreationCounter": 4,
+  "areDisabledCriteriaHidden": false,
+  "created": "2026-08-29T23:14:22.367801500",
+  "criteria": [
+    {
+      "creationIndex": 1,
+      "name": "Criterion #1",
+      "weight": 6.5,
+      "enabled": false
+    },
+    {
+      "creationIndex": 4,
+      "name": "Criterion #4",
+      "weight": 5,
+      "enabled": true
+    },
+    {
+      "creationIndex": 3,
+      "name": "Criterisafdsa",
+      "weight": 5,
+      "enabled": true
+    }
+  ],
+  "areDisabledItemsHidden": false,
+  "fileFormatVersion": 1,
+  "itemsCreationCounter": 6,
+  "isOriginal": false,
+  "fileCreated": "2026-08-30T18:53:11.424717400",
+  "modified": "2026-09-06T11:28:05.373003100",
+  "isCriteriaPrecise": true,
+  "projectName": "test name",
+  "isItemsPrecise": true,
+  "items": [
+    {
+      "scores": {
+        "1": 74,
+        "3": 50,
+        "4": 50
+      },
+      "collapsed": true,
+      "creationIndex": 3,
+      "name": "Item #3",
+      "enabled": true
+    },
+    {
+      "scores": {
+        "1": 50,
+        "3": 50,
+        "4": 50
+      },
+      "collapsed": false,
+      "creationIndex": 5,
+      "name": "Item #5",
+      "enabled": true
+    },
+    {
+      "scores": {
+        "1": 50,
+        "3": 50,
+        "4": 50
+      },
+      "collapsed": true,
+      "creationIndex": 2,
+      "name": "Item dasf",
+      "enabled": false
+    },
+    {
+      "scores": {
+        "1": 0,
+        "3": 87,
+        "4": 20
+      },
+      "collapsed": false,
+      "creationIndex": 6,
+      "name": "Item #6",
+      "enabled": true
+    }
+  ],
+  "rankingMode": "UNWEIGHTED_ALL_CRITERIA",
+  "projectId": "0a3e2876-e1d4-4f91-9e4e-5c03a43e7b6c"
+}

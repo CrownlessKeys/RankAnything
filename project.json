@@ -1,0 +1,49 @@
+{
+    "itemsCreationCounter": 2,
+    "criteriaCreationCounter": 3,
+    "criteria": [
+        {
+            "creationIndex": 1,
+            "name": "Criterion #1",
+            "weight": 7,
+            "enabled": true
+        },
+        {
+            "creationIndex": 2,
+            "name": "Criterion #2",
+            "weight": 4,
+            "enabled": true
+        },
+        {
+            "creationIndex": 3,
+            "name": "Criterion #3",
+            "weight": 8,
+            "enabled": true
+        }
+    ],
+    "items": [
+        {
+            "scores": {
+                "1": 50,
+                "2": 50,
+                "3": 50
+            },
+            "collapsed": true,
+            "creationIndex": 1,
+            "name": "george",
+            "enabled": true
+        },
+        {
+            "scores": {
+                "1": 50,
+                "2": 50,
+                "3": 50
+            },
+            "collapsed": false,
+            "creationIndex": 2,
+            "name": "washington",
+            "enabled": true
+        }
+    ],
+    "projectId": "3aa40cd3-c306-421d-9ea0-1dabb0227ba8"
+}

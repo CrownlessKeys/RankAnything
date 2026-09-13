@@ -1,0 +1,40 @@
+{
+  "appVersion": "1.0.0",
+  "notes": "",
+  "criteriaCreationCounter": 4,
+  "areDisabledCriteriaHidden": false,
+  "created": "2026-08-21T21:57:19.789785600",
+  "criteria": [{
+    "creationIndex": 4,
+    "name": "Criterion #4",
+    "weight": 5,
+    "enabled": true
+  }],
+  "areDisabledItemsHidden": false,
+  "fileFormatVersion": 1,
+  "itemsCreationCounter": 3,
+  "isOriginal": false,
+  "fileCreated": "2026-08-29T23:14:05.877946",
+  "modified": "2026-09-06T15:19:21.491019300",
+  "isCriteriaPrecise": true,
+  "projectName": "realylongNameTestAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+  "isItemsPrecise": false,
+  "items": [
+    {
+      "scores": {"4": 50},
+      "collapsed": false,
+      "creationIndex": 2,
+      "name": "Item #2",
+      "enabled": true
+    },
+    {
+      "scores": {"4": 50},
+      "collapsed": false,
+      "creationIndex": 3,
+      "name": "Item #3",
+      "enabled": true
+    }
+  ],
+  "rankingMode": "WEIGHTED_ENABLED",
+  "projectId": "3c6e7a7c-fe32-42a7-9baf-ad2a9887e591"
+}
