@@ -1,6 +1,7 @@
 package app;
 
 import java.io.File;
+import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 
@@ -76,6 +77,36 @@ public final class Settings {
             Files.writeString(file.toPath(), root.toString(4), StandardCharsets.UTF_8);
 
         } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    public static void restoreDefaults() {
+        wipeSettingsFile();
+        load();
+        MenuBar.updateSettingsMenu();
+    }
+
+    private static void wipeSettingsFile() {
+        try {
+            // Delete existing file if it exists
+            if (Main.SETTINGS_FILE.exists()) {
+                Main.SETTINGS_FILE.delete();
+            }
+
+            // Ensure the app data directory exists
+            if (!Main.APP_DATA_DIR.exists()) {
+                Main.APP_DATA_DIR.mkdirs();
+            }
+
+            // Write an empty JSON object
+            Files.writeString(
+                Main.SETTINGS_FILE.toPath(),
+                "{}",
+                StandardCharsets.UTF_8
+            );
+
+        } catch (IOException ex) {
             ex.printStackTrace();
         }
     }

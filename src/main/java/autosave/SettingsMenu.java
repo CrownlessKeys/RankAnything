@@ -262,7 +262,7 @@ final class SettingsMenu {
                 AutoTimer.stop();
             }
 
-            MenuBar.autosaveToggle.setSelected(Settings.autosavePeriodically || Settings.autosaveOnClose);
+            MenuBar.updateSettingsMenu();
             AutoIndicator.updateText();
 
             Settings.save();
