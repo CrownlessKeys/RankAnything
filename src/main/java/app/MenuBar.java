@@ -20,7 +20,8 @@ import saveload.SaveLoad;
 public final class MenuBar extends JMenuBar {
     
     // public so autosave settings can update it accordingly
-    public static JCheckBoxMenuItem autosaveToggle;
+    private static JCheckBoxMenuItem autosaveToggle;
+    private static JCheckBoxMenuItem autoRenameFilesToggle;
 
     public MenuBar(JFrame frame) {
 
@@ -93,12 +94,15 @@ public final class MenuBar extends JMenuBar {
             JMenuItem autosaveSettingsItem = new JMenuItem("Autosave Settings...");
             settingsMenu.add(autosaveSettingsItem);
 
-            JCheckBoxMenuItem autoRenameFilesToggle = new JCheckBoxMenuItem("Automatically Rename Files");
+            autoRenameFilesToggle = new JCheckBoxMenuItem("Automatically Rename Files");
             autoRenameFilesToggle.setSelected(Settings.autoRenameFiles);
             autoRenameFilesToggle.setToolTipText(
                 "Enable or disable automatic renaming of your current project file when saving."
             );
             settingsMenu.add(autoRenameFilesToggle);
+
+            JMenuItem restoreDefaultsItem = new JMenuItem("Restore Default Settings");
+            settingsMenu.add(restoreDefaultsItem);
 
         // HELP MENU
             JMenu helpMenu = new JMenu("Help");
@@ -165,5 +169,11 @@ public final class MenuBar extends JMenuBar {
             Settings.autoRenameFiles = autoRenameFilesToggle.isSelected();
             Settings.save();
         });
+        restoreDefaultsItem.addActionListener(e -> Settings.restoreDefaults());
+    }
+
+    public static void updateSettingsMenu() {
+        autoRenameFilesToggle.setSelected(Settings.autoRenameFiles);
+        autosaveToggle.setSelected(Settings.autosavePeriodically || Settings.autosaveOnClose);
     }
 }
