@@ -111,14 +111,10 @@ public final class Settings {
     private static void wipeSettingsFile() {
         try {
             // Delete existing file if it exists
-            if (Main.SETTINGS_FILE.exists()) {
-                Main.SETTINGS_FILE.delete();
-            }
+            if (Main.SETTINGS_FILE.exists()) Main.SETTINGS_FILE.delete();
 
             // Ensure the app data directory exists
-            if (!Main.APP_DATA_DIR.exists()) {
-                Main.APP_DATA_DIR.mkdirs();
-            }
+            if (!Main.APP_DATA_DIR.exists()) Main.APP_DATA_DIR.mkdirs();
 
             // Write an empty JSON object
             Files.writeString(

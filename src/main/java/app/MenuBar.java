@@ -19,9 +19,9 @@ import saveload.SaveLoad;
 
 public final class MenuBar extends JMenuBar {
     
-    // public so autosave settings can update it accordingly
     private static JCheckBoxMenuItem autosaveToggle;
     private static JCheckBoxMenuItem autoRenameFilesToggle;
+    public static JMenu recentProjectsMenu;
 
     public MenuBar(JFrame frame) {
 
@@ -33,7 +33,7 @@ public final class MenuBar extends JMenuBar {
             JMenuItem openItem = new JMenuItem("Open...");
             JMenuItem saveItem = new JMenuItem("Save");
             JMenuItem saveAsItem = new JMenuItem("Save As...");
-            JMenuItem recentProjectsItem = new JMenuItem("Recent Projects");
+            recentProjectsMenu = new JMenu("Recent Projects");
             JMenuItem unsavedProjectsItem = new JMenuItem("Unsaved Projects");
             JMenuItem openFileLocationItem = new JMenuItem("Open File Location");
             JMenuItem exitItem = new JMenuItem("Exit");
@@ -52,7 +52,7 @@ public final class MenuBar extends JMenuBar {
             fileMenu.add(saveAsItem);
             fileMenu.add(autosavesMenu);
             fileMenu.add(openFileLocationItem);
-            fileMenu.add(recentProjectsItem);
+            fileMenu.add(recentProjectsMenu);
             fileMenu.add(unsavedProjectsItem);
             fileMenu.addSeparator();
             fileMenu.add(exitItem);
@@ -63,6 +63,8 @@ public final class MenuBar extends JMenuBar {
             saveAsItem.setAccelerator(KeyStroke.getKeyStroke("control shift S"));
             projectAutosavesItem.setAccelerator(KeyStroke.getKeyStroke("control A"));
             exitItem.setAccelerator(KeyStroke.getKeyStroke("alt F4"));
+
+            RecentProjects.updateRecentProjectsMenu(frame);
 
         // PROJECT MENU
             JMenu projectMenu = new JMenu("Project");
@@ -126,6 +128,7 @@ public final class MenuBar extends JMenuBar {
         settingsMenu.setMnemonic('S');
         helpMenu.setMnemonic('H');
         autosavesMenu.setMnemonic('A');
+        recentProjectsMenu.setMnemonic('R');
 
         // LISTENERS
         saveAsItem.addActionListener(e -> SaveLoad.saveAs(frame));
