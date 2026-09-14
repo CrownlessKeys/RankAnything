@@ -73,8 +73,9 @@ public final class MenuBar extends JMenuBar {
             JMenuItem renameProjectItem = new JMenuItem("Rename Project");
 
             projectMenu.add(projectInfoItem);
-            projectMenu.add(editNotesItem);
+            projectMenu.addSeparator();
             projectMenu.add(renameProjectItem);
+            projectMenu.add(editNotesItem);
             
             projectInfoItem.setAccelerator(KeyStroke.getKeyStroke("control I"));
             editNotesItem.setAccelerator(KeyStroke.getKeyStroke("control E"));
@@ -93,6 +94,7 @@ public final class MenuBar extends JMenuBar {
 
             JMenuItem autosaveSettingsItem = new JMenuItem("Autosave Settings...");
             settingsMenu.add(autosaveSettingsItem);
+            settingsMenu.addSeparator();
 
             autoRenameFilesToggle = new JCheckBoxMenuItem("Automatically Rename Files");
             autoRenameFilesToggle.setSelected(Settings.autoRenameFiles);
@@ -100,6 +102,7 @@ public final class MenuBar extends JMenuBar {
                 "Enable or disable automatic renaming of your current project file when saving."
             );
             settingsMenu.add(autoRenameFilesToggle);
+            settingsMenu.addSeparator();
 
             JMenuItem restoreDefaultsItem = new JMenuItem("Restore Default Settings");
             settingsMenu.add(restoreDefaultsItem);
@@ -169,7 +172,7 @@ public final class MenuBar extends JMenuBar {
             Settings.autoRenameFiles = autoRenameFilesToggle.isSelected();
             Settings.save();
         });
-        restoreDefaultsItem.addActionListener(e -> Settings.restoreDefaults());
+        restoreDefaultsItem.addActionListener(e -> Settings.restoreDefaults(frame));
     }
 
     public static void updateSettingsMenu() {

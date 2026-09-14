@@ -5,25 +5,28 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+
 import org.json.JSONObject;
 
 public final class Settings {
 
     // miscellaneous settings
-    public static boolean autoRenameFiles = true;
+    public static boolean autoRenameFiles;
 
     // autosave settings
-    public static int autosaveIntervalSeconds = 5 * 60;
-    public static int autosaveMaxPerProject = 10;
-    public static boolean autosaveUnlimitedPerProject = false;
-    public static int autosaveMaxTotal = 100;
-    public static boolean autosaveUnlimitedTotal = true;
-    public static boolean autosaveOnClose = true;
-    public static boolean autosavePeriodically = true;
+    public static int autosaveIntervalSeconds;
+    public static int autosaveMaxPerProject;
+    public static boolean autosaveUnlimitedPerProject;
+    public static int autosaveMaxTotal;
+    public static boolean autosaveUnlimitedTotal;
+    public static boolean autosaveOnClose;
+    public static boolean autosavePeriodically;
     
     // "Don't show again" settings
-    public static boolean showRenameWarning = true;
-    public static boolean showAutosaveDeleteWarning = true;
+    public static boolean showRenameWarning;
+    public static boolean showAutosaveDeleteWarning;
 
     public static void load() {
         try {
@@ -81,7 +84,25 @@ public final class Settings {
         }
     }
 
-    public static void restoreDefaults() {
+    public static void restoreDefaults(JFrame frame) {
+        
+        Object[] params = {
+            "This will reset ALL settings to their default values.",
+            "Are you sure you want to continue?",
+        };
+
+        int result = JOptionPane.showConfirmDialog(
+            frame,
+            params,
+            "Restore Default Settings",
+            JOptionPane.OK_CANCEL_OPTION,
+            JOptionPane.WARNING_MESSAGE
+        );
+
+        if (result != JOptionPane.OK_OPTION) {
+            return; // user cancelled
+        }
+
         wipeSettingsFile();
         load();
         MenuBar.updateSettingsMenu();
