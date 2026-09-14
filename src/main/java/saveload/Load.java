@@ -11,6 +11,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import app.Main;
+import app.RecentProjects;
 import app.Settings;
 import autosave.AutoIndicator;
 import autosave.Autosave;
@@ -32,19 +33,7 @@ final class Load {
         if (dialog.getFile() != null) {
             File file = new File(dialog.getDirectory(), dialog.getFile());
 
-            if (!file.getName().toLowerCase().endsWith(".rank")) {
-                int choice = JOptionPane.showConfirmDialog(
-                    frame, 
-                    """
-                        This file does not use the .rank extension.
-                        It may not be a valid project file and could cause errors when loading.
-                        Attempt to load it anyway?
-                    """,
-                    "Non-Rank File",
-                    JOptionPane.YES_NO_OPTION
-                );
-                if (choice != JOptionPane.YES_OPTION) return;
-            }
+            if (!Metadata.checkExtension(frame, file)) return;
 
             loadFromFile(file, frame, false);
             Autosave.checkForNewerAutosave(frame);
@@ -73,9 +62,8 @@ final class Load {
             empty.put("modified", CREATION_TIMESTAMP);
 
             Files.writeString(temp.toPath(), empty.toString(4));
-            loadFromFile(temp, frame, false);
+            loadFromFile(temp, frame, true); // effectively auto, for all intents and purposes
 
-            SaveLoad.currentProjectFile = null;
             Main.unsavedChanges = false;
             Main.projectDirty = false;
             Metadata.updateWindowTitle(frame);
@@ -166,6 +154,11 @@ final class Load {
 
             if (!isAuto) {
                 SaveLoad.currentProjectFile = file;
+                
+                RecentProjects.addRecentProject(file.getAbsolutePath());
+                RecentProjects.save();
+                RecentProjects.updateRecentProjectsMenu(frame);
+
             } else if (isDifferentProject) {
                 SaveLoad.currentProjectFile = null;
             }

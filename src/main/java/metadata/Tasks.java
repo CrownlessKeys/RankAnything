@@ -6,6 +6,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 
 import app.Main;
 import saveload.SaveLoad;
@@ -49,6 +50,25 @@ final class Tasks {
             }
         } else {
             Notify.showToast(frame, "Project Not Saved");
+        }
+    }
+
+    static boolean checkExtension(JFrame frame, File file) {
+        if (!file.getName().toLowerCase().endsWith(".rank")) {
+            int choice = JOptionPane.showConfirmDialog(
+                frame, 
+                """
+                    This file does not use the .rank extension.
+                    It may not be a valid project file and could cause errors when loading.
+                    Attempt to load it anyway?
+                """,
+                "Non-Rank File",
+                JOptionPane.YES_NO_OPTION
+            );
+            
+            return choice == JOptionPane.YES_OPTION;
+        } else {
+            return true;
         }
     }
 }

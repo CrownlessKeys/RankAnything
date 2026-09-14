@@ -65,6 +65,7 @@ public final class Main {
     // directories
     public static final File APP_DATA_DIR = getAppDataDir();
     public static final File SETTINGS_FILE = new File(APP_DATA_DIR, "Settings.json");
+    public static final File RECENT_PROJECTS_FILE = new File(APP_DATA_DIR, "RecentProjects.json");
     public static final File AUTOSAVE_DIR = new File(APP_DATA_DIR, "Autosaves");
 
     private static File getAppDataDir() {
@@ -83,6 +84,7 @@ public final class Main {
 
     public static void main(String[] args) {
         Settings.load();
+        RecentProjects.load();
         SwingUtilities.invokeLater(() -> {
             RankInit.build();
             CritInit.build();

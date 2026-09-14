@@ -1,5 +1,6 @@
 package metadata;
 
+import java.io.File;
 import java.time.LocalDateTime;
 
 import javax.swing.JFrame;
@@ -18,6 +19,10 @@ public final class Metadata {
 
     public static void versionMismatchWarnings(JFrame frame) {
         SaveLoadMeta.versionMismatchWarnings(frame);
+    }
+
+    public static boolean checkExtension(JFrame frame, File file) {
+        return Tasks.checkExtension(frame, file);
     }
 
     public static void showProjectInfoDialog(JFrame frame) {
