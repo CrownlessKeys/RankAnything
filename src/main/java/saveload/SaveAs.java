@@ -6,6 +6,7 @@ import java.io.File;
 import javax.swing.JFrame;
 
 import app.Main;
+import app.RecentProjects;
 import metadata.Metadata;
 import metadata.ProjectID;
 
@@ -30,6 +31,10 @@ final class SaveAs {
             Main.unsavedChanges = false;
             Main.projectDirty = false;
             Metadata.updateWindowTitle(frame);
+
+            RecentProjects.addRecentProject(file.getAbsolutePath());
+            RecentProjects.save();
+            RecentProjects.updateRecentProjectsMenu(frame);
         }
     }
 }
