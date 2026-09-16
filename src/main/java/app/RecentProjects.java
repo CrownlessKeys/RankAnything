@@ -81,7 +81,17 @@ public final class RecentProjects {
         
         recentProjectsMenu.removeAll();
 
-        for (String path : RecentProjects.recentProjects) {
+        if (recentProjects.isEmpty()) {
+            JMenuItem none = new JMenuItem("No recent projects");
+            none.setEnabled(false);
+            none.setToolTipText(
+                "No project files have been opened recently. Try creating or opening a project to get started!"
+            );
+            recentProjectsMenu.add(none);
+            return;
+        }
+
+        for (String path : recentProjects) {
             File f = new File(path);
             JMenuItem item = new JMenuItem(f.getName());
             
@@ -93,8 +103,8 @@ public final class RecentProjects {
                         "File Missing",
                         JOptionPane.ERROR_MESSAGE
                     );
-                    RecentProjects.recentProjects.remove(path);
-                    RecentProjects.save();
+                    recentProjects.remove(path);
+                    save();
                     updateRecentProjectsMenu(frame);
                     return;
                 }
@@ -109,8 +119,8 @@ public final class RecentProjects {
 
         JMenuItem clear = new JMenuItem("Clear Recent Projects");
         clear.addActionListener(e -> {
-            RecentProjects.recentProjects.clear();
-            RecentProjects.save();
+            recentProjects.clear();
+            save();
             updateRecentProjectsMenu(frame);
         });
 
