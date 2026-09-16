@@ -10,6 +10,9 @@ import javax.swing.JOptionPane;
 
 import org.json.JSONObject;
 
+import autosave.AutoIndicator;
+import ranking.RankingPanel.RankingMode;
+
 public final class Settings {
 
     // miscellaneous settings
@@ -23,6 +26,13 @@ public final class Settings {
     public static boolean autosaveUnlimitedTotal;
     public static boolean autosaveOnClose;
     public static boolean autosavePeriodically;
+
+    // default project settings
+    public static boolean preciseSlidersCriteria;
+    public static boolean preciseSlidersItems;
+    public static boolean hideDisabledCriteria;
+    public static boolean hideDisabledItems;
+    public static RankingMode rankingMode;
     
     // "Don't show again" settings
     public static boolean showRenameWarning;
@@ -48,6 +58,17 @@ public final class Settings {
             autosaveUnlimitedTotal = root.optBoolean("autosaveUnlimitedTotal", true);
             autosaveOnClose = root.optBoolean("autosaveOnClose", true);
             autosavePeriodically = root.optBoolean("autosavePeriodically", true);
+
+            preciseSlidersCriteria = root.optBoolean("preciseSlidersCriteria", false);
+            preciseSlidersItems = root.optBoolean("preciseSlidersItems", false);
+            hideDisabledCriteria = root.optBoolean("hideDisabledCriteria", false);
+            hideDisabledItems = root.optBoolean("hideDisabledItems", false);
+            String rankingModeStr = root.optString("rankingMode", RankingMode.WEIGHTED_ENABLED.name()); 
+            try {
+                rankingMode = RankingMode.valueOf(rankingModeStr);
+            } catch (IllegalArgumentException e) {
+                rankingMode = RankingMode.WEIGHTED_ENABLED; // default if invalid
+            }
             
             showRenameWarning = root.optBoolean("showRenameWarning", true);
             showAutosaveDeleteWarning = root.optBoolean("showAutosaveDeleteWarning", true);
@@ -70,6 +91,12 @@ public final class Settings {
             root.put("autosaveUnlimitedTotal", autosaveUnlimitedTotal);
             root.put("autosaveOnClose", autosaveOnClose);
             root.put("autosavePeriodically", autosavePeriodically);
+
+            root.put("preciseSlidersCriteria", preciseSlidersCriteria);
+            root.put("preciseSlidersItems", preciseSlidersItems);
+            root.put("hideDisabledCriteria", hideDisabledCriteria);
+            root.put("hideDisabledItems", hideDisabledItems);
+            root.put("rankingMode", rankingMode.name());
             
             root.put("showRenameWarning", showRenameWarning);
             root.put("showAutosaveDeleteWarning", showAutosaveDeleteWarning);
@@ -106,6 +133,7 @@ public final class Settings {
         wipeSettingsFile();
         load();
         MenuBar.updateSettingsMenu();
+        AutoIndicator.updateText();
     }
 
     private static void wipeSettingsFile() {

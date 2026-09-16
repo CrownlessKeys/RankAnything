@@ -12,6 +12,7 @@ import javax.swing.JCheckBox;
 import javax.swing.JPanel;
 import javax.swing.JViewport;
 
+import app.Settings;
 import criteria.CriteriaPanel;
 import items.ItemsPanel;
 
@@ -36,8 +37,8 @@ public final class RankingPanel extends JPanel {
         UNWEIGHTED_ALL_CRITERIA_ALL_ITEMS
     }
 
-    public RankingMode rankingMode = RankingMode.WEIGHTED_ENABLED;
-    public JCheckBox unweightedToggle;
+    public RankingMode rankingMode = Settings.rankingMode; // default from settings
+    public JCheckBox weightedToggle;
     public JCheckBox allCriteriaToggle;
     public JCheckBox allItemsToggle;
 
@@ -183,9 +184,25 @@ public final class RankingPanel extends JPanel {
     public void applyModeToToggles(RankingMode mode) {
         Mode.applyModeToToggles(
             mode, 
-            unweightedToggle, 
+            weightedToggle, 
             allCriteriaToggle,
             allItemsToggle
         );
+    }
+
+    public RankingMode computeMode(boolean weighted, boolean includeDisabledCriteria, boolean includeDisabledItems) {
+        return Mode.computeMode(weighted, includeDisabledCriteria, includeDisabledItems);
+    }
+
+    public boolean isWeighted(RankingMode mode) {
+        return Mode.isWeighted(mode);
+    }
+
+    public boolean isAllCriteria(RankingMode mode) {
+        return Mode.isAllCriteria(mode);
+    }
+
+    public boolean isAllItems(RankingMode mode) {
+        return Mode.isAllItems(mode);
     }
 }

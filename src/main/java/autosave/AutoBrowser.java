@@ -118,7 +118,7 @@ public final class AutoBrowser {
         });
 
         settingsButton.addActionListener(e -> {
-            SettingsMenu.show(frame);
+            AutoSettings.show(frame);
         });
 
         JPanel buttonPanel = new JPanel();

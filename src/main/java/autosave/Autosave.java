@@ -15,6 +15,6 @@ public final class Autosave {
     }
 
     public static void showAutosaveSettings(JFrame frame) {
-        SettingsMenu.show(frame);
+        AutoSettings.show(frame);
     }
 }

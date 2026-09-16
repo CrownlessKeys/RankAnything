@@ -55,6 +55,7 @@ final class Load {
             Files.writeString(temp.toPath(), empty.toString(4));
             loadFromFile(temp, frame, true); // effectively auto, for all intents and purposes
             Main.unsavedChanges = false; // except for this intent and purpose, so we fix it
+            Metadata.updateWindowTitle(frame);
 
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -113,13 +114,13 @@ final class Load {
                 ip.refreshExtraInfo();
             }
 
-            Main.updatePrecisionCriteria(root.optBoolean("isCriteriaPrecise", false));
-            Main.updatePrecisionItems(root.optBoolean("isItemsPrecise", false));
+            Main.updatePrecisionCriteria(root.optBoolean("isCriteriaPrecise", Settings.preciseSlidersCriteria));
+            Main.updatePrecisionItems(root.optBoolean("isItemsPrecise", Settings.preciseSlidersItems));
 
-            Main.updateHideDisabledCriteria(root.optBoolean("areDisabledCriteriaHidden", false));
-            Main.updateHideDisabledItems(root.optBoolean("areDisabledItemsHidden", false));
+            Main.updateHideDisabledCriteria(root.optBoolean("areDisabledCriteriaHidden", Settings.hideDisabledCriteria));
+            Main.updateHideDisabledItems(root.optBoolean("areDisabledItemsHidden", Settings.hideDisabledItems));
 
-            String modeString = root.optString("rankingMode", RankingMode.WEIGHTED_ENABLED.name());
+            String modeString = root.optString("rankingMode", Settings.rankingMode.name());
             RankingMode mode;
             try {
                 mode = RankingMode.valueOf(modeString);

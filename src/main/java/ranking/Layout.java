@@ -18,21 +18,21 @@ final class Layout {
 
     static void build(RankingPanel panel) {
 
-        JCheckBox unweightedToggle = new JCheckBox("Unweighted");
+        JCheckBox weightedToggle = new JCheckBox("Weighted");
         JCheckBox allCriteriaToggle = new JCheckBox("Consider disabled criteria");
         JCheckBox allItemsToggle = new JCheckBox("Consider disabled items");
 
-        unweightedToggle.setBackground(panel.bg);
+        weightedToggle.setBackground(panel.bg);
         allCriteriaToggle.setBackground(panel.bg);
         allItemsToggle.setBackground(panel.bg);
 
         // initial state based on current rankingMode
-        Mode.applyModeToToggles(panel.rankingMode, unweightedToggle, allCriteriaToggle, allItemsToggle);
+        Mode.applyModeToToggles(panel.rankingMode, weightedToggle, allCriteriaToggle, allItemsToggle);
 
         // when any toggle changes, recompute mode
         ActionListener listener = e -> {
             RankingMode mode = Mode.computeMode(
-                unweightedToggle.isSelected(),
+                weightedToggle.isSelected(),
                 allCriteriaToggle.isSelected(),
                 allItemsToggle.isSelected()
             );
@@ -45,18 +45,18 @@ final class Layout {
             Metadata.updateWindowTitle(Main.frame);
         };
 
-        unweightedToggle.addActionListener(listener);
+        weightedToggle.addActionListener(listener);
         allCriteriaToggle.addActionListener(listener);
         allItemsToggle.addActionListener(listener);
 
-        JPanel unweightedRow = new JPanel();
-        unweightedRow.setLayout(new BoxLayout(unweightedRow, BoxLayout.X_AXIS));
-        unweightedRow.setBackground(panel.bg);
+        JPanel weightedRow = new JPanel();
+        weightedRow.setLayout(new BoxLayout(weightedRow, BoxLayout.X_AXIS));
+        weightedRow.setBackground(panel.bg);
 
         // layout
-        unweightedRow.add(Box.createHorizontalGlue());
-        unweightedRow.add(unweightedToggle);
-        unweightedRow.add(Box.createHorizontalGlue());
+        weightedRow.add(Box.createHorizontalGlue());
+        weightedRow.add(weightedToggle);
+        weightedRow.add(Box.createHorizontalGlue());
 
         JPanel allCriteriaRow = new JPanel();
         allCriteriaRow.setLayout(new BoxLayout(allCriteriaRow, BoxLayout.X_AXIS));
@@ -77,7 +77,7 @@ final class Layout {
         allItemsRow.add(Box.createHorizontalGlue());
 
         // store references on panel
-        panel.unweightedToggle = unweightedToggle;
+        panel.weightedToggle = weightedToggle;
         panel.allCriteriaToggle = allCriteriaToggle;
         panel.allItemsToggle = allItemsToggle;
 
@@ -88,7 +88,7 @@ final class Layout {
 
         // layout
         header.add(Box.createVerticalStrut(12));
-        header.add(unweightedRow);
+        header.add(weightedRow);
         header.add(Box.createVerticalStrut(12));
         header.add(allCriteriaRow);
         header.add(Box.createVerticalStrut(12));
