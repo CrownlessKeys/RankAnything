@@ -19,7 +19,7 @@ import app.MenuBar;
 import app.Settings;
 import autosave.AutoBrowser.AutosaveRendererMode;
 
-final class SettingsMenu {
+final class AutoSettings {
 
     static void show(JFrame frame) {
 
@@ -264,7 +264,6 @@ final class SettingsMenu {
 
             MenuBar.updateSettingsMenu();
             AutoIndicator.updateText();
-
             Settings.save();
         }
     }

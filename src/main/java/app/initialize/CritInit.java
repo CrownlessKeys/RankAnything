@@ -14,6 +14,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
 import app.Main;
+import app.Settings;
 import metadata.Metadata;
 import tasks.Create;
 import tasks.Sort;
@@ -43,10 +44,11 @@ public final class CritInit {
 
         // Settings Row for precise sliders and hide disabled criteria toggles
             JCheckBox preciseToggleCriteria = new JCheckBox("Precise Sliders");
-            preciseToggleCriteria.setSelected(false); // default coarse mode
+            preciseToggleCriteria.setSelected(Settings.preciseSlidersCriteria); // default from settings
             preciseToggleCriteria.setBackground(criteriaPanelColor);
 
             JCheckBox hideDisabledCriteria = new JCheckBox("Hide Disabled");
+            hideDisabledCriteria.setSelected(Settings.hideDisabledCriteria); // default from settings
             hideDisabledCriteria.setBackground(criteriaPanelColor);
 
             JPanel criteriaSettingsRow = new JPanel();

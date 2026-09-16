@@ -13,6 +13,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
 import app.Main;
+import app.Settings;
 import criteria.CriteriaPanel;
 import items.ItemsPanel;
 import metadata.Metadata;
@@ -47,10 +48,11 @@ public final class ItemInit {
 
         // Settings Row for precise sliders and hide disabled items toggles
             JCheckBox preciseToggleItems = new JCheckBox("Precise Sliders");
-            preciseToggleItems.setSelected(false); // default coarse mode
+            preciseToggleItems.setSelected(Settings.preciseSlidersItems); // default from settings
             preciseToggleItems.setBackground(itemsPanelColor);
 
             JCheckBox hideDisabledItems = new JCheckBox("Hide Disabled");
+            hideDisabledItems.setSelected(Settings.hideDisabledItems); // default from settings
             hideDisabledItems.setBackground(itemsPanelColor);
 
             JPanel itemsSettingsRow = new JPanel();

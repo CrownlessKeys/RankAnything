@@ -93,13 +93,19 @@ public final class RecentProjects {
 
         for (String path : recentProjects) {
             File f = new File(path);
-            JMenuItem item = new JMenuItem(f.getName());
+
+            String displayName = shortenFileName(f.getName());
+            JMenuItem item = new JMenuItem(displayName);
+            item.setToolTipText(f.getAbsolutePath());
             
             item.addActionListener(e -> {
                 if (!f.exists()) {
                     JOptionPane.showMessageDialog(
-                        null,
-                        "This project no longer exists.",
+                        frame,
+                        """
+                            The project file could not be found. 
+                            It may have been moved, renamed, or deleted.
+                        """,
                         "File Missing",
                         JOptionPane.ERROR_MESSAGE
                     );
@@ -128,5 +134,19 @@ public final class RecentProjects {
 
         recentProjectsMenu.revalidate();
         recentProjectsMenu.repaint();
+    }
+
+    private static String shortenFileName(String name) {
+        int maxStart = 20;   // characters to keep at the start
+        int maxEnd = 4;      // characters to keep at the end ("rank")
+
+        if (name.length() <= maxStart + maxEnd + 3) {
+            return name; // no need to shorten
+        }
+
+        String start = name.substring(0, maxStart).trim();
+        String end = name.substring(name.length() - maxEnd).trim();
+
+        return start + "..." + end;
     }
 }

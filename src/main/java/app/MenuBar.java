@@ -20,6 +20,7 @@ import saveload.SaveLoad;
 public final class MenuBar extends JMenuBar {
     
     private static JCheckBoxMenuItem autosaveToggle;
+    private static JCheckBoxMenuItem preciseSlidersToggle;
     private static JCheckBoxMenuItem autoRenameFilesToggle;
     public static JMenu recentProjectsMenu;
 
@@ -115,6 +116,17 @@ public final class MenuBar extends JMenuBar {
             settingsMenu.add(autosaveSettingsItem);
             settingsMenu.addSeparator();
 
+            preciseSlidersToggle = new JCheckBoxMenuItem("Default to Precise Sliders");
+            preciseSlidersToggle.setSelected(Settings.preciseSlidersCriteria || Settings.preciseSlidersItems);
+            preciseSlidersToggle.setToolTipText(
+                "Choose whether projects use precise sliders by default."
+            );
+            settingsMenu.add(preciseSlidersToggle);
+
+            JMenuItem defaultProjectSettingsItem = new JMenuItem("Default Project Settings...");
+            settingsMenu.add(defaultProjectSettingsItem);
+            settingsMenu.addSeparator();
+
             autoRenameFilesToggle = new JCheckBoxMenuItem("Automatically Rename Files");
             autoRenameFilesToggle.setSelected(Settings.autoRenameFiles);
             autoRenameFilesToggle.setToolTipText(
@@ -188,6 +200,13 @@ public final class MenuBar extends JMenuBar {
             }
         });
         autosaveSettingsItem.addActionListener(e -> Autosave.showAutosaveSettings(frame));
+        preciseSlidersToggle.addActionListener(e -> {
+            boolean enabled = preciseSlidersToggle.isSelected();
+            Settings.preciseSlidersCriteria = enabled;
+            Settings.preciseSlidersItems = enabled;
+            Settings.save();
+        });
+        defaultProjectSettingsItem.addActionListener(e -> DefaultSettings.show(frame));
         autoRenameFilesToggle.addActionListener(e -> {
             Settings.autoRenameFiles = autoRenameFilesToggle.isSelected();
             Settings.save();
@@ -198,5 +217,6 @@ public final class MenuBar extends JMenuBar {
     public static void updateSettingsMenu() {
         autoRenameFilesToggle.setSelected(Settings.autoRenameFiles);
         autosaveToggle.setSelected(Settings.autosavePeriodically || Settings.autosaveOnClose);
+        preciseSlidersToggle.setSelected(Settings.preciseSlidersCriteria || Settings.preciseSlidersItems);
     }
 }
