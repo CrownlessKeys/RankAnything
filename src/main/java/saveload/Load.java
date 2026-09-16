@@ -24,6 +24,7 @@ import tasks.Create;
 import tasks.Notify;
 
 final class Load {
+    // does nothing except let the user select a file for loadFromFile() to use
     static void load(JFrame frame) {        
         FileDialog dialog = new FileDialog(frame, "Open Project", FileDialog.LOAD);
         dialog.setVisible(true);

@@ -46,6 +46,19 @@ public final class MenuBar extends JMenuBar {
             autosavesMenu.add(allAutosavesItem);
             autosavesMenu.add(unsavedAutoItem);
 
+            newProjectItem.setToolTipText("Create a new, empty project");
+            openItem.setToolTipText("Open a previously saved project");
+            saveItem.setToolTipText("Save the current project");
+            saveAsItem.setToolTipText("Save the current project to a new file");
+            recentProjectsMenu.setToolTipText("Open a recently opened project");
+            unsavedProjectsItem.setToolTipText("Recover a project that was never manually saved to a file");
+            openFileLocationItem.setToolTipText("Open the location of the current project file");
+            exitItem.setToolTipText("Exit the application");
+            autosavesMenu.setToolTipText("View backup save files of your projects");
+            projectAutosavesItem.setToolTipText("View backup save files of the current project");
+            allAutosavesItem.setToolTipText("View all backup save files of your projects");
+            unsavedAutoItem.setToolTipText("View backup save files of projects that were never manually saved to a file");
+
             fileMenu.add(newProjectItem);
             fileMenu.add(openItem);
             fileMenu.add(saveItem);
@@ -73,6 +86,10 @@ public final class MenuBar extends JMenuBar {
             JMenuItem projectInfoItem = new JMenuItem("Project Info");
             JMenuItem editNotesItem = new JMenuItem("Edit Notes");
             JMenuItem renameProjectItem = new JMenuItem("Rename Project");
+
+            projectInfoItem.setToolTipText("View information about the current project");
+            editNotesItem.setToolTipText("Edit notes for the current project");
+            renameProjectItem.setToolTipText("Rename the current project");
 
             projectMenu.add(projectInfoItem);
             projectMenu.addSeparator();
