@@ -24,23 +24,13 @@ import tasks.Create;
 import tasks.Notify;
 
 final class Load {
-    static void load(JFrame frame) {
-        if (Settings.autosaveOnClose) Autosave.autosave(frame);
-        
+    static void load(JFrame frame) {        
         FileDialog dialog = new FileDialog(frame, "Open Project", FileDialog.LOAD);
         dialog.setVisible(true);
 
         if (dialog.getFile() != null) {
             File file = new File(dialog.getDirectory(), dialog.getFile());
-
-            if (!Metadata.checkExtension(frame, file)) return;
-
             loadFromFile(file, frame, false);
-            Autosave.checkForNewerAutosave(frame);
-
-            Main.unsavedChanges = false;
-            Main.projectDirty = false;
-            Metadata.updateWindowTitle(frame);
         }
     }
 
@@ -63,10 +53,7 @@ final class Load {
 
             Files.writeString(temp.toPath(), empty.toString(4));
             loadFromFile(temp, frame, true); // effectively auto, for all intents and purposes
-
-            Main.unsavedChanges = false;
-            Main.projectDirty = false;
-            Metadata.updateWindowTitle(frame);
+            Main.unsavedChanges = false; // except for this intent and purpose, so we fix it
 
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -79,6 +66,9 @@ final class Load {
     }
 
     static void loadFromFile(File file, JFrame frame, boolean isAuto) {
+        if (Settings.autosaveOnClose) Autosave.autosave(frame);
+        if (!Metadata.checkExtension(frame, file)) return;
+
         try {
             String json = new String(Files.readAllBytes(file.toPath()));
             JSONObject root = new JSONObject(json);
@@ -154,17 +144,19 @@ final class Load {
 
             if (!isAuto) {
                 SaveLoad.currentProjectFile = file;
-                
                 RecentProjects.addRecentProject(file.getAbsolutePath());
                 RecentProjects.save();
                 RecentProjects.updateRecentProjectsMenu(frame);
-
+                Autosave.checkForNewerAutosave(frame);
             } else if (isDifferentProject) {
                 SaveLoad.currentProjectFile = null;
             }
 
-            Notify.showToast(frame, "Project loaded");
+            Main.unsavedChanges = isAuto;
+            Main.projectDirty = false;
             AutoIndicator.reset();
+            Metadata.updateWindowTitle(frame);
+            Notify.showToast(frame, "Project loaded");
 
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(null,
