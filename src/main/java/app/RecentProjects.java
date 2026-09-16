@@ -14,8 +14,6 @@ import javax.swing.JOptionPane;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import autosave.Autosave;
-import metadata.Metadata;
 import saveload.SaveLoad;
 
 public final class RecentProjects {
@@ -101,14 +99,7 @@ public final class RecentProjects {
                     return;
                 }
 
-                if (!Metadata.checkExtension(frame, f)) return;
-                if (Settings.autosaveOnClose) Autosave.autosave(frame);
                 SaveLoad.loadFromFile(f, frame, false);
-                Autosave.checkForNewerAutosave(frame);
-
-                Main.unsavedChanges = false;
-                Main.projectDirty = false;
-                Metadata.updateWindowTitle(frame);
             });
 
             recentProjectsMenu.add(item);
