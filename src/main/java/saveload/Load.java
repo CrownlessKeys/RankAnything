@@ -76,7 +76,7 @@ final class Load {
             JSONObject root = new JSONObject(json);
 
             Metadata.loadFromJSON(root);
-            Metadata.versionMismatchWarnings(frame);
+            Metadata.versionMismatchWarningsLoad(frame);
 
             // Criteria and Items
             JSONArray criteriaArray = root.optJSONArray("criteria", new JSONArray());
