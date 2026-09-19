@@ -65,7 +65,7 @@ final class Tasks {
                     try {
                         JSONObject root = new JSONObject(Files.readString(f.toPath()));
                         String fileCreated = root.optString("fileCreated", "");
-                        return fileCreated.equals("Project Not Saved");
+                        return fileCreated.equals("Project not saved");
                     } catch (Exception ex) {
                         return false;
                     }

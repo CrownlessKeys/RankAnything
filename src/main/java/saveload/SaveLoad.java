@@ -36,7 +36,7 @@ public final class SaveLoad {
         if (currentProjectFile != null) {
             return currentProjectFile.getAbsolutePath();
         } else {
-            return "Project Not Saved";
+            return "Project not saved";
         }
     }
 }

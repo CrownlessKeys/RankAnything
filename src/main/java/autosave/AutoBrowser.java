@@ -8,6 +8,8 @@ import java.awt.event.MouseEvent;
 import java.io.File;
 import java.nio.file.Files;
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.swing.BorderFactory;
 import javax.swing.DefaultListCellRenderer;
@@ -55,12 +57,27 @@ public final class AutoBrowser {
             return;
         }
 
-        // Sort by projectId first, then by newest modified time first
+        // 1. Pre-calculate the maximum lastModified time for each project ID
+        Map<String, Long> projectNewestTime = new HashMap<>();
+        for (File f : autosaves) {
+            String id = f.getName().split("_")[0];
+            long modified = f.lastModified();
+            projectNewestTime.merge(id, modified, Long::max);
+        }
+
+        // 2. Sort groups by their newest file first, then newest to oldest within each group
         Arrays.sort(autosaves, (a, b) -> {
             String idA = a.getName().split("_")[0];
             String idB = b.getName().split("_")[0];
-            int comp = idA.compareTo(idB);
-            if (comp != 0) return comp;
+            
+            // If they belong to different projects, sort by the project's overall newest autosave
+            if (!idA.equals(idB)) {
+                long maxA = projectNewestTime.get(idA);
+                long maxB = projectNewestTime.get(idB);
+                return Long.compare(maxB, maxA); // Newest project group first
+            }
+            
+            // If they belong to the same project, sort newest to oldest
             return Long.compare(b.lastModified(), a.lastModified());
         });
 
@@ -78,7 +95,7 @@ public final class AutoBrowser {
 
         // Buttons
         JButton loadButton = new JButton("Load");
-        JButton saveAsButton = new JButton("Save As...");
+        JButton saveAsButton = new JButton("Save as...");
         JButton deleteButton = new JButton("Delete");
         JButton settingsButton = new JButton("Settings");
 
@@ -213,8 +230,8 @@ public final class AutoBrowser {
             label.setText("<html>" +
                 "<b>" + namePreview + "</b><br>" +
                 "Saved on " + autosaved + "<br>" +
-                (mode == AutosaveRendererMode.CURRENT_PROJECT ? "" : "Project Created: " + created + "<br>") +
-                (mode == AutosaveRendererMode.ALL_AUTOSAVES ? "File Created: " + fileCreated + "<br>" : "") +
+                (mode == AutosaveRendererMode.CURRENT_PROJECT ? "" : "Project created: " + created + "<br>") +
+                (mode == AutosaveRendererMode.ALL_AUTOSAVES ? "File created: " + fileCreated + "<br>" : "") +
                 "Criteria: " + criteriaCount + " &nbsp;&nbsp; Items: " + itemsCount + "<br>" +
                 "Size: " + sizeBytes + " bytes" +
                 (notesPreview.isEmpty() ? "" : "<br><i>" + notesPreview + "</i>") +

@@ -45,7 +45,7 @@ final class ProjectInfo {
         panel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
         // project name label
-        JLabel projectNameLabel = new JLabel("Project Name: ");
+        JLabel projectNameLabel = new JLabel("Project name: ");
         projectNameLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
         panel.add(projectNameLabel);
 
@@ -63,7 +63,7 @@ final class ProjectInfo {
         panel.add(Box.createVerticalStrut(10));
 
         // file information
-        JLabel fileLocationHeaderLabel = new JLabel("File Location: ");
+        JLabel fileLocationHeaderLabel = new JLabel("File location: ");
         fileLocationHeaderLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
         panel.add(fileLocationHeaderLabel);
         JLabel fileLocationLabel = new JLabel("    " + SaveLoad.getCurrentFilePath());
@@ -89,13 +89,13 @@ final class ProjectInfo {
         });
 
         // timestamps
-        JLabel createdLabel = new JLabel("Project Created: " + created);
+        JLabel createdLabel = new JLabel("Project created: " + created);
         createdLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
         panel.add(createdLabel);
-        JLabel fileCreatedLabel = new JLabel("File Created: " + fileCreated);
+        JLabel fileCreatedLabel = new JLabel("File created: " + fileCreated);
         fileCreatedLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
         panel.add(fileCreatedLabel);
-        JLabel modifiedLabel = new JLabel("Last Modified: " + modified);
+        JLabel modifiedLabel = new JLabel("Last modified: " + modified);
         modifiedLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
         panel.add(modifiedLabel);
         panel.add(Box.createVerticalStrut(10));
