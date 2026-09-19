@@ -40,16 +40,16 @@ final class ExtraInfo {
         criterion.infoName.setText("Name: " + criterion.getCriterionName());
         criterion.infoWeight.setText("Weight: " + criterion.getWeight() + " / 10");
         criterion.infoScore.setText(
-            "Average Score: " +
+            "Average score: " +
             criterion.computeAverageScore(Main.itemsList).setScale(5, RoundingMode.HALF_UP)
             + "%"
         );
         criterion.infoVariance.setText(
-            "Score Variance: " +
+            "Score variance: " +
             criterion.computeScoreVariance(Main.itemsList).setScale(5, RoundingMode.HALF_UP)
         );
         criterion.infoCreation.setText(
-            "Creation Index: #" + criterion.creationIndex + " of " + Main.criteriaCreationCounter
+            "Creation index: #" + criterion.creationIndex + " of " + Main.criteriaCreationCounter
         );
 
         criterion.revalidate();

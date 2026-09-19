@@ -31,7 +31,7 @@ final class ExtraInfo {
         int itemCount = item.isEnabledItem() ? Main.countEnabledItems() : Main.countEnabledItems() + 1;
 
         item.infoName.setText("Name: " + item.getItemName());
-        item.infoWeighted.setText("Total Weighted Score: " +
+        item.infoWeighted.setText("Total weighted score: " +
             item.rankingPanel.computeScore(item).score.setScale(5, RoundingMode.HALF_UP)
             + "%"
         );
@@ -39,16 +39,16 @@ final class ExtraInfo {
             + " of " + itemCount
             + (item.isEnabledItem() ? "" : " (if enabled)")
         );
-        item.infoVariance.setText("Score Variance: " +
+        item.infoVariance.setText("Score variance: " +
             item.computeScoreVariance().setScale(5, RoundingMode.HALF_UP)
         );
-        item.infoCreation.setText("Creation Index: #" + item.creationIndex + " of " + Main.itemsCreationCounter);
-        item.infoUnweighted.setText("Unweighted Average Score: " +
+        item.infoCreation.setText("Creation index: #" + item.creationIndex + " of " + Main.itemsCreationCounter);
+        item.infoUnweighted.setText("Unweighted average score: " +
             item.getUnweightedAverageScore().setScale(5, RoundingMode.HALF_UP)
             + "%"
         );
         item.infoUnweightedRank.setText(
-            "Unweighted Rank: #" + item.rankingPanel.getUnweightedRankOf(item)
+            "Unweighted rank: #" + item.rankingPanel.getUnweightedRankOf(item)
             + " of " + itemCount
             + (item.isEnabledItem() ? "" : " (if enabled)")
         );
@@ -56,11 +56,11 @@ final class ExtraInfo {
             "Rank: #" + item.rankingPanel.getRankAllItems(item) + " of " + Main.itemsList.size()
         );
         item.infoUnweightedRankAllItems.setText(
-            "Unweighted Rank: #" + 
+            "Unweighted rank: #" + 
             item.rankingPanel.getUnweightedRankAllItems(item)
             + " of " + Main.itemsList.size()
         );
-        item.infoWeightedAllCriteria.setText("Total Weighted Score: " +
+        item.infoWeightedAllCriteria.setText("Total weighted score: " +
             item.rankingPanel.computeScoreAllCriteria(item).score.setScale(5, RoundingMode.HALF_UP)
             + "%"
         );
@@ -68,12 +68,12 @@ final class ExtraInfo {
             + " of " + itemCount
             + (item.isEnabledItem() ? "" : " (if enabled)")
         );
-        item.infoUnweightedAllCriteria.setText("Unweighted Average Score: " +
+        item.infoUnweightedAllCriteria.setText("Unweighted average score: " +
             item.getUnweightedAverageScoreAllCriteria().setScale(5, RoundingMode.HALF_UP)
             + "%"
         );
         item.infoUnweightedRankAllCriteria.setText(
-            "Unweighted Rank: #" + item.rankingPanel.getUnweightedRankAllCriteria(item)
+            "Unweighted rank: #" + item.rankingPanel.getUnweightedRankAllCriteria(item)
             + " of " + itemCount
             + (item.isEnabledItem() ? "" : " (if enabled)")
         );
@@ -82,7 +82,7 @@ final class ExtraInfo {
             + " of " + Main.itemsList.size()
         );
         item.infoUnweightedRankAllCriteriaAllItems.setText(
-            "Unweighted Rank: #" + 
+            "Unweighted rank: #" + 
             item.rankingPanel.getUnweightedRankAllCriteriaAllItems(item)
             + " of " + Main.itemsList.size()
         );
