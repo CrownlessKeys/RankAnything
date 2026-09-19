@@ -30,7 +30,7 @@ public final class CritInit {
         criteriaPanel.setOpaque(true);
         
         // Row for the Add Criterion Button
-            JButton addCriterionButton = new JButton("Add Criterion");
+            JButton addCriterionButton = new JButton("Add criterion");
 
             JPanel addCriterionRow = new JPanel();
             addCriterionRow.setBackground(criteriaPanelColor);
@@ -43,11 +43,11 @@ public final class CritInit {
             addCriterionRow.add(Box.createHorizontalGlue());
 
         // Settings Row for precise sliders and hide disabled criteria toggles
-            JCheckBox preciseToggleCriteria = new JCheckBox("Precise Sliders");
+            JCheckBox preciseToggleCriteria = new JCheckBox("Precise sliders");
             preciseToggleCriteria.setSelected(Settings.preciseSlidersCriteria); // default from settings
             preciseToggleCriteria.setBackground(criteriaPanelColor);
 
-            JCheckBox hideDisabledCriteria = new JCheckBox("Hide Disabled");
+            JCheckBox hideDisabledCriteria = new JCheckBox("Hide disabled");
             hideDisabledCriteria.setSelected(Settings.hideDisabledCriteria); // default from settings
             hideDisabledCriteria.setBackground(criteriaPanelColor);
 
@@ -66,11 +66,11 @@ public final class CritInit {
         // Sorting Row for everything sorting-related
             String[] criteriaSortModes = {
                 "Alphabetical",
-                "By Weight",
-                "By Scores",
-                "By Variance",
-                "By Creation",
-                "Disabled Last"
+                "By weight",
+                "By scores",
+                "By variance",
+                "By creation",
+                "Disabled last"
             };
 
             JComboBox<String> criteriaSortDropdown = new JComboBox<>(criteriaSortModes);
@@ -123,11 +123,11 @@ public final class CritInit {
 
                 switch (mode) {
                     case "Alphabetical" -> Sort.sortCriteriaAlphabetically(reverse, criteriaPanel);
-                    case "By Weight" -> Sort.sortCriteriaByWeight(reverse, criteriaPanel);
-                    case "By Scores" -> Sort.sortCriteriaByAverageScore(reverse, criteriaPanel);
-                    case "By Variance" -> Sort.sortCriteriaByScoreVariance(reverse, criteriaPanel);
-                    case "By Creation" -> Sort.sortCriteriaByCreationIndex(reverse, criteriaPanel);
-                    case "Disabled Last" -> Sort.sortCriteriaDisabledLast(reverse, criteriaPanel);
+                    case "By weight" -> Sort.sortCriteriaByWeight(reverse, criteriaPanel);
+                    case "By scores" -> Sort.sortCriteriaByAverageScore(reverse, criteriaPanel);
+                    case "By variance" -> Sort.sortCriteriaByScoreVariance(reverse, criteriaPanel);
+                    case "By creation" -> Sort.sortCriteriaByCreationIndex(reverse, criteriaPanel);
+                    case "Disabled last" -> Sort.sortCriteriaDisabledLast(reverse, criteriaPanel);
                 }
 
                 Main.unsavedChanges = true;

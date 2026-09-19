@@ -16,6 +16,7 @@ import autosave.AutoTimer;
 import autosave.Autosave;
 import metadata.Metadata;
 import saveload.SaveLoad;
+import tasks.Browse;
 
 public final class MenuBar extends JMenuBar {
     
@@ -30,19 +31,19 @@ public final class MenuBar extends JMenuBar {
             JMenu fileMenu = new JMenu("File");
             add(fileMenu);
 
-            JMenuItem newProjectItem = new JMenuItem("New Project");
+            JMenuItem newProjectItem = new JMenuItem("New project");
             JMenuItem openItem = new JMenuItem("Open...");
             JMenuItem saveItem = new JMenuItem("Save");
-            JMenuItem saveAsItem = new JMenuItem("Save As...");
-            recentProjectsMenu = new JMenu("Recent Projects");
-            JMenuItem unsavedProjectsItem = new JMenuItem("Unsaved Projects");
-            JMenuItem openFileLocationItem = new JMenuItem("Open File Location");
+            JMenuItem saveAsItem = new JMenuItem("Save as...");
+            recentProjectsMenu = new JMenu("Recent projects");
+            JMenuItem unsavedProjectsItem = new JMenuItem("Unsaved projects");
+            JMenuItem openFileLocationItem = new JMenuItem("Open file location");
             JMenuItem exitItem = new JMenuItem("Exit");
             
             JMenu autosavesMenu = new JMenu("Autosaves...");
-            JMenuItem projectAutosavesItem = new JMenuItem("Current Project");
-            JMenuItem allAutosavesItem = new JMenuItem("All Autosaves");
-            JMenuItem unsavedAutoItem = new JMenuItem("Unsaved Projects");
+            JMenuItem projectAutosavesItem = new JMenuItem("Current project");
+            JMenuItem allAutosavesItem = new JMenuItem("All autosaves");
+            JMenuItem unsavedAutoItem = new JMenuItem("Unsaved projects");
             autosavesMenu.add(projectAutosavesItem);
             autosavesMenu.add(allAutosavesItem);
             autosavesMenu.add(unsavedAutoItem);
@@ -84,9 +85,9 @@ public final class MenuBar extends JMenuBar {
             JMenu projectMenu = new JMenu("Project");
             add(projectMenu);
 
-            JMenuItem projectInfoItem = new JMenuItem("Project Info");
-            JMenuItem editNotesItem = new JMenuItem("Edit Notes");
-            JMenuItem renameProjectItem = new JMenuItem("Rename Project");
+            JMenuItem projectInfoItem = new JMenuItem("Project info");
+            JMenuItem editNotesItem = new JMenuItem("Edit notes");
+            JMenuItem renameProjectItem = new JMenuItem("Rename project");
 
             projectInfoItem.setToolTipText("View information about the current project");
             editNotesItem.setToolTipText("Edit notes for the current project");
@@ -105,29 +106,29 @@ public final class MenuBar extends JMenuBar {
             JMenu settingsMenu = new JMenu("Settings");
             add(settingsMenu);
 
-            autosaveToggle = new JCheckBoxMenuItem("Enable Autosave");
+            autosaveToggle = new JCheckBoxMenuItem("Enable autosave");
             autosaveToggle.setSelected(Settings.autosavePeriodically || Settings.autosaveOnClose);
             autosaveToggle.setToolTipText(
                 "Enable or disable the automatic creation of backup save files of your project periodically and when closing the project with unsaved changes."
             );
             settingsMenu.add(autosaveToggle);
 
-            JMenuItem autosaveSettingsItem = new JMenuItem("Autosave Settings...");
+            JMenuItem autosaveSettingsItem = new JMenuItem("Autosave settings...");
             settingsMenu.add(autosaveSettingsItem);
             settingsMenu.addSeparator();
 
-            preciseSlidersToggle = new JCheckBoxMenuItem("Default to Precise Sliders");
+            preciseSlidersToggle = new JCheckBoxMenuItem("Default to precise sliders");
             preciseSlidersToggle.setSelected(Settings.preciseSlidersCriteria || Settings.preciseSlidersItems);
             preciseSlidersToggle.setToolTipText(
                 "Choose whether projects use precise sliders by default."
             );
             settingsMenu.add(preciseSlidersToggle);
 
-            JMenuItem defaultProjectSettingsItem = new JMenuItem("Default Project Settings...");
+            JMenuItem defaultProjectSettingsItem = new JMenuItem("Default project settings...");
             settingsMenu.add(defaultProjectSettingsItem);
             settingsMenu.addSeparator();
 
-            autoRenameFilesToggle = new JCheckBoxMenuItem("Automatically Rename Files");
+            autoRenameFilesToggle = new JCheckBoxMenuItem("Automatically rename files");
             autoRenameFilesToggle.setSelected(Settings.autoRenameFiles);
             autoRenameFilesToggle.setToolTipText(
                 "Enable or disable automatic renaming of your current project file when saving."
@@ -135,12 +136,20 @@ public final class MenuBar extends JMenuBar {
             settingsMenu.add(autoRenameFilesToggle);
             settingsMenu.addSeparator();
 
-            JMenuItem restoreDefaultsItem = new JMenuItem("Restore Default Settings");
+            JMenuItem restoreDefaultsItem = new JMenuItem("Restore default settings");
             settingsMenu.add(restoreDefaultsItem);
 
         // HELP MENU
             JMenu helpMenu = new JMenu("Help");
             add(helpMenu);
+
+            JMenuItem musicItem = new JMenuItem("Background music");
+            musicItem.setToolTipText("Listen to some beautiful piano playing by yours truly while you rank");
+            helpMenu.add(musicItem);
+
+            JMenuItem gitItem = new JMenuItem("View source code");
+            gitItem.setToolTipText("View this application's source code repository on GitHub in your web browser");
+            helpMenu.add(gitItem);
 
             JMenuItem aboutItem = new JMenuItem("About");
             helpMenu.add(aboutItem);
@@ -160,58 +169,69 @@ public final class MenuBar extends JMenuBar {
         recentProjectsMenu.setMnemonic('R');
 
         // LISTENERS
-        saveAsItem.addActionListener(e -> SaveLoad.saveAs(frame));
-        openItem.addActionListener(e -> SaveLoad.load(frame));
-        saveItem.addActionListener(e -> SaveLoad.save(frame));
-        openFileLocationItem.addActionListener(e -> Metadata.openFileLocation(frame));
-        newProjectItem.addActionListener(e -> SaveLoad.newProject(frame));
-        projectAutosavesItem.addActionListener(e -> AutoBrowser.show(
-            frame, Main.projectId, AutoBrowser.AutosaveRendererMode.CURRENT_PROJECT
-        ));
-        allAutosavesItem.addActionListener(e -> AutoBrowser.show(
-            frame, Main.projectId, AutoBrowser.AutosaveRendererMode.ALL_AUTOSAVES
-        ));
-        unsavedAutoItem.addActionListener(e -> AutoBrowser.show(
-            frame, Main.projectId, AutoBrowser.AutosaveRendererMode.UNSAVED_PROJECTS
-        ));
-        unsavedProjectsItem.addActionListener(e -> AutoBrowser.show(
-            frame, Main.projectId, AutoBrowser.AutosaveRendererMode.UNSAVED_PROJECTS
-        ));
-        exitItem.addActionListener(e -> 
-            frame.dispatchEvent(new WindowEvent(
-                frame, WindowEvent.WINDOW_CLOSING
-            ))
-        );
+        // File
+            saveAsItem.addActionListener(e -> SaveLoad.saveAs(frame));
+            openItem.addActionListener(e -> SaveLoad.load(frame));
+            saveItem.addActionListener(e -> SaveLoad.save(frame));
+            openFileLocationItem.addActionListener(e -> Metadata.openFileLocation(frame));
+            newProjectItem.addActionListener(e -> SaveLoad.newProject(frame));
+            projectAutosavesItem.addActionListener(e -> AutoBrowser.show(
+                frame, Main.projectId, AutoBrowser.AutosaveRendererMode.CURRENT_PROJECT
+            ));
+            allAutosavesItem.addActionListener(e -> AutoBrowser.show(
+                frame, Main.projectId, AutoBrowser.AutosaveRendererMode.ALL_AUTOSAVES
+            ));
+            unsavedAutoItem.addActionListener(e -> AutoBrowser.show(
+                frame, Main.projectId, AutoBrowser.AutosaveRendererMode.UNSAVED_PROJECTS
+            ));
+            unsavedProjectsItem.addActionListener(e -> AutoBrowser.show(
+                frame, Main.projectId, AutoBrowser.AutosaveRendererMode.UNSAVED_PROJECTS
+            ));
+            exitItem.addActionListener(e -> 
+                frame.dispatchEvent(new WindowEvent(
+                    frame, WindowEvent.WINDOW_CLOSING
+                ))
+            );
 
-        projectInfoItem.addActionListener(e -> Metadata.showProjectInfoDialog(frame));
-        editNotesItem.addActionListener(e -> Metadata.showNotesEditor(frame));
-        renameProjectItem.addActionListener(e -> Metadata.showProjectNameEditor(frame));
+        // Project
+            projectInfoItem.addActionListener(e -> Metadata.showProjectInfoDialog(frame));
+            editNotesItem.addActionListener(e -> Metadata.showNotesEditor(frame));
+            renameProjectItem.addActionListener(e -> Metadata.showProjectNameEditor(frame));
 
-        autosaveToggle.addActionListener(e -> {
-            boolean enabled = autosaveToggle.isSelected();
-            Settings.autosavePeriodically = enabled;
-            Settings.autosaveOnClose = enabled;
-            Settings.save();
+        // Settings
+            autosaveToggle.addActionListener(e -> {
+                boolean enabled = autosaveToggle.isSelected();
+                Settings.autosavePeriodically = enabled;
+                Settings.autosaveOnClose = enabled;
+                Settings.save();
 
-            if (Settings.autosavePeriodically) {
-                AutoTimer.start(Main.frame);
-            } else {
-                AutoTimer.stop();
-            }
-        });
-        autosaveSettingsItem.addActionListener(e -> Autosave.showAutosaveSettings(frame));
-        preciseSlidersToggle.addActionListener(e -> {
-            boolean enabled = preciseSlidersToggle.isSelected();
-            Settings.preciseSlidersCriteria = enabled;
-            Settings.preciseSlidersItems = enabled;
-            Settings.save();
-        });
-        defaultProjectSettingsItem.addActionListener(e -> DefaultSettings.show(frame));
-        autoRenameFilesToggle.addActionListener(e -> {
-            Settings.autoRenameFiles = autoRenameFilesToggle.isSelected();
-            Settings.save();
-        });
-        restoreDefaultsItem.addActionListener(e -> Settings.restoreDefaults(frame));
+                if (Settings.autosavePeriodically) {
+                    AutoTimer.start(Main.frame);
+                } else {
+                    AutoTimer.stop();
+                }
+            });
+            autosaveSettingsItem.addActionListener(e -> Autosave.showAutosaveSettings(frame));
+
+            preciseSlidersToggle.addActionListener(e -> {
+                boolean enabled = preciseSlidersToggle.isSelected();
+                Settings.preciseSlidersCriteria = enabled;
+                Settings.preciseSlidersItems = enabled;
+                Settings.save();
+            });
+            defaultProjectSettingsItem.addActionListener(e -> DefaultSettings.show(frame));
+
+            autoRenameFilesToggle.addActionListener(e -> {
+                Settings.autoRenameFiles = autoRenameFilesToggle.isSelected();
+                Settings.save();
+            });
+            
+            restoreDefaultsItem.addActionListener(e -> Settings.restoreDefaults(frame));
+
+        // Help
+            musicItem.addActionListener(e -> Browse.openWebpage(frame, "https://YouTube.com/@CrownlessKeys"));
+            gitItem.addActionListener(e -> Browse.openWebpage(frame, "https://github.com/HyruleWarrior001/RankAnything"));
+        // end
     }
 
     public static void updateSettingsMenu() {
