@@ -41,7 +41,7 @@ final class Tasks {
 
     static void openFileLocation(JFrame frame) {
         String path = SaveLoad.getCurrentFilePath();
-        if (path != null && !path.equals("Project Not Saved")) {
+        if (path != null && !path.equals("Project not saved")) {
             try {
                 File file = new File(path);
                 Desktop.getDesktop().open(file.getParentFile());
@@ -49,7 +49,7 @@ final class Tasks {
                 ex.printStackTrace();
             }
         } else {
-            Notify.showToast(frame, "Project Not Saved");
+            Notify.showToast(frame, "Project not saved");
         }
     }
 

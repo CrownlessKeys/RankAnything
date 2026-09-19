@@ -49,7 +49,7 @@ final class Load {
             empty.put("appVersion", Main.APP_VERSION);
             empty.put("fileFormatVersion", Main.FILE_FORMAT_VERSION);
             empty.put("created", CREATION_TIMESTAMP);
-            empty.put("fileCreated", "Project Not Saved");
+            empty.put("fileCreated", "Project not saved");
             empty.put("modified", CREATION_TIMESTAMP);
 
             Files.writeString(temp.toPath(), empty.toString(4));

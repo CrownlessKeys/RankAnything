@@ -22,7 +22,7 @@ final class SaveAs {
             
             File file = new File(dialog.getDirectory(), fileName);
 
-            Main.isOriginal = Main.fileCreated.equals("Project Not Saved");
+            Main.isOriginal = Main.fileCreated.equals("Project not saved");
             Main.fileCreated = Metadata.now();
             if (!Main.isOriginal) Main.projectId = ProjectID.generate();
 

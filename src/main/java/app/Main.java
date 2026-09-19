@@ -53,7 +53,7 @@ public final class Main {
     public static String projectName = "Untitled";
     public static String projectNotes = "";
     public static String projectCreated = STARTUP_TIMESTAMP;
-    public static String fileCreated = "Project Not Saved";
+    public static String fileCreated = "Project not saved";
     public static String projectModified = STARTUP_TIMESTAMP;
     public static final String APP_VERSION = "1.0.0";
     public static String projectAppVersion = APP_VERSION;
