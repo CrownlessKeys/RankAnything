@@ -17,8 +17,16 @@ public final class Metadata {
         SaveLoadMeta.saveToJSON(root, isAuto);
     }
 
-    public static void versionMismatchWarnings(JFrame frame) {
-        SaveLoadMeta.versionMismatchWarnings(frame);
+    public static void versionMismatchWarningsLoad(JFrame frame) {
+        SaveLoadMeta.versionMismatchWarningsLoad(frame);
+    }
+
+    public static boolean versionMismatchWarningsSave(JFrame frame) {
+        return SaveLoadMeta.versionMismatchWarningsSave(frame);
+    }
+
+    public static void checkFileName(JFrame frame) {
+        Tasks.checkFileName(frame);
     }
 
     public static boolean checkExtension(JFrame frame, File file) {

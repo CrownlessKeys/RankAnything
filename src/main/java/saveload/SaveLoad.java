@@ -6,14 +6,14 @@ import javax.swing.JFrame;
 
 public final class SaveLoad {
 
-    static File currentProjectFile = null;
+    public static File currentProjectFile = null;
 
     public static void save(JFrame frame) {
         Save.save(frame);
     }
 
     public static void saveAs(JFrame frame) {
-        SaveAs.save(frame);
+        Save.saveAs(frame);
     }
 
     public static void load(JFrame frame) {

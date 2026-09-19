@@ -36,15 +36,18 @@ final class SaveLoadMeta {
         root.put("isOriginal", Main.isOriginal);
     }
 
-    static void versionMismatchWarnings(JFrame frame) {
+    static void versionMismatchWarningsLoad(JFrame frame) {
 
         // App version mismatch
         if (!Main.projectAppVersion.equals(Main.APP_VERSION)) {
             JOptionPane.showMessageDialog(frame,
-                "This project was saved using Rank Anything version "
-                + Main.projectAppVersion + ".\n"
-                + "You are currently using version " + Main.APP_VERSION + ".",
-                "Version Mismatch",
+                """
+                This project was saved using Rank Anything 
+                version %s.
+                
+                You are currently using version %s.
+                """.formatted(Main.projectAppVersion, Main.APP_VERSION),
+                "Version mismatch",
                 JOptionPane.INFORMATION_MESSAGE
             );
         }
@@ -53,10 +56,13 @@ final class SaveLoadMeta {
         if (Main.projectFileFormatVersion <= 0) {
             JOptionPane.showMessageDialog(frame, 
                 """
-                    This project does not contain valid file format information.
-                    If you save this project, it will be converted to the current file format.
+                    This project does not contain valid file 
+                    format information.
+
+                    If you save this project, it will be converted 
+                    to the current file format.
                 """,
-                "Missing File Format",
+                "Missing file format",
                 JOptionPane.INFORMATION_MESSAGE
             );
         }
@@ -67,10 +73,13 @@ final class SaveLoadMeta {
         ) {
             JOptionPane.showMessageDialog(frame, 
                 """
-                    This project was saved with an older file format.
-                    If you save this project, it will be converted to the current file format.
+                    This project was saved with an older file format
+                    than this version of Rank Anything supports. 
+                    
+                    If you save this project, it will be converted 
+                    to the current file format.
                 """,
-                "Old File Format",
+                "Old file format",
                 JOptionPane.INFORMATION_MESSAGE
             );
         }
@@ -79,13 +88,85 @@ final class SaveLoadMeta {
         if (Main.projectFileFormatVersion > Main.FILE_FORMAT_VERSION) {
             JOptionPane.showMessageDialog(frame, 
                 """
-                    This project was saved with a newer file format than this version of Rank Anything supports.
+                    This project was saved with a newer file format 
+                    than this version of Rank Anything supports. 
                     Some features may not load correctly.
-                    If you save this project, it will be converted to the current file format.
+
+                    If you save this project, it will be converted 
+                    to the current file format.
                 """,
-                "Newer File Format",
+                "Newer file format",
                 JOptionPane.WARNING_MESSAGE
             );
         }
+    }
+
+    static boolean versionMismatchWarningsSave(JFrame frame) {
+
+        // Missing or corrupted file format
+        if (Main.projectFileFormatVersion <= 0) {
+            int choice = JOptionPane.showConfirmDialog(frame, 
+                """
+                    This project does not contain valid file format information. If you 
+                    save this project, it will be converted to the current file format.
+
+                    Because the original format cannot be determined, it is unknown exactly 
+                    what structural changes will occur. This process could permanently 
+                    overwrite or misalign some of your existing project settings.
+
+                    In short, it is recommended that you know what you are doing.
+
+                    Do you want to proceed with saving?
+                """,
+                "Missing file format",
+                JOptionPane.YES_NO_OPTION,
+                JOptionPane.WARNING_MESSAGE
+            );
+
+            if (choice != JOptionPane.YES_OPTION) return false;
+        }
+
+        // Old file format
+        if (Main.projectFileFormatVersion < Main.FILE_FORMAT_VERSION
+            && Main.projectFileFormatVersion > 0
+        ) {
+            int choice = JOptionPane.showConfirmDialog(frame, 
+                """
+                    This project was saved with an older file format. If you 
+                    save this project, it will be converted to the current 
+                    file format.
+
+                    Do you want to proceed with saving?
+                """,
+                "File format upgrade",
+                JOptionPane.YES_NO_OPTION,
+                JOptionPane.WARNING_MESSAGE
+            );
+
+            if (choice != JOptionPane.YES_OPTION) return false;
+        }
+
+        // Newer file format
+        if (Main.projectFileFormatVersion > Main.FILE_FORMAT_VERSION) {
+            int choice = JOptionPane.showConfirmDialog(frame, 
+                """
+                    CRITICAL WARNING: This project belongs to a newer 
+                    version of Rank Anything than you are currently running. 
+
+                    Saving now will overwrite the file, permanently 
+                    stripping out features and data not supported by 
+                    this older app version.
+
+                    Are you absolutely sure you want to overwrite this file?
+                """,
+                "CRITICAL: Potential data loss",
+                JOptionPane.YES_NO_OPTION,
+                JOptionPane.WARNING_MESSAGE
+            );
+
+            if (choice != JOptionPane.YES_OPTION) return false;
+        }
+
+        return true;
     }
 }
