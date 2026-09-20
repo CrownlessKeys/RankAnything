@@ -4,6 +4,8 @@ import java.io.File;
 
 import javax.swing.JFrame;
 
+import org.json.JSONObject;
+
 public final class SaveLoad {
 
     public static File currentProjectFile = null;
@@ -30,6 +32,10 @@ public final class SaveLoad {
 
     public static void saveToFile(File file, JFrame frame, boolean isAuto) {
         SaveToFile.save(file, frame, isAuto);
+    }
+
+    public static JSONObject buildProjectJSON() {
+        return SaveToFile.buildProjectJSON(true); // auto true since this method should only create the JSON object without changing anything
     }
 
     public static String getCurrentFilePath() {

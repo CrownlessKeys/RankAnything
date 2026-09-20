@@ -33,7 +33,7 @@ final class Dialog {
 
         // Title
         JLabel title = new JLabel(
-            "<html>Please describe the issue.<br>All fields are optional, but including more information helps me solve the problem.</html>"
+            "<html>Please describe the issue.<br>All fields are optional, but including more information helps me solve the problem.<br>You will be able to review everything included in the email before sending.</html>"
         );
         left.accept(title);
         panel.add(title);
@@ -80,12 +80,20 @@ final class Dialog {
         panel.add(Box.createVerticalStrut(10));
 
         // Checkboxes
-        JCheckBox includeSystemInfo = new JCheckBox("Include system information");
+        JCheckBox includeProject = new JCheckBox("Include your current project information");
+        includeProject.setSelected(true); // default
+        JCheckBox includeSettings = new JCheckBox("Include your current Rank Anything settings");
+        includeSettings.setSelected(true); // default
+        JCheckBox includeSystemInfo = new JCheckBox("Include basic system information");
         includeSystemInfo.setSelected(true); // default
         JCheckBox requestReply = new JCheckBox("I would like a follow-up response");
         requestReply.setSelected(true); // default
+        left.accept(includeProject);
+        left.accept(includeSettings);
         left.accept(includeSystemInfo);
         left.accept(requestReply);
+        panel.add(includeProject);
+        panel.add(includeSettings);
         panel.add(includeSystemInfo);
         panel.add(requestReply);
         panel.add(Box.createVerticalStrut(15));
@@ -114,6 +122,8 @@ final class Dialog {
                 stepsArea.getText().trim(),
                 expectedArea.getText().trim(),
                 actualArea.getText().trim(),
+                includeProject.isSelected(),
+                includeSettings.isSelected(),
                 includeSystemInfo.isSelected(),
                 requestReply.isSelected(),
                 false // manual = false
@@ -127,6 +137,8 @@ final class Dialog {
                 stepsArea.getText().trim(),
                 expectedArea.getText().trim(),
                 actualArea.getText().trim(),
+                includeProject.isSelected(),
+                includeSettings.isSelected(),
                 includeSystemInfo.isSelected(),
                 requestReply.isSelected(),
                 true // manual = true
