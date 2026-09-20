@@ -14,6 +14,7 @@ import autosave.AutoBrowser;
 import autosave.AutoIndicator;
 import autosave.AutoTimer;
 import autosave.Autosave;
+import contact.Contact;
 import metadata.Metadata;
 import saveload.SaveLoad;
 import tasks.Browse;
@@ -151,6 +152,18 @@ public final class MenuBar extends JMenuBar {
             gitItem.setToolTipText("View this application's source code repository on GitHub in your web browser");
             helpMenu.add(gitItem);
 
+            JMenu contactMenu = new JMenu("Contact developer...");
+            JMenuItem bugItem = new JMenuItem("Report a bug");
+            bugItem.setToolTipText("Tell the developer about a problem or error in the application so he can work on it");
+            contactMenu.add(bugItem);
+            JMenuItem featureItem = new JMenuItem("Request a feature");
+            featureItem.setToolTipText("Let me know about any ideas you have to improve Rank Anything!");
+            contactMenu.add(featureItem);
+            JMenuItem generalItem = new JMenuItem("Other");
+            generalItem.setToolTipText("Send an email to the developer");
+            contactMenu.add(generalItem);
+            helpMenu.add(contactMenu);
+
             JMenuItem aboutItem = new JMenuItem("About");
             helpMenu.add(aboutItem);
         // end
@@ -231,6 +244,10 @@ public final class MenuBar extends JMenuBar {
         // Help
             musicItem.addActionListener(e -> Browse.openWebpage(frame, "https://YouTube.com/@CrownlessKeys"));
             gitItem.addActionListener(e -> Browse.openWebpage(frame, "https://github.com/HyruleWarrior001/RankAnything"));
+
+            bugItem.addActionListener(e -> Contact.reportBug());
+            featureItem.addActionListener(e -> Contact.requestFeature());
+            generalItem.addActionListener(e -> Contact.generalContact());
         // end
     }
 
