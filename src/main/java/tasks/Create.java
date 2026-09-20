@@ -94,7 +94,7 @@ public final class Create {
 
         wrapper.add(bubble);
         wrapper.add(Box.createVerticalStrut(10));
-        Main.criteriaPanel.add(wrapper);
+        Main.criteriaRow.add(wrapper);
         Main.criteriaPanel.revalidate();
         Main.criteriaPanel.repaint();
 
@@ -145,10 +145,12 @@ public final class Create {
         JPanel wrapper = new JPanel();
         wrapper.setLayout(new BoxLayout(wrapper, BoxLayout.Y_AXIS));
         wrapper.setOpaque(false);
+        wrapper.setAlignmentX(Component.LEFT_ALIGNMENT);
 
         ItemsPanel bubble = new ItemsPanel(Main.criteriaList);
         bubble.initialize();
         bubble.setRankingPanel(Main.rankingPanel);
+        bubble.setAlignmentX(Component.LEFT_ALIGNMENT);
 
         if (data != null) {
             bubble.creationIndex = data.getInt("creationIndex");
@@ -223,7 +225,7 @@ public final class Create {
         wrapper.add(bubble);
         wrapper.add(Box.createVerticalStrut(10));
 
-        Main.itemsPanel.add(wrapper);
+        Main.itemsRow.add(wrapper);
         Main.itemsPanel.revalidate();
         Main.itemsPanel.repaint();
 
