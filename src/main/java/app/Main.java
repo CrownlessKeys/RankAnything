@@ -34,6 +34,9 @@ public final class Main {
     public static JScrollPane criteriaScroll;
     public static JScrollPane itemsScroll;
 
+    public static JPanel criteriaRow;
+    public static JPanel itemsRow;
+
     public static JCheckBox preciseToggleCriteria;
     public static JCheckBox preciseToggleItems;
     public static JCheckBox hideDisabledCriteria;

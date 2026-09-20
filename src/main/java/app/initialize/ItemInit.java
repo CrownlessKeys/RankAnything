@@ -1,6 +1,7 @@
 package app.initialize;
 
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Dimension;
 
 import javax.swing.BorderFactory;
@@ -43,7 +44,11 @@ public final class ItemInit {
             JPanel addItemRow = new JPanel();
             addItemRow.setBackground(itemsPanelColor);
             addItemRow.setLayout(new BoxLayout(addItemRow, BoxLayout.X_AXIS));
-            addItemRow.setMaximumSize(new Dimension(Integer.MAX_VALUE, addItemButton.getPreferredSize().height));
+            addItemRow.setMaximumSize(new Dimension(
+                Integer.MAX_VALUE, 
+                addItemButton.getPreferredSize().height
+            ));
+            addItemRow.setAlignmentX(Component.LEFT_ALIGNMENT);
 
             // layout
             addItemRow.add(Box.createHorizontalGlue());
@@ -62,7 +67,11 @@ public final class ItemInit {
             JPanel itemsSettingsRow = new JPanel();
             itemsSettingsRow.setBackground(itemsPanelColor);
             itemsSettingsRow.setLayout(new BoxLayout(itemsSettingsRow, BoxLayout.X_AXIS));
-            itemsSettingsRow.setMaximumSize(new Dimension(Integer.MAX_VALUE, preciseToggleItems.getPreferredSize().height));
+            itemsSettingsRow.setMaximumSize(new Dimension(
+                Integer.MAX_VALUE, 
+                preciseToggleItems.getPreferredSize().height
+            ));
+            itemsSettingsRow.setAlignmentX(Component.LEFT_ALIGNMENT);
 
             // layout
             itemsSettingsRow.add(Box.createHorizontalGlue());
@@ -92,6 +101,7 @@ public final class ItemInit {
             JPanel itemsSortRow = new JPanel();
             itemsSortRow.setLayout(new BoxLayout(itemsSortRow, BoxLayout.X_AXIS));
             itemsSortRow.setBackground(itemsPanelColor);
+            itemsSortRow.setAlignmentX(Component.LEFT_ALIGNMENT);
 
             // layout
             itemsSortRow.add(Box.createHorizontalGlue());
@@ -109,7 +119,11 @@ public final class ItemInit {
             JPanel selectAllRow = new JPanel();
             selectAllRow.setBackground(itemsPanelColor);
             selectAllRow.setLayout(new BoxLayout(selectAllRow, BoxLayout.X_AXIS));
-            selectAllRow.setMaximumSize(new Dimension(Integer.MAX_VALUE, disableAllButton.getPreferredSize().height));
+            selectAllRow.setMaximumSize(new Dimension(
+                Integer.MAX_VALUE, 
+                disableAllButton.getPreferredSize().height
+            ));
+            selectAllRow.setAlignmentX(Component.LEFT_ALIGNMENT);
 
             // layout
             selectAllRow.add(Box.createHorizontalGlue());
@@ -121,8 +135,13 @@ public final class ItemInit {
         // Items Header
             JPanel itemsHeader = new JPanel();
             itemsHeader.setLayout(new BoxLayout(itemsHeader, BoxLayout.Y_AXIS));
-            itemsHeader.setMaximumSize(new Dimension(Integer.MAX_VALUE, 150));
+            int height = 10
+                    + itemsSortRow.getPreferredSize().height + 10
+                    + itemsSettingsRow.getPreferredSize().height + 10
+                    + selectAllRow.getPreferredSize().height + 10;
+            itemsHeader.setMaximumSize(new Dimension(Integer.MAX_VALUE, height));
             itemsHeader.setBackground(itemsPanelColor);
+            itemsHeader.setAlignmentX(Component.LEFT_ALIGNMENT);
 
             // layout
             itemsHeader.add(Box.createVerticalStrut(10));
@@ -132,11 +151,19 @@ public final class ItemInit {
             itemsHeader.add(Box.createVerticalStrut(10));
             itemsHeader.add(selectAllRow);
             itemsHeader.add(Box.createVerticalStrut(10));
-            itemsHeader.add(addItemRow);
-            itemsHeader.add(Box.createVerticalStrut(10));
+    
+        // row for the items
+            JPanel itemsRow = new JPanel();
+            itemsRow.setLayout(new BoxLayout(itemsRow, BoxLayout.Y_AXIS));
+            itemsRow.setBackground(itemsPanelColor);
+            itemsRow.setOpaque(true);
+            itemsRow.setAlignmentX(Component.LEFT_ALIGNMENT);
 
-            // add header to the panel
+        // layout
             itemsPanel.add(itemsHeader);
+            itemsPanel.add(itemsRow);
+            itemsPanel.add(addItemRow);
+            itemsPanel.add(Box.createVerticalStrut(50));
         // end
 
         preciseToggleItems.addActionListener(e -> {
@@ -210,5 +237,6 @@ public final class ItemInit {
         Main.itemsScroll = itemsScroll;
         Main.preciseToggleItems = preciseToggleItems;
         Main.hideDisabledItems = hideDisabledItems;
+        Main.itemsRow = itemsRow;
     }
 }

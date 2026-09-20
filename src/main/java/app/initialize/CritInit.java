@@ -38,7 +38,11 @@ public final class CritInit {
             JPanel addCriterionRow = new JPanel();
             addCriterionRow.setBackground(criteriaPanelColor);
             addCriterionRow.setLayout(new BoxLayout(addCriterionRow, BoxLayout.X_AXIS));
-            addCriterionRow.setMaximumSize(new Dimension(Integer.MAX_VALUE, addCriterionButton.getPreferredSize().height));
+            addCriterionRow.setMaximumSize(new Dimension(
+                Integer.MAX_VALUE, 
+                addCriterionButton.getPreferredSize().height
+            ));
+            addCriterionRow.setAlignmentX(Component.LEFT_ALIGNMENT);
 
             // layout
             addCriterionRow.add(Box.createHorizontalGlue());
@@ -57,7 +61,11 @@ public final class CritInit {
             JPanel criteriaSettingsRow = new JPanel();
             criteriaSettingsRow.setBackground(criteriaPanelColor);
             criteriaSettingsRow.setLayout(new BoxLayout(criteriaSettingsRow, BoxLayout.X_AXIS));
-            criteriaSettingsRow.setMaximumSize(new Dimension(Integer.MAX_VALUE, preciseToggleCriteria.getPreferredSize().height));
+            criteriaSettingsRow.setMaximumSize(new Dimension(
+                Integer.MAX_VALUE, 
+                preciseToggleCriteria.getPreferredSize().height
+            ));
+            criteriaSettingsRow.setAlignmentX(Component.LEFT_ALIGNMENT);
 
             // layout
             criteriaSettingsRow.add(Box.createHorizontalGlue());
@@ -86,6 +94,11 @@ public final class CritInit {
             JPanel criteriaSortRow = new JPanel();
             criteriaSortRow.setLayout(new BoxLayout(criteriaSortRow, BoxLayout.X_AXIS));
             criteriaSortRow.setBackground(criteriaPanelColor);
+            criteriaSortRow.setMaximumSize(new Dimension(
+                Integer.MAX_VALUE, 
+                criteriaSortButton.getPreferredSize().height
+            ));
+            criteriaSortRow.setAlignmentX(Component.LEFT_ALIGNMENT);
 
             // layout
             criteriaSortRow.add(Box.createHorizontalGlue());
@@ -102,7 +115,11 @@ public final class CritInit {
             JPanel selectAllRow = new JPanel();
             selectAllRow.setBackground(criteriaPanelColor);
             selectAllRow.setLayout(new BoxLayout(selectAllRow, BoxLayout.X_AXIS));
-            selectAllRow.setMaximumSize(new Dimension(Integer.MAX_VALUE, disableAllButton.getPreferredSize().height));
+            selectAllRow.setMaximumSize(new Dimension(
+                Integer.MAX_VALUE, 
+                disableAllButton.getPreferredSize().height
+            ));
+            selectAllRow.setAlignmentX(Component.LEFT_ALIGNMENT);
 
             // layout
             selectAllRow.add(Box.createHorizontalGlue());
@@ -112,7 +129,11 @@ public final class CritInit {
         // Criteria Header
             JPanel criteriaHeader = new JPanel();
             criteriaHeader.setLayout(new BoxLayout(criteriaHeader, BoxLayout.Y_AXIS));
-            criteriaHeader.setMaximumSize(new Dimension(Integer.MAX_VALUE, 150));
+            int height = 10 
+                    + criteriaSortRow.getPreferredSize().height + 10 
+                    + criteriaSettingsRow.getPreferredSize().height + 10
+                    + selectAllRow.getPreferredSize().height + 10;
+            criteriaHeader.setMaximumSize(new Dimension(Integer.MAX_VALUE, height));
             criteriaHeader.setAlignmentX(Component.LEFT_ALIGNMENT);
             criteriaHeader.setBackground(criteriaPanelColor);
 
@@ -124,12 +145,21 @@ public final class CritInit {
             criteriaHeader.add(Box.createVerticalStrut(10));
             criteriaHeader.add(selectAllRow);
             criteriaHeader.add(Box.createVerticalStrut(10));
-            criteriaHeader.add(addCriterionRow);
-            criteriaHeader.add(Box.createVerticalStrut(10));
+    
+        // row for the criteria
+            JPanel criteriaRow = new JPanel();
+            criteriaRow.setLayout(new BoxLayout(criteriaRow, BoxLayout.Y_AXIS));
+            criteriaRow.setBackground(criteriaPanelColor);
+            criteriaRow.setOpaque(true);
+            criteriaRow.setAlignmentX(Component.LEFT_ALIGNMENT);
 
-            // add header to the panel
+        // layout
             criteriaPanel.add(criteriaHeader);
+            criteriaPanel.add(criteriaRow);
+            criteriaPanel.add(addCriterionRow);
+            criteriaPanel.add(Box.createVerticalStrut(50));
 
+        // listeners
             preciseToggleCriteria.addActionListener(e -> {
                 boolean precise = preciseToggleCriteria.isSelected();
                 Main.updatePrecisionCriteria(precise);
@@ -165,15 +195,16 @@ public final class CritInit {
                 disabled = !disabled;
                 disableAllButton.setText(disabled ? "Enable all" : "Disable all");
             });
+        // end
 
-            JScrollPane criteriaScroll = new JScrollPane(criteriaPanel);
-            criteriaScroll.getVerticalScrollBar().setUnitIncrement(16);
-            criteriaScroll.getHorizontalScrollBar().setUnitIncrement(16);
+        JScrollPane criteriaScroll = new JScrollPane(criteriaPanel);
+        criteriaScroll.getVerticalScrollBar().setUnitIncrement(16);
+        criteriaScroll.getHorizontalScrollBar().setUnitIncrement(16);
 
-            Main.criteriaPanel = criteriaPanel;
-            Main.preciseToggleCriteria = preciseToggleCriteria;
-            Main.hideDisabledCriteria = hideDisabledCriteria;
-            Main.criteriaScroll = criteriaScroll;
-        //end
+        Main.criteriaPanel = criteriaPanel;
+        Main.preciseToggleCriteria = preciseToggleCriteria;
+        Main.hideDisabledCriteria = hideDisabledCriteria;
+        Main.criteriaScroll = criteriaScroll;
+        Main.criteriaRow = criteriaRow;
     }
 }
