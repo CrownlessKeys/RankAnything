@@ -186,6 +186,7 @@ public final class MenuBar extends JMenuBar {
         helpMenu.setMnemonic('H');
         autosavesMenu.setMnemonic('A');
         recentProjectsMenu.setMnemonic('R');
+        contactMenu.setMnemonic('C');
 
         // LISTENERS
         // File
