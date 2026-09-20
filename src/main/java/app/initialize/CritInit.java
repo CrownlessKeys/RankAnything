@@ -17,9 +17,12 @@ import app.Main;
 import app.Settings;
 import metadata.Metadata;
 import tasks.Create;
+import tasks.SelectAll;
 import tasks.Sort;
 
 public final class CritInit {
+    private static boolean disabled = false; // used for whether button is "disable all" or "enable all"
+
     public static void build() {
         
         Color criteriaPanelColor = new Color(180, 200, 210);
@@ -93,10 +96,23 @@ public final class CritInit {
             criteriaSortRow.add(criteriaSortButton);
             criteriaSortRow.add(Box.createHorizontalGlue());
 
+        // Row for the Select All buttons
+            JButton disableAllButton = new JButton("Disable all");
+
+            JPanel selectAllRow = new JPanel();
+            selectAllRow.setBackground(criteriaPanelColor);
+            selectAllRow.setLayout(new BoxLayout(selectAllRow, BoxLayout.X_AXIS));
+            selectAllRow.setMaximumSize(new Dimension(Integer.MAX_VALUE, disableAllButton.getPreferredSize().height));
+
+            // layout
+            selectAllRow.add(Box.createHorizontalGlue());
+            selectAllRow.add(disableAllButton);
+            selectAllRow.add(Box.createHorizontalGlue());
+
         // Criteria Header
             JPanel criteriaHeader = new JPanel();
             criteriaHeader.setLayout(new BoxLayout(criteriaHeader, BoxLayout.Y_AXIS));
-            criteriaHeader.setMaximumSize(new Dimension(Integer.MAX_VALUE, 120));
+            criteriaHeader.setMaximumSize(new Dimension(Integer.MAX_VALUE, 150));
             criteriaHeader.setAlignmentX(Component.LEFT_ALIGNMENT);
             criteriaHeader.setBackground(criteriaPanelColor);
 
@@ -105,6 +121,8 @@ public final class CritInit {
             criteriaHeader.add(criteriaSortRow);
             criteriaHeader.add(Box.createVerticalStrut(10));
             criteriaHeader.add(criteriaSettingsRow);
+            criteriaHeader.add(Box.createVerticalStrut(10));
+            criteriaHeader.add(selectAllRow);
             criteriaHeader.add(Box.createVerticalStrut(10));
             criteriaHeader.add(addCriterionRow);
             criteriaHeader.add(Box.createVerticalStrut(10));
@@ -140,8 +158,12 @@ public final class CritInit {
                 Main.updateHideDisabledCriteria(hide);
             });
 
-            addCriterionButton.addActionListener(e -> {
-                Create.createCriterion(null, Main.frame);
+            addCriterionButton.addActionListener(e -> Create.createCriterion(null, Main.frame));
+
+            disableAllButton.addActionListener(e -> {
+                SelectAll.enableAllCriteria(disabled);
+                disabled = !disabled;
+                disableAllButton.setText(disabled ? "Enable all" : "Disable all");
             });
 
             JScrollPane criteriaScroll = new JScrollPane(criteriaPanel);
