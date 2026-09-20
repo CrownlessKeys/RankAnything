@@ -20,7 +20,7 @@ public final class CriteriaPanel extends JPanel {
     public final JTextField valueField;
     public final JSlider weightSlider;
     JTextField nameField;
-    public JCheckBox enabledCheck;
+    JCheckBox enabledCheck;
     Point dragStart;
     JPanel extraInfoPanel;
     JLabel extraInfoToggleLabel;
@@ -47,7 +47,7 @@ public final class CriteriaPanel extends JPanel {
 
     public CriteriaPanel() {
         weightSlider = new JSlider(0, Main.isCriteriaPrecise() ? 100 : 20, Main.isCriteriaPrecise() ? 50 : 10);
-        valueField = new JTextField("5", 4);
+        valueField = new JTextField("5.0", 4);
     }
 
     public void initialize() {
@@ -82,7 +82,7 @@ public final class CriteriaPanel extends JPanel {
 
     public final double getWeight() {
         try {
-            return new java.math.BigDecimal(valueField.getText().trim()).doubleValue();
+            return new BigDecimal(valueField.getText().trim()).doubleValue();
         } catch (Exception e) {
             return weightSlider.getValue() / (Main.isCriteriaPrecise() ? 10 : 2); // fallback
         }
@@ -95,56 +95,12 @@ public final class CriteriaPanel extends JPanel {
     }
 
     public void updatePrecision(boolean precise) {
+        Tasks.updatePrecision(precise, this);
+    }
 
-        // get current value by checking valueField
-        double value;
-        try {
-            String raw = valueField.getText().trim();
-            if (raw.endsWith("%")) raw = raw.substring(0, raw.length() - 1);
-            value = Double.parseDouble(raw);
-        } catch (Exception ex) {
-            value = weightSlider.getValue() / (precise ? 10 : 2); // fallback
-        }
-
-        // Change slider range
-        if (precise) {
-            weightSlider.setMaximum(100);   // 0.1 increments
-            weightSlider.setMajorTickSpacing(10);
-
-            // Custom labels: 0–10 instead of 0–100
-            java.util.Hashtable<Integer, JLabel> labelTable = new java.util.Hashtable<>();
-            for (int i = 0; i <= 10; i++) {
-                labelTable.put(i * 10, new JLabel(String.valueOf(i)));
-            }
-            weightSlider.setLabelTable(labelTable);
-
-        } else {
-            weightSlider.setMaximum(20);    // 0.5 increments
-            weightSlider.setMajorTickSpacing(2);
-
-            // Custom labels: 0–10 instead of 0-20
-            java.util.Hashtable<Integer, JLabel> labelTable = new java.util.Hashtable<>();
-            for (int i = 0; i <= 10; i++) {
-                labelTable.put(i * 2, new JLabel(String.valueOf(i)));
-            }
-            weightSlider.setLabelTable(labelTable);
-
-        }
-
-        // Convert value to slider's new scale
-        int newSliderValue = precise
-                ? (int)Math.round(value * 10)    // 0.1 increments
-                : (int)Math.round(value * 2);    // 0.5 increments
-
-        weightSlider.setValue(newSliderValue);
-
-        weightSlider.setPaintTicks(true);
-        weightSlider.setPaintLabels(true);
-        weightSlider.revalidate();
-        weightSlider.repaint();
-
-        // Make sure valueField stays accurate
-        valueField.setText(String.valueOf(value));
+    public void setEnabledCriterion(boolean enabled) {
+        enabledCheck.setSelected(enabled);
+        updateBackground();
     }
 
     public int getCreationIndex() {
@@ -155,11 +111,11 @@ public final class CriteriaPanel extends JPanel {
         nameField.setText(name);
     }
 
-    public final BigDecimal computeAverageScore(java.util.List<ItemsPanel> itemsList) {
+    public final BigDecimal computeAverageScore(List<ItemsPanel> itemsList) {
         return Calculate.averageScore(this, itemsList);
     }
 
-    public final BigDecimal computeScoreVariance(java.util.List<ItemsPanel> itemsList) {
+    public final BigDecimal computeScoreVariance(List<ItemsPanel> itemsList) {
         return Calculate.scoreVariance(this, itemsList);
     }
 
@@ -174,21 +130,6 @@ public final class CriteriaPanel extends JPanel {
     }
 
     public void updateBackground() {
-        boolean on = enabledCheck.isSelected();
-        Color bg = on ? activated : deactivated;
-
-        // Bubble + rows
-        setBackground(bg);
-        headerRow.setBackground(bg);
-        weightRow.setBackground(bg);
-
-        // Child components
-        enabledCheck.setBackground(bg);
-        weightSlider.setBackground(bg);
-
-        repaint();
-
-        if (onStructureChanged != null) onStructureChanged.run();
-        if (onEnabledChanged != null) onEnabledChanged.run();
+        Tasks.updateBackground(this);
     }
 }

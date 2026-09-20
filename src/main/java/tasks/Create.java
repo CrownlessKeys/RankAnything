@@ -31,7 +31,7 @@ public final class Create {
         if (data != null) {
             bubble.creationIndex = data.getInt("creationIndex");
             bubble.rename(data.getString("name"));
-            bubble.enabledCheck.setSelected(data.getBoolean("enabled"));
+            bubble.setEnabledCriterion(data.getBoolean("enabled"));
             bubble.weightSlider.setValue((int)Math.round(data.getDouble("weight") * (Main.isCriteriaPrecise() ? 10 : 2)));
             bubble.valueField.setText(String.valueOf(data.getDouble("weight")));
         } else {
@@ -153,7 +153,7 @@ public final class Create {
         if (data != null) {
             bubble.creationIndex = data.getInt("creationIndex");
             bubble.rename(data.getString("name"));
-            bubble.enabledCheck.setSelected(data.getBoolean("enabled"));
+            bubble.setEnabledItem(data.getBoolean("enabled"));
             bubble.setCollapsed(data.getBoolean("collapsed"));
         } else {
             bubble.creationIndex = ++Main.itemsCreationCounter;

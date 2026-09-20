@@ -18,9 +18,13 @@ import criteria.CriteriaPanel;
 import items.ItemsPanel;
 import metadata.Metadata;
 import tasks.Create;
+import tasks.SelectAll;
 import tasks.Sort;
 
 public final class ItemInit {
+    private static boolean disabled = false; // used for whether button is "disable all" or "enable all"
+    private static boolean collapsed = false; // used for whether button is "collapse all" or "expand all"
+
     public static void build() {
         Color itemsPanelColor = new Color(175, 205, 205);
         JPanel itemsPanel = new JPanel();
@@ -98,10 +102,26 @@ public final class ItemInit {
             itemsSortRow.add(itemSortButton);
             itemsSortRow.add(Box.createHorizontalGlue());
 
+        // Row for Select All buttons
+            JButton disableAllButton = new JButton("Disable all");
+            JButton collapseAllButton = new JButton("Collapse all");
+
+            JPanel selectAllRow = new JPanel();
+            selectAllRow.setBackground(itemsPanelColor);
+            selectAllRow.setLayout(new BoxLayout(selectAllRow, BoxLayout.X_AXIS));
+            selectAllRow.setMaximumSize(new Dimension(Integer.MAX_VALUE, disableAllButton.getPreferredSize().height));
+
+            // layout
+            selectAllRow.add(Box.createHorizontalGlue());
+            selectAllRow.add(disableAllButton);
+            selectAllRow.add(Box.createHorizontalGlue());
+            selectAllRow.add(collapseAllButton);
+            selectAllRow.add(Box.createHorizontalGlue());
+
         // Items Header
             JPanel itemsHeader = new JPanel();
             itemsHeader.setLayout(new BoxLayout(itemsHeader, BoxLayout.Y_AXIS));
-            itemsHeader.setMaximumSize(new Dimension(Integer.MAX_VALUE, 120));
+            itemsHeader.setMaximumSize(new Dimension(Integer.MAX_VALUE, 150));
             itemsHeader.setBackground(itemsPanelColor);
 
             // layout
@@ -109,6 +129,8 @@ public final class ItemInit {
             itemsHeader.add(itemsSortRow);
             itemsHeader.add(Box.createVerticalStrut(10));
             itemsHeader.add(itemsSettingsRow);
+            itemsHeader.add(Box.createVerticalStrut(10));
+            itemsHeader.add(selectAllRow);
             itemsHeader.add(Box.createVerticalStrut(10));
             itemsHeader.add(addItemRow);
             itemsHeader.add(Box.createVerticalStrut(10));
@@ -148,6 +170,18 @@ public final class ItemInit {
 
         addItemButton.addActionListener(e -> {
             Create.createItem(null, Main.frame);
+        });
+
+        disableAllButton.addActionListener(e -> {
+            SelectAll.enableAllItems(disabled);
+            disabled = !disabled;
+            disableAllButton.setText(disabled ? "Enable all" : "Disable all");
+        });
+
+        collapseAllButton.addActionListener(e -> {
+            SelectAll.collapseAllItems(!collapsed);
+            collapseAllButton.setText(collapsed ? "Collapse all" : "Expand all");
+            collapsed = !collapsed;
         });
 
         // Attach callback to ALL criteria

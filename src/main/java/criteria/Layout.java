@@ -7,6 +7,7 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Hashtable;
 
 import javax.swing.BorderFactory;
 import javax.swing.Box;
@@ -27,16 +28,16 @@ final class Layout {
     private Layout() {
     }
 
-    static void build(CriteriaPanel panel) {
+    static void build(CriteriaPanel cp) {
         final boolean[] userIsTyping = { false };
 
-        panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
-        panel.setBorder(BorderFactory.createCompoundBorder(
+        cp.setLayout(new BoxLayout(cp, BoxLayout.Y_AXIS));
+        cp.setBorder(BorderFactory.createCompoundBorder(
             BorderFactory.createLineBorder(Color.GRAY, 1, true),
             BorderFactory.createEmptyBorder(10, 10, 10, 10)
         ));
-        panel.setBackground(panel.activated);
-        panel.setOpaque(true);
+        cp.setBackground(cp.activated);
+        cp.setOpaque(true);
 
         JLabel label = new JLabel("Weight:");
 
@@ -53,7 +54,7 @@ final class Layout {
         leftColumn.add(dragHandle);
         leftColumn.add(Box.createVerticalGlue());
 
-        Drag.install(panel, dragHandle);
+        Drag.install(cp, dragHandle);
 
         JPanel mainRow = new JPanel();
         mainRow.setLayout(new BoxLayout(mainRow, BoxLayout.X_AXIS));
@@ -61,33 +62,33 @@ final class Layout {
         mainRow.add(leftColumn);
         mainRow.add(Box.createHorizontalStrut(10));
 
-        panel.headerRow = new JPanel();
-        panel.headerRow.setLayout(new BoxLayout(panel.headerRow, BoxLayout.X_AXIS));
-        panel.headerRow.setBackground(panel.activated);
+        cp.headerRow = new JPanel();
+        cp.headerRow.setLayout(new BoxLayout(cp.headerRow, BoxLayout.X_AXIS));
+        cp.headerRow.setBackground(cp.activated);
 
-        panel.nameField = new JTextField("", 12);
+        cp.nameField = new JTextField("", 12);
 
-        panel.nameField.addActionListener(e -> {
-            if (panel.onCriteriaChanged != null) panel.onCriteriaChanged.run();
+        cp.nameField.addActionListener(e -> {
+            if (cp.onCriteriaChanged != null) cp.onCriteriaChanged.run();
         });
 
-        panel.nameField.getDocument().addDocumentListener(new DocumentListener() {
+        cp.nameField.getDocument().addDocumentListener(new DocumentListener() {
             @Override
             public void insertUpdate(DocumentEvent e) {
-                if (panel.onCriteriaChanged != null) panel.onCriteriaChanged.run();
-                panel.refreshExtraInfo();
+                if (cp.onCriteriaChanged != null) cp.onCriteriaChanged.run();
+                cp.refreshExtraInfo();
             }
 
             @Override
             public void removeUpdate(DocumentEvent e) {
-                if (panel.onCriteriaChanged != null) panel.onCriteriaChanged.run();
-                panel.refreshExtraInfo();
+                if (cp.onCriteriaChanged != null) cp.onCriteriaChanged.run();
+                cp.refreshExtraInfo();
             }
 
             @Override
             public void changedUpdate(DocumentEvent e) {
-                if (panel.onCriteriaChanged != null) panel.onCriteriaChanged.run();
-                panel.refreshExtraInfo();
+                if (cp.onCriteriaChanged != null) cp.onCriteriaChanged.run();
+                cp.refreshExtraInfo();
             }
         });
 
@@ -100,23 +101,23 @@ final class Layout {
         deleteButton.setContentAreaFilled(false);
         deleteButton.setFocusPainted(false);
 
-        panel.enabledCheck = new JCheckBox();
-        panel.enabledCheck.setSelected(true);
-        panel.enabledCheck.setBackground(panel.activated);
+        cp.enabledCheck = new JCheckBox();
+        cp.enabledCheck.setSelected(true);
+        cp.enabledCheck.setBackground(cp.activated);
 
-        panel.headerRow.add(panel.enabledCheck);
-        panel.headerRow.add(Box.createHorizontalStrut(8));
-        panel.headerRow.add(panel.nameField);
-        panel.headerRow.add(Box.createHorizontalGlue());
-        panel.headerRow.add(deleteButton);
+        cp.headerRow.add(cp.enabledCheck);
+        cp.headerRow.add(Box.createHorizontalStrut(8));
+        cp.headerRow.add(cp.nameField);
+        cp.headerRow.add(Box.createHorizontalGlue());
+        cp.headerRow.add(deleteButton);
 
-        panel.headerRow.setMaximumSize(new Dimension(Integer.MAX_VALUE, panel.headerRow.getPreferredSize().height));
-        panel.headerRow.setAlignmentX(Component.LEFT_ALIGNMENT);
-        panel.nameField.setMaximumSize(new Dimension(Integer.MAX_VALUE, panel.nameField.getPreferredSize().height));
-        panel.nameField.setAlignmentX(Component.LEFT_ALIGNMENT);
+        cp.headerRow.setMaximumSize(new Dimension(Integer.MAX_VALUE, cp.headerRow.getPreferredSize().height));
+        cp.headerRow.setAlignmentX(Component.LEFT_ALIGNMENT);
+        cp.nameField.setMaximumSize(new Dimension(Integer.MAX_VALUE, cp.nameField.getPreferredSize().height));
+        cp.nameField.setAlignmentX(Component.LEFT_ALIGNMENT);
 
         deleteButton.addActionListener(e -> {
-            JPanel wrapper = (JPanel) panel.getParent();
+            JPanel wrapper = (JPanel) cp.getParent();
             JPanel column = (JPanel) wrapper.getParent();
 
             final int frames = 8;
@@ -140,8 +141,8 @@ final class Layout {
                         wrapper.removeAll();
                         column.remove(wrapper);
 
-                        if (panel.onDelete != null) panel.onDelete.run();
-                        if (panel.onStructureChanged != null) panel.onStructureChanged.run();
+                        if (cp.onDelete != null) cp.onDelete.run();
+                        if (cp.onStructureChanged != null) cp.onStructureChanged.run();
 
                         column.revalidate();
                         column.repaint();
@@ -152,81 +153,81 @@ final class Layout {
             timerRef[0].start();
         });
 
-        panel.weightRow = new JPanel();
-        panel.weightRow.setLayout(new BoxLayout(panel.weightRow, BoxLayout.X_AXIS));
-        panel.weightRow.setMaximumSize(new Dimension(Integer.MAX_VALUE, panel.weightRow.getPreferredSize().height));
-        panel.weightRow.setAlignmentX(Component.LEFT_ALIGNMENT);
-        panel.weightRow.setBackground(panel.activated);
+        cp.weightRow = new JPanel();
+        cp.weightRow.setLayout(new BoxLayout(cp.weightRow, BoxLayout.X_AXIS));
+        cp.weightRow.setMaximumSize(new Dimension(Integer.MAX_VALUE, cp.weightRow.getPreferredSize().height));
+        cp.weightRow.setAlignmentX(Component.LEFT_ALIGNMENT);
+        cp.weightRow.setBackground(cp.activated);
 
-        panel.weightSlider.setMajorTickSpacing(Main.isCriteriaPrecise() ? 10 : 2);
-        panel.weightSlider.setPaintTicks(true);
-        panel.weightSlider.setPaintLabels(true);
-        panel.weightSlider.setMinimumSize(new Dimension(160, panel.weightSlider.getPreferredSize().height));
-        panel.weightSlider.setPreferredSize(new Dimension(160, panel.weightSlider.getPreferredSize().height));
-        panel.weightSlider.setMaximumSize(new Dimension(Integer.MAX_VALUE, panel.weightSlider.getPreferredSize().height));
-        panel.weightSlider.setAlignmentX(Component.LEFT_ALIGNMENT);
-        panel.weightSlider.setBackground(panel.activated);
+        cp.weightSlider.setMajorTickSpacing(Main.isCriteriaPrecise() ? 10 : 2);
+        cp.weightSlider.setPaintTicks(true);
+        cp.weightSlider.setPaintLabels(true);
+        cp.weightSlider.setMinimumSize(new Dimension(160, cp.weightSlider.getPreferredSize().height));
+        cp.weightSlider.setPreferredSize(new Dimension(160, cp.weightSlider.getPreferredSize().height));
+        cp.weightSlider.setMaximumSize(new Dimension(Integer.MAX_VALUE, cp.weightSlider.getPreferredSize().height));
+        cp.weightSlider.setAlignmentX(Component.LEFT_ALIGNMENT);
+        cp.weightSlider.setBackground(cp.activated);
 
-        java.util.Hashtable<Integer, JLabel> labelTable = new java.util.Hashtable<>();
+        Hashtable<Integer, JLabel> labelTable = new Hashtable<>();
         for (int i = 0; i <= 10; i++) {
             labelTable.put(i * (Main.isCriteriaPrecise() ? 10 : 2), new JLabel(String.valueOf(i)));
         }
-        panel.weightSlider.setLabelTable(labelTable);
+        cp.weightSlider.setLabelTable(labelTable);
 
         Dimension taller = new Dimension(75, 28);
-        panel.valueField.setPreferredSize(taller);
-        panel.valueField.setMinimumSize(taller);
-        panel.valueField.setMaximumSize(taller);
+        cp.valueField.setPreferredSize(taller);
+        cp.valueField.setMinimumSize(taller);
+        cp.valueField.setMaximumSize(taller);
 
-        panel.weightSlider.addChangeListener(e -> {
+        cp.weightSlider.addChangeListener(e -> {
             if (!userIsTyping[0]) {
-                double val = panel.weightSlider.getValue() / (Main.isCriteriaPrecise() ? 10.0 : 2.0);
-                panel.valueField.setText(String.valueOf(val));
+                double val = cp.weightSlider.getValue() / (Main.isCriteriaPrecise() ? 10.0 : 2.0);
+                cp.valueField.setText(String.valueOf(val));
             }
 
-            if (panel.onCriteriaChanged != null) panel.onCriteriaChanged.run();
-            panel.refreshExtraInfo();
+            if (cp.onCriteriaChanged != null) cp.onCriteriaChanged.run();
+            cp.refreshExtraInfo();
         });
 
-        panel.valueField.addActionListener(e -> {
+        cp.valueField.addActionListener(e -> {
             try {
                 userIsTyping[0] = true;
 
-                double typed = Double.parseDouble(panel.valueField.getText());
+                double typed = Double.parseDouble(cp.valueField.getText());
                 if (typed >= 0.0 && typed <= 10.0) {
                     int sliderVal = (int)Math.round(typed * (Main.isCriteriaPrecise() ? 10 : 2));
-                    panel.weightSlider.setValue(sliderVal);
+                    cp.weightSlider.setValue(sliderVal);
                 }
 
-                if (panel.onCriteriaChanged != null) panel.onCriteriaChanged.run();
+                if (cp.onCriteriaChanged != null) cp.onCriteriaChanged.run();
 
             } catch (NumberFormatException ignored) {
             } finally {
                 userIsTyping[0] = false;
             }
 
-            panel.refreshExtraInfo();
+            cp.refreshExtraInfo();
         });
 
-        panel.weightRow.add(panel.weightSlider);
-        panel.weightRow.add(Box.createHorizontalStrut(10));
-        panel.weightRow.add(panel.valueField);
+        cp.weightRow.add(cp.weightSlider);
+        cp.weightRow.add(Box.createHorizontalStrut(10));
+        cp.weightRow.add(cp.valueField);
 
-        panel.weightRow.setMaximumSize(new Dimension(Integer.MAX_VALUE, panel.weightRow.getPreferredSize().height));
-        panel.weightRow.setAlignmentX(Component.LEFT_ALIGNMENT);
+        cp.weightRow.setMaximumSize(new Dimension(Integer.MAX_VALUE, cp.weightRow.getPreferredSize().height));
+        cp.weightRow.setAlignmentX(Component.LEFT_ALIGNMENT);
 
-        panel.setAlignmentX(Component.LEFT_ALIGNMENT);
+        cp.setAlignmentX(Component.LEFT_ALIGNMENT);
 
-        panel.extraInfoToggleLabel = new JLabel("More...");
-        panel.extraInfoToggleLabel.setForeground(Color.GRAY);
-        panel.extraInfoToggleLabel.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-        panel.extraInfoToggleLabel.setAlignmentX(Component.RIGHT_ALIGNMENT);
+        cp.extraInfoToggleLabel = new JLabel("More...");
+        cp.extraInfoToggleLabel.setForeground(Color.GRAY);
+        cp.extraInfoToggleLabel.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+        cp.extraInfoToggleLabel.setAlignmentX(Component.RIGHT_ALIGNMENT);
 
-        panel.extraInfoPanel = new JPanel();
-        panel.extraInfoPanel.setLayout(new BoxLayout(panel.extraInfoPanel, BoxLayout.Y_AXIS));
-        panel.extraInfoPanel.setOpaque(false);
-        panel.extraInfoPanel.setVisible(false);
-        panel.extraInfoPanel.setAlignmentX(Component.LEFT_ALIGNMENT);
+        cp.extraInfoPanel = new JPanel();
+        cp.extraInfoPanel.setLayout(new BoxLayout(cp.extraInfoPanel, BoxLayout.Y_AXIS));
+        cp.extraInfoPanel.setOpaque(false);
+        cp.extraInfoPanel.setVisible(false);
+        cp.extraInfoPanel.setAlignmentX(Component.LEFT_ALIGNMENT);
 
         JPanel extraInfoToggleRow = new JPanel();
         extraInfoToggleRow.setLayout(new BoxLayout(extraInfoToggleRow, BoxLayout.X_AXIS));
@@ -234,43 +235,43 @@ final class Layout {
         extraInfoToggleRow.setAlignmentX(Component.LEFT_ALIGNMENT);
 
         extraInfoToggleRow.add(Box.createHorizontalGlue());
-        extraInfoToggleRow.add(panel.extraInfoToggleLabel);
+        extraInfoToggleRow.add(cp.extraInfoToggleLabel);
 
-        panel.infoName = new JLabel("Name: " + panel.getCriterionName());
-        panel.infoName.setForeground(Color.DARK_GRAY);
-        panel.extraInfoPanel.add(panel.infoName);
+        cp.infoName = new JLabel("Name: " + cp.getCriterionName());
+        cp.infoName.setForeground(Color.DARK_GRAY);
+        cp.extraInfoPanel.add(cp.infoName);
 
-        panel.infoWeight = new JLabel("Weight: " + panel.getWeight());
-        panel.infoWeight.setForeground(Color.DARK_GRAY);
-        panel.extraInfoPanel.add(panel.infoWeight);
+        cp.infoWeight = new JLabel("Weight: " + cp.getWeight());
+        cp.infoWeight.setForeground(Color.DARK_GRAY);
+        cp.extraInfoPanel.add(cp.infoWeight);
 
-        panel.infoScore = new JLabel("Average Score: " + panel.computeAverageScore(Main.itemsList));
-        panel.infoScore.setForeground(Color.DARK_GRAY);
-        panel.extraInfoPanel.add(panel.infoScore);
+        cp.infoScore = new JLabel("Average Score: " + cp.computeAverageScore(Main.itemsList));
+        cp.infoScore.setForeground(Color.DARK_GRAY);
+        cp.extraInfoPanel.add(cp.infoScore);
 
-        panel.infoVariance = new JLabel("Score Variance: " + panel.computeScoreVariance(Main.itemsList));
-        panel.infoVariance.setForeground(Color.DARK_GRAY);
-        panel.extraInfoPanel.add(panel.infoVariance);
+        cp.infoVariance = new JLabel("Score Variance: " + cp.computeScoreVariance(Main.itemsList));
+        cp.infoVariance.setForeground(Color.DARK_GRAY);
+        cp.extraInfoPanel.add(cp.infoVariance);
 
-        panel.infoCreation = new JLabel("Creation Index: " + panel.creationIndex);
-        panel.infoCreation.setForeground(Color.DARK_GRAY);
-        panel.extraInfoPanel.add(panel.infoCreation);
+        cp.infoCreation = new JLabel("Creation Index: " + cp.creationIndex);
+        cp.infoCreation.setForeground(Color.DARK_GRAY);
+        cp.extraInfoPanel.add(cp.infoCreation);
 
-        ExtraInfo.initialize(panel);
+        ExtraInfo.initialize(cp);
 
         JPanel contentColumn = new JPanel();
         contentColumn.setLayout(new BoxLayout(contentColumn, BoxLayout.Y_AXIS));
         contentColumn.setOpaque(false);
 
-        contentColumn.add(panel.headerRow);
+        contentColumn.add(cp.headerRow);
         contentColumn.add(label);
-        contentColumn.add(panel.weightRow);
-        contentColumn.add(panel.extraInfoPanel);
+        contentColumn.add(cp.weightRow);
+        contentColumn.add(cp.extraInfoPanel);
         contentColumn.add(extraInfoToggleRow);
 
         mainRow.add(contentColumn);
-        panel.add(mainRow);
+        cp.add(mainRow);
 
-        panel.enabledCheck.addActionListener(e -> panel.updateBackground());
+        cp.enabledCheck.addActionListener(e -> cp.updateBackground());
     }
 }

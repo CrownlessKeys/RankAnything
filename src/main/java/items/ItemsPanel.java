@@ -24,7 +24,7 @@ import ranking.RankingPanel;
 public final class ItemsPanel extends JPanel {
 
     public int creationIndex;
-    public JCheckBox enabledCheck;
+    JCheckBox enabledCheck;
     boolean collapsed = false;
     boolean extraInfoVisible = false;
     boolean typingScore = false;
@@ -116,6 +116,11 @@ public final class ItemsPanel extends JPanel {
 
     public boolean isEnabledItem() {
         return enabledCheck.isSelected();
+    }
+
+    public void setEnabledItem(boolean enabled) {
+        enabledCheck.setSelected(enabled);
+        updateBackground();
     }
 
     Runnable onScoresChanged;
