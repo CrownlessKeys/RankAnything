@@ -33,6 +33,13 @@ public final class Settings {
     public static boolean hideDisabledCriteria;
     public static boolean hideDisabledItems;
     public static RankingMode rankingMode;
+
+    // universal default export settings
+    public static boolean ranking;
+    public static boolean itemInfo;
+    public static boolean critInfo;
+    public static boolean metadata;
+    public static boolean notes;
     
     // "Don't show again" settings
     public static boolean showRenameWarning;
@@ -69,7 +76,13 @@ public final class Settings {
             } catch (IllegalArgumentException e) {
                 rankingMode = RankingMode.WEIGHTED_ENABLED; // default if invalid
             }
-            
+
+            ranking = root.optBoolean("ranking", true);
+            itemInfo = root.optBoolean("itemInfo", true);
+            critInfo = root.optBoolean("critInfo", true);
+            metadata = root.optBoolean("metadata", true);
+            notes = root.optBoolean("notes", true);
+
             showRenameWarning = root.optBoolean("showRenameWarning", true);
             showAutosaveDeleteWarning = root.optBoolean("showAutosaveDeleteWarning", true);
 
@@ -97,7 +110,13 @@ public final class Settings {
             root.put("hideDisabledCriteria", hideDisabledCriteria);
             root.put("hideDisabledItems", hideDisabledItems);
             root.put("rankingMode", rankingMode.name());
-            
+
+            root.put("ranking", ranking);
+            root.put("itemInfo", itemInfo);
+            root.put("critInfo", critInfo);
+            root.put("metadata", metadata);
+            root.put("notes", notes);
+
             root.put("showRenameWarning", showRenameWarning);
             root.put("showAutosaveDeleteWarning", showAutosaveDeleteWarning);
 
