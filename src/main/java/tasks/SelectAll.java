@@ -4,7 +4,7 @@ import app.Main;
 import criteria.CriteriaPanel;
 import items.ItemsPanel;
 
-public class SelectAll {
+public final class SelectAll {
     public static void enableAllCriteria(boolean enabled) {
         for (CriteriaPanel cp : Main.criteriaList) {
             cp.setEnabledCriterion(enabled);

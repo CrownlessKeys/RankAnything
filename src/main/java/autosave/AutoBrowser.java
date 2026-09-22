@@ -164,7 +164,7 @@ public final class AutoBrowser {
         );
     }
 
-    private static class AutosaveCellRenderer extends DefaultListCellRenderer {
+    private static final class AutosaveCellRenderer extends DefaultListCellRenderer {
         private final AutosaveRendererMode mode;
 
         public AutosaveCellRenderer(AutosaveRendererMode mode) {
