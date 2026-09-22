@@ -19,6 +19,7 @@ final class SaveLoadMeta {
         Main.projectFileFormatVersion = root.optInt("fileFormatVersion", 0);
         Main.isOriginal = root.optBoolean("isOriginal", false);
 
+        // export preferences
         Main.ranking = root.optBoolean("ranking", Settings.ranking);
         Main.itemInfo = root.optBoolean("itemInfo", Settings.itemInfo);
         Main.critInfo = root.optBoolean("critInfo", Settings.critInfo);
@@ -42,6 +43,7 @@ final class SaveLoadMeta {
         root.put("fileFormatVersion", Main.FILE_FORMAT_VERSION);
         root.put("isOriginal", Main.isOriginal);
 
+        // export preferences TODO: DO NOT SAVE DEFAULT VALUES!! Try to only save if the preferences have been altered
         root.put("ranking", Main.ranking);
         root.put("itemInfo", Main.itemInfo);
         root.put("critInfo", Main.critInfo);

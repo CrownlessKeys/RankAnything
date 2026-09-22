@@ -17,6 +17,7 @@ import autosave.AutoIndicator;
 import autosave.AutoTimer;
 import criteria.CriteriaPanel;
 import items.ItemsPanel;
+import javafx.application.Platform;
 import metadata.Metadata;
 import metadata.ProjectID;
 import ranking.RankingPanel;
@@ -93,6 +94,7 @@ public final class Main {
     }
 
     public static void main(String[] args) {
+        Platform.startup(() -> {}); // Start JavaFX
         Settings.load();
         RecentProjects.load();
         SwingUtilities.invokeLater(() -> {
