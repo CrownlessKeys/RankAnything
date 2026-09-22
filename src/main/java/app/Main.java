@@ -65,7 +65,12 @@ public final class Main {
     public static boolean isOriginal = false;
     public static String projectId = ProjectID.generate();
 
-    // export preferences for current project
+    // export preferences for current project (default to universal defaults)
+    public static boolean ranking = Settings.ranking;
+    public static boolean itemInfo = Settings.itemInfo;
+    public static boolean critInfo = Settings.critInfo;
+    public static boolean metadata = Settings.metadata;
+    public static boolean notes = Settings.notes;
 
     // directories
     public static final File APP_DATA_DIR = getAppDataDir();

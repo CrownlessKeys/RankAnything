@@ -6,6 +6,7 @@ import javax.swing.JOptionPane;
 import org.json.JSONObject;
 
 import app.Main;
+import app.Settings;
 
 final class SaveLoadMeta {
     static void loadFromJSON(JSONObject root) {
@@ -17,6 +18,12 @@ final class SaveLoadMeta {
         Main.projectAppVersion = root.optString("appVersion", "Unknown");
         Main.projectFileFormatVersion = root.optInt("fileFormatVersion", 0);
         Main.isOriginal = root.optBoolean("isOriginal", false);
+
+        Main.ranking = root.optBoolean("ranking", Settings.ranking);
+        Main.itemInfo = root.optBoolean("itemInfo", Settings.itemInfo);
+        Main.critInfo = root.optBoolean("critInfo", Settings.critInfo);
+        Main.metadata = root.optBoolean("metadata", Settings.metadata);
+        Main.notes = root.optBoolean("notes", Settings.notes);
     }
 
     static void saveToJSON(JSONObject root, boolean isAuto) {
@@ -34,6 +41,12 @@ final class SaveLoadMeta {
         root.put("appVersion", Main.APP_VERSION);
         root.put("fileFormatVersion", Main.FILE_FORMAT_VERSION);
         root.put("isOriginal", Main.isOriginal);
+
+        root.put("ranking", Main.ranking);
+        root.put("itemInfo", Main.itemInfo);
+        root.put("critInfo", Main.critInfo);
+        root.put("metadata", Main.metadata);
+        root.put("notes", Main.notes);
     }
 
     static void versionMismatchWarningsLoad(JFrame frame) {
