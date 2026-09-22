@@ -65,6 +65,8 @@ public final class Main {
     public static boolean isOriginal = false;
     public static String projectId = ProjectID.generate();
 
+    // export preferences for current project
+
     // directories
     public static final File APP_DATA_DIR = getAppDataDir();
     public static final File SETTINGS_FILE = new File(APP_DATA_DIR, "Settings.json");

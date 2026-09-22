@@ -36,6 +36,8 @@ public final class MenuBar extends JMenuBar {
             JMenuItem openItem = new JMenuItem("Open...");
             JMenuItem saveItem = new JMenuItem("Save");
             JMenuItem saveAsItem = new JMenuItem("Save as...");
+            JMenuItem exportItem = new JMenuItem("Export...");
+            JMenuItem printItem = new JMenuItem("Print...");
             recentProjectsMenu = new JMenu("Recent projects");
             JMenuItem unsavedProjectsItem = new JMenuItem("Unsaved projects");
             JMenuItem openFileLocationItem = new JMenuItem("Open file location");
@@ -53,6 +55,7 @@ public final class MenuBar extends JMenuBar {
             openItem.setToolTipText("Open a previously saved project");
             saveItem.setToolTipText("Save the current project");
             saveAsItem.setToolTipText("Save the current project to a new file");
+            exportItem.setToolTipText("Export the results of your project to a viewable file");
             recentProjectsMenu.setToolTipText("Open a recently opened project");
             unsavedProjectsItem.setToolTipText("Recover a project that was never manually saved to a file");
             openFileLocationItem.setToolTipText("Open the location of the current project file");
@@ -66,6 +69,8 @@ public final class MenuBar extends JMenuBar {
             fileMenu.add(openItem);
             fileMenu.add(saveItem);
             fileMenu.add(saveAsItem);
+            fileMenu.add(exportItem);
+            fileMenu.add(printItem);
             fileMenu.add(autosavesMenu);
             fileMenu.add(openFileLocationItem);
             fileMenu.add(recentProjectsMenu);
@@ -76,6 +81,7 @@ public final class MenuBar extends JMenuBar {
             newProjectItem.setAccelerator(KeyStroke.getKeyStroke("control N"));
             openItem.setAccelerator(KeyStroke.getKeyStroke("control O"));
             saveItem.setAccelerator(KeyStroke.getKeyStroke("control S"));
+            printItem.setAccelerator(KeyStroke.getKeyStroke("control P"));
             saveAsItem.setAccelerator(KeyStroke.getKeyStroke("control shift S"));
             projectAutosavesItem.setAccelerator(KeyStroke.getKeyStroke("control A"));
             exitItem.setAccelerator(KeyStroke.getKeyStroke("alt F4"));

@@ -164,7 +164,7 @@ public final class RankingPanel extends JPanel {
     }
 
     // Internal score class
-    public static class ItemScore {
+    public static final class ItemScore {
         final ItemsPanel item;
         public final BigDecimal score;
 
