@@ -14,12 +14,14 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 
+import app.Main;
+import app.Settings;
 import javafx.application.Platform;
 import javafx.stage.DirectoryChooser;
 
 final class Dialog {
 
-    static ExportPreferences show(JFrame frame, ExportPreferences defaults) {
+    static void show(JFrame frame, ExportPreferences defaults) {
 
         ExportPreferences opts = new ExportPreferences();
 
@@ -140,7 +142,6 @@ final class Dialog {
             opts.critInfo = criteriaBox.isSelected();
             opts.metadata = metadataBox.isSelected();
             opts.notes = notesBox.isSelected();
-            opts.confirmed = true;
 
             opts.fileName = fileNameField.getText().trim();
             opts.folder = locationField.getText().trim();
@@ -149,10 +150,18 @@ final class Dialog {
             opts.rankFileName = snapshotNameField.getText().trim();
             opts.rankFolder = snapshotFolderNameField.getText().trim();
 
-        } else {
-            opts.confirmed = false;
-        }
+            // Store last-used export preferences
+            Main.projectExport = new ExportPreferences(opts); // for the project
+            Settings.defaultExport = new ExportPreferences(opts); // and globally
 
-        return opts;
+            // keep project-specifics to defaults in Settings.json
+            Settings.defaultExport.fileName = "";
+            Settings.defaultExport.rankFileName = "";
+            Settings.defaultExport.rankFolder = "";
+
+            Settings.save();
+
+            Write.export(frame, opts);
+        }
     }
 }
