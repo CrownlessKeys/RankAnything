@@ -80,18 +80,17 @@ public final class Settings {
             } else {
                 // sensible defaults
                 defaultExport = new ExportPreferences(
-                    true,  // ranking
-                    true,  // itemInfo
-                    true,  // critInfo
-                    true,  // metadata
-                    true,  // notes
+                    true,
+                    true,
+                    true,
+                    true,
+                    true,
                     "PDF",
                     "",
                     "",
-                    false, // rankProject
+                    false,
                     "",
-                    "",
-                    true   // confirmed
+                    ""
                 );
             }
 

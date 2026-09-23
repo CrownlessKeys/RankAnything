@@ -4,21 +4,20 @@ import org.json.JSONObject;
 
 public final class ExportPreferences {
 
+    // whether to include these fields in the export
     public boolean ranking;
     public boolean itemInfo;
     public boolean critInfo;
     public boolean metadata;
     public boolean notes;
 
-    public String fileType;
-    public String fileName;
-    public String folder;
+    public String fileType; // file type for export
+    public String fileName; // name of export file
+    public String folder; // file location to store the export
 
-    public boolean rankProject;
-    public String rankFileName;
-    public String rankFolder;
-
-    public boolean confirmed;
+    public boolean rankProject; // whether to include .rank project snapshot
+    public String rankFileName; // what to name .rank project snapshot
+    public String rankFolder; // what to name the folder where the snapshot and export are stored
 
     public ExportPreferences() {
     }
@@ -34,8 +33,7 @@ public final class ExportPreferences {
         String folder,
         boolean rankProject,
         String rankFileName,
-        String rankFolder,
-        boolean confirmed
+        String rankFolder
     ) {
         this.ranking = ranking;
         this.itemInfo = itemInfo;
@@ -50,8 +48,6 @@ public final class ExportPreferences {
         this.rankProject = rankProject;
         this.rankFileName = rankFileName;
         this.rankFolder = rankFolder;
-
-        this.confirmed = confirmed;
     }
 
     // mitosis constructor
@@ -71,13 +67,11 @@ public final class ExportPreferences {
         this.rankProject = e.rankProject;
         this.rankFileName = e.rankFileName;
         this.rankFolder = e.rankFolder;
-
-        this.confirmed = e.confirmed;
     }
 
     public JSONObject toJSON() {
         JSONObject obj = new JSONObject();
-        
+
         obj.put("ranking", ranking);
         obj.put("itemInfo", itemInfo);
         obj.put("critInfo", critInfo);
@@ -91,8 +85,6 @@ public final class ExportPreferences {
         obj.put("rankProject", rankProject);
         obj.put("rankFileName", rankFileName);
         obj.put("rankFolder", rankFolder);
-
-        obj.put("confirmed", confirmed);
 
         return obj;
     }
@@ -113,8 +105,6 @@ public final class ExportPreferences {
         p.rankProject = obj.optBoolean("rankProject", false);
         p.rankFileName = obj.optString("rankFileName", "");
         p.rankFolder = obj.optString("rankFolder", "");
-
-        p.confirmed = obj.optBoolean("confirmed", true);
 
         return p;
     }

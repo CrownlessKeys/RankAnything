@@ -1,0 +1,20 @@
+{
+  "appVersion": "1.0.0",
+  "notes": "",
+  "criteriaCreationCounter": 0,
+  "areDisabledCriteriaHidden": false,
+  "created": "2026-09-22T23:51:19.615593800",
+  "criteria": [],
+  "areDisabledItemsHidden": false,
+  "fileFormatVersion": 1,
+  "itemsCreationCounter": 0,
+  "isOriginal": false,
+  "fileCreated": "2026-09-22T23:51:51.835070700",
+  "modified": "2026-09-22T23:51:51.835070700",
+  "isCriteriaPrecise": true,
+  "projectName": "copy",
+  "isItemsPrecise": true,
+  "items": [],
+  "rankingMode": "WEIGHTED_ENABLED",
+  "projectId": "a6e0f6c0-3cff-4f26-8742-1bd9261c1064-COPY-431ffa5b-304b-44ce-a3f1-2506612ce8db"
+}
