@@ -14,7 +14,6 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 
-import export.Export.ExportPreferences;
 import javafx.application.Platform;
 import javafx.stage.DirectoryChooser;
 
@@ -59,6 +58,16 @@ final class Dialog {
             Platform.runLater(() -> {
                 DirectoryChooser chooser = new DirectoryChooser();
                 chooser.setTitle("Choose export folder");
+
+                // Use whatever is currently in the text field
+                String current = locationField.getText().trim();
+                if (!current.isEmpty()) {
+                    File dir = new File(current);
+                    if (dir.exists() && dir.isDirectory()) {
+                        chooser.setInitialDirectory(dir);
+                    }
+                }
+
                 File folder = chooser.showDialog(null);
                 if (folder != null) {
                     SwingUtilities.invokeLater(() ->
