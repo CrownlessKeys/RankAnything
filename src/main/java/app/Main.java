@@ -16,6 +16,7 @@ import app.initialize.RankInit;
 import autosave.AutoIndicator;
 import autosave.AutoTimer;
 import criteria.CriteriaPanel;
+import export.ExportPreferences;
 import items.ItemsPanel;
 import javafx.application.Platform;
 import metadata.Metadata;
@@ -66,12 +67,8 @@ public final class Main {
     public static boolean isOriginal = false;
     public static String projectId = ProjectID.generate();
 
-    // export preferences for current project (default to universal defaults)
-    public static boolean ranking = Settings.ranking;
-    public static boolean itemInfo = Settings.itemInfo;
-    public static boolean critInfo = Settings.critInfo;
-    public static boolean metadata = Settings.metadata;
-    public static boolean notes = Settings.notes;
+    // export preferences for current project (default to null until the current project is exported)
+    public static ExportPreferences projectExport = null;
 
     // directories
     public static final File APP_DATA_DIR = getAppDataDir();
