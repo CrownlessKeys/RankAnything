@@ -51,7 +51,7 @@ final class Dialog {
         JPanel locationPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
         locationPanel.add(new JLabel("Export location:"));
         JTextField locationField = new JTextField(20);
-        JButton chooseLocationBtn = new JButton("Choose...");
+        JButton chooseLocationBtn = new JButton("Browse...");
         locationPanel.add(locationField);
         locationPanel.add(chooseLocationBtn);
         panel.add(locationPanel);
