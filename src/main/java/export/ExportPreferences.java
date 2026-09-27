@@ -6,8 +6,8 @@ public final class ExportPreferences {
 
     // whether to include these fields in the export
     public boolean ranking;
-    public boolean itemInfo;
-    public boolean critInfo;
+    public boolean itemInfo; public boolean includeDisabledItems;
+    public boolean critInfo; public boolean includeDisabledCriteria;
     public boolean metadata;
     public boolean notes;
 
@@ -24,8 +24,8 @@ public final class ExportPreferences {
 
     public ExportPreferences(
         boolean ranking,
-        boolean itemInfo,
-        boolean critInfo,
+        boolean itemInfo, boolean includeDisabledItems,
+        boolean critInfo, boolean includeDisabledCriteria,
         boolean metadata,
         boolean notes,
         String fileType,
@@ -36,8 +36,8 @@ public final class ExportPreferences {
         String rankFolder
     ) {
         this.ranking = ranking;
-        this.itemInfo = itemInfo;
-        this.critInfo = critInfo;
+        this.itemInfo = itemInfo; this.includeDisabledItems = includeDisabledItems;
+        this.critInfo = critInfo; this.includeDisabledCriteria = includeDisabledCriteria;
         this.metadata = metadata;
         this.notes = notes;
 
@@ -55,8 +55,8 @@ public final class ExportPreferences {
         ExportPreferences e
     ) {
         this.ranking = e.ranking;
-        this.itemInfo = e.itemInfo;
-        this.critInfo = e.critInfo;
+        this.itemInfo = e.itemInfo; this.includeDisabledItems = e.includeDisabledItems;
+        this.critInfo = e.critInfo; this.includeDisabledCriteria = e.includeDisabledCriteria;
         this.metadata = e.metadata;
         this.notes = e.notes;
 
@@ -73,8 +73,8 @@ public final class ExportPreferences {
         JSONObject obj = new JSONObject();
 
         obj.put("ranking", ranking);
-        obj.put("itemInfo", itemInfo);
-        obj.put("critInfo", critInfo);
+        obj.put("itemInfo", itemInfo); obj.put("includeDisabledItems", includeDisabledItems);
+        obj.put("critInfo", critInfo); obj.put("includeDisabledCriteria", includeDisabledCriteria);
         obj.put("metadata", metadata);
         obj.put("notes", notes);
 
@@ -93,8 +93,8 @@ public final class ExportPreferences {
         ExportPreferences p = new ExportPreferences();
 
         p.ranking = obj.optBoolean("ranking", true);
-        p.itemInfo = obj.optBoolean("itemInfo", true);
-        p.critInfo = obj.optBoolean("critInfo", true);
+        p.itemInfo = obj.optBoolean("itemInfo", true); p.includeDisabledItems = obj.optBoolean("includeDisabledItems", true);
+        p.critInfo = obj.optBoolean("critInfo", true); p.includeDisabledCriteria = obj.optBoolean("includeDisabledCriteria", true);
         p.metadata = obj.optBoolean("metadata", true);
         p.notes = obj.optBoolean("notes", true);
 

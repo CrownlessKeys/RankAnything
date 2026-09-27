@@ -14,7 +14,7 @@ import saveload.SaveLoad;
 // writes files
 final class Write {
 
-    public static boolean export(JFrame frame, ExportPreferences prefs) {
+    static boolean export(JFrame frame, ExportPreferences prefs) {
 
         File exportFolder;
 
@@ -37,7 +37,7 @@ final class Write {
         boolean ok;
 
         switch (prefs.fileType.toUpperCase()) {
-            case "PDF" -> ok = exportPDF(exportFile, prefs);
+            case "PDF" -> ok = PDF.exportPDF(exportFile, prefs);
             case "HTML" -> ok = exportHTML(exportFile, prefs);
             case "TXT" -> ok = exportTXT(exportFile, prefs);
             case "PNG" -> ok = exportPNG(exportFile, prefs);
@@ -49,28 +49,10 @@ final class Write {
 
         // If export succeeded, handle snapshot if requested
         if (ok && prefs.rankProject) {
-            exportSnapshot(exportFolder, prefs, frame);
+            exportSnapshot(exportFolder, prefs, frame, false); // .rank, not .json
         }
 
         return ok;
-    }
-
-    // TODO: placeholder
-    private static boolean exportPDF(File file, ExportPreferences prefs) {
-        try {
-            FileWriter fw = new FileWriter(file);
-            fw.write("PDF Export\n");
-            fw.write("Ranking: " + prefs.ranking + "\n");
-            fw.write("Item Info: " + prefs.itemInfo + "\n");
-            fw.write("Criteria Info: " + prefs.critInfo + "\n");
-            fw.write("Metadata: " + prefs.metadata + "\n");
-            fw.write("Notes: " + prefs.notes + "\n");
-            fw.close();
-            return true;
-        } catch (IOException ex) {
-            ex.printStackTrace();
-            return false;
-        }
     }
 
     // TODO: placeholder
@@ -130,11 +112,12 @@ final class Write {
         }
     }
 
-    private static void exportSnapshot(File exportFolder, ExportPreferences prefs, JFrame frame) {
+    private static void exportSnapshot(File exportFolder, ExportPreferences prefs, JFrame frame, boolean JSON) {
 
         String name = prefs.rankFileName;
-        if (!name.toLowerCase().endsWith(".rank")) {
-            name += ".rank";
+        String fileExtension = JSON ? ".json" : ".rank";
+        if (!name.toLowerCase().endsWith(fileExtension)) {
+            name += fileExtension;
         }
         
         File snapshotFile = new File(exportFolder, name);
