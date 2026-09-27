@@ -33,7 +33,10 @@ final class Dialog {
         JPanel fileTypePanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
         fileTypePanel.add(new JLabel("File type:"));
 
-        String[] fileTypes = { "PDF", "DOCX", "CSV", "PNG", "HTML", "MD", "TXT"};
+        String[] fileTypes = {
+            "PDF", "DOCX", "CSV", "PNG", "HTML", "MD", "TXT", 
+            "RANK (project file)", "JSON (project file)"
+        };
         JComboBox<String> fileTypeBox = new JComboBox<>(fileTypes);
         fileTypeBox.setSelectedItem(defaults.fileType);
         fileTypePanel.add(fileTypeBox);
