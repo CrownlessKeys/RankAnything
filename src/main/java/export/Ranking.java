@@ -1,7 +1,6 @@
 package export;
 
 import java.math.BigDecimal;
-import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -16,19 +15,16 @@ final class Ranking {
     static final class RankingResult {
         public final int rank;
         public final String itemName;
-        public final BigDecimal roundedScore;
-        public final BigDecimal preciseScore;
+        public final BigDecimal score;
 
         public RankingResult(
             int rank, 
             String itemName,
-            BigDecimal roundedScore, 
-            BigDecimal preciseScore
+            BigDecimal score
         ) {
             this.rank = rank;
             this.itemName = itemName;
-            this.roundedScore = roundedScore;
-            this.preciseScore = preciseScore;
+            this.score = score;
         }
     }
 
@@ -75,14 +71,10 @@ final class Ranking {
 
         for (ItemScore s : scores) {
 
-            BigDecimal rounded = s.score.setScale(0, RoundingMode.HALF_UP);
-            BigDecimal precise = s.score;
-
             results.add(new RankingResult(
                 rank,
                 s.item.getItemName(),
-                rounded,
-                precise
+                s.score
             ));
 
             rank++;

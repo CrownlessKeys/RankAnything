@@ -18,6 +18,7 @@ import app.Main;
 import app.Settings;
 import javafx.application.Platform;
 import javafx.stage.DirectoryChooser;
+import tasks.Notify;
 
 final class Dialog {
 
@@ -164,7 +165,7 @@ final class Dialog {
 
             Settings.save();
 
-            Write.export(frame, opts);
+            Notify.showToast(frame, Write.export(frame, opts) ? "Project exported successfully" : "Export failed");
         }
     }
 }
