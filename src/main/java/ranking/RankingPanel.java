@@ -8,6 +8,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.swing.BorderFactory;
+import javax.swing.BoxLayout;
 import javax.swing.JCheckBox;
 import javax.swing.JPanel;
 import javax.swing.JViewport;
@@ -51,9 +53,9 @@ public final class RankingPanel extends JPanel {
         setBackground(bg);
 
         contentPanel = new JPanel();
-        contentPanel.setLayout(new javax.swing.BoxLayout(contentPanel, javax.swing.BoxLayout.Y_AXIS));
+        contentPanel.setLayout(new BoxLayout(contentPanel, BoxLayout.Y_AXIS));
         contentPanel.setOpaque(false);
-        contentPanel.setBorder(javax.swing.BorderFactory.createEmptyBorder(10, 10, 10, 10));
+        contentPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
     }
 
     public void initialize() {
@@ -165,7 +167,7 @@ public final class RankingPanel extends JPanel {
 
     // Internal score class
     public static final class ItemScore {
-        final ItemsPanel item;
+        public final ItemsPanel item;
         public final BigDecimal score;
 
         ItemScore(ItemsPanel item, BigDecimal score) {
@@ -205,4 +207,31 @@ public final class RankingPanel extends JPanel {
     public boolean isAllItems(RankingMode mode) {
         return Mode.isAllItems(mode);
     }
+
+    // "compute scores" methods for exports
+        public List<ItemScore> computeScores() {
+            return Calculate.computeScores(this);
+        }
+        public List<ItemScore> computeScoresAllCriteria() {
+            return Calculate.computeScoresAllCriteria(this);
+        }
+        public List<ItemScore> computeScoresAllItems() {
+            return Calculate.computeScoresAllItems(this);
+        }
+        public List<ItemScore> computeScoresAllCriteriaAllItems() {
+            return Calculate.computeScoresAllCriteriaAllItems(this);
+        }
+        public List<ItemScore> computeUnweightedScores() {
+            return Calculate.computeUnweightedScores(this);
+        }
+        public List<ItemScore> computeUnweightedScoresAllItems() {
+            return Calculate.computeUnweightedScoresAllItems(this);
+        }
+        public List<ItemScore> computeUnweightedScoresAllCriteria() {
+            return Calculate.computeUnweightedScoresAllCriteria(this);
+        }
+        public List<ItemScore> computeUnweightedScoresAllCriteriaAllItems() {
+            return Calculate.computeUnweightedScoresAllCriteriaAllItems(this);
+        }
+    // end
 }
