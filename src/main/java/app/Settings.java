@@ -81,8 +81,8 @@ public final class Settings {
                 // sensible defaults
                 defaultExport = new ExportPreferences(
                     true,
-                    true, true,
-                    true, true,
+                    true, false, false,
+                    true, false, false,
                     true,
                     true,
                     "PDF",
@@ -90,7 +90,8 @@ public final class Settings {
                     "",
                     false,
                     "",
-                    ""
+                    "",
+                    false, false, false, false, false, false, false, false
                 );
             }
 

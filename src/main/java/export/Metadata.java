@@ -18,7 +18,6 @@ final class Metadata {
 
         public final String appVersion;
         public final String projectAppVersion;
-        public final int fileFormatVersion;
         public final int projectFileFormatVersion;
 
         public final int criteriaCount;
@@ -36,7 +35,6 @@ final class Metadata {
             String projectModified,
             String appVersion,
             String projectAppVersion,
-            int fileFormatVersion,
             int projectFileFormatVersion,
             int criteriaCount,
             int criteriaCreated,
@@ -55,7 +53,6 @@ final class Metadata {
 
             this.appVersion = appVersion;
             this.projectAppVersion = projectAppVersion;
-            this.fileFormatVersion = fileFormatVersion;
             this.projectFileFormatVersion = projectFileFormatVersion;
 
             this.criteriaCount = criteriaCount;
@@ -80,7 +77,6 @@ final class Metadata {
 
             Main.APP_VERSION,
             Main.projectAppVersion,
-            Main.FILE_FORMAT_VERSION,
             Main.projectFileFormatVersion,
 
             Main.criteriaList.size(),

@@ -64,10 +64,16 @@ final class ProjectInfo {
         nameField.setMaximumSize(new Dimension(Integer.MAX_VALUE, nameField.getPreferredSize().height));
         nameWrapper.add(nameField);
         panel.add(nameWrapper);
+        JLabel projectIdLabel = new JLabel("Project ID: " + Main.projectId);
+        projectIdLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
+        projectIdLabel.setForeground(Color.GRAY);
+        projectIdLabel.setToolTipText(Main.projectId + " (Click to copy to clipboard)");
+        projectIdLabel.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        panel.add(projectIdLabel);
         panel.add(Box.createVerticalStrut(10));
 
         // file information
-        JLabel fileLocationHeaderLabel = new JLabel("File location: ");
+        JLabel fileLocationHeaderLabel = new JLabel("File location:");
         fileLocationHeaderLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
         panel.add(fileLocationHeaderLabel);
         JLabel fileLocationLabel = new JLabel("    " + SaveLoad.getCurrentFilePath());
@@ -78,12 +84,6 @@ final class ProjectInfo {
         JLabel originalLabel = new JLabel("This file is the original copy of the project.");
         originalLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
         if (Main.isOriginal) panel.add(originalLabel);
-        JLabel projectIdLabel = new JLabel("Project ID: " + Main.projectId);
-        projectIdLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
-        projectIdLabel.setForeground(Color.GRAY);
-        projectIdLabel.setToolTipText(Main.projectId + " (Click to copy to clipboard)");
-        projectIdLabel.setCursor(new Cursor(Cursor.HAND_CURSOR));
-        panel.add(projectIdLabel);
         panel.add(Box.createVerticalStrut(10));
 
         // copy project ID
@@ -121,7 +121,7 @@ final class ProjectInfo {
         JLabel appVersionLabel = new JLabel("Current app version: " + Main.APP_VERSION);
         appVersionLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
         panel.add(appVersionLabel);
-        JLabel fileAppVersionLabel = new JLabel("App version this project was last saved with: " + Main.projectAppVersion);
+        JLabel fileAppVersionLabel = new JLabel("Project last saved using app version: " + Main.projectAppVersion);
         fileAppVersionLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
         panel.add(fileAppVersionLabel);
         JLabel fileFormatVersionLabel = new JLabel("Current file format version: " + Main.FILE_FORMAT_VERSION);

@@ -33,10 +33,12 @@ final class ItemInfo {
     static final class CriterionScore {
         public final String criterionName;
         public final BigDecimal score;
+        public final boolean enabled;
 
-        public CriterionScore(String criterionName, BigDecimal score) {
+        public CriterionScore(String criterionName, BigDecimal score, boolean enabled) {
             this.criterionName = criterionName;
             this.score = score;
+            this.enabled = enabled;
         }
     }
 
@@ -112,7 +114,7 @@ final class ItemInfo {
 
             for (CriteriaPanel c : Main.criteriaList) {
                 BigDecimal score = new BigDecimal(item.getScoreForCriterion(c));
-                criterionScores.add(new CriterionScore(c.getCriterionName(), score));
+                criterionScores.add(new CriterionScore(c.getCriterionName(), score, c.isEnabledCriterion()));
             }
 
             // Extra info section

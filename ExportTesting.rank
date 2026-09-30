@@ -1,0 +1,123 @@
+{
+  "appVersion": "1.0.0",
+  "notes": "Here are some test notes.\n\nI am writing these so that they will show up in the export. Wow!",
+  "criteriaCreationCounter": 4,
+  "areDisabledCriteriaHidden": false,
+  "created": "2026-09-29T22:54:58.644151400",
+  "criteria": [
+    {
+      "creationIndex": 1,
+      "name": "Criterion #1",
+      "weight": 6.5,
+      "enabled": true
+    },
+    {
+      "creationIndex": 2,
+      "name": "Criterion #2",
+      "weight": 4.1,
+      "enabled": false
+    },
+    {
+      "creationIndex": 3,
+      "name": "Criterion #3",
+      "weight": 6.324720184,
+      "enabled": true
+    },
+    {
+      "creationIndex": 4,
+      "name": "Criterion #4",
+      "weight": 5,
+      "enabled": false
+    }
+  ],
+  "areDisabledItemsHidden": false,
+  "fileFormatVersion": 1,
+  "exportPreferences": {
+    "includeExtraInfoCriteria": true,
+    "metadata": true,
+    "fileName": "fourthMusket",
+    "notes": true,
+    "critInfo": true,
+    "includeDisabledCriteria": true,
+    "itemInfo": true,
+    "includeExtraInfoItems": true,
+    "includeDisabledItems": true,
+    "folder": "C:\\Users\\danie\\Documents\\Projects\\RankAnything",
+    "rankProject": false,
+    "ranking": true,
+    "rankFolder": "",
+    "fileType": "PDF",
+    "rankFileName": ""
+  },
+  "itemsCreationCounter": 5,
+  "isOriginal": true,
+  "fileCreated": "2026-09-29T22:56:34.148988300",
+  "modified": "2026-09-29T23:08:48.042985300",
+  "isCriteriaPrecise": true,
+  "projectName": "ExportTesting",
+  "isItemsPrecise": true,
+  "items": [
+    {
+      "scores": {
+        "1": 82,
+        "2": 33,
+        "3": 55,
+        "4": 50
+      },
+      "collapsed": false,
+      "creationIndex": 1,
+      "name": "Item #1",
+      "enabled": true
+    },
+    {
+      "scores": {
+        "1": 69,
+        "2": 38,
+        "3": 81,
+        "4": 50
+      },
+      "collapsed": true,
+      "creationIndex": 2,
+      "name": "Item #2",
+      "enabled": false
+    },
+    {
+      "scores": {
+        "1": 91,
+        "2": 50,
+        "3": 9.4465465,
+        "4": 50
+      },
+      "collapsed": false,
+      "creationIndex": 3,
+      "name": "Item #3",
+      "enabled": true
+    },
+    {
+      "scores": {
+        "1": 50,
+        "2": 50,
+        "3": 50,
+        "4": 50
+      },
+      "collapsed": false,
+      "creationIndex": 4,
+      "name": "Item #4",
+      "enabled": true
+    },
+    {
+      "scores": {
+        "1": 50,
+        "2": 0,
+        "3": 50,
+        "4": 0
+      },
+      "collapsed": false,
+      "creationIndex": 5,
+      "name": "Item #5",
+      "enabled": true
+    }
+  ],
+  "rankingMode": "UNWEIGHTED_ALL_CRITERIA",
+  "projectId": "47378fb5-4cbf-42a5-8b23-bfb361b0779d"
+}
