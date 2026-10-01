@@ -148,7 +148,7 @@ final class Update {
 
     static double getScoreForCriterion(CriteriaPanel cp, ItemsPanel item) {
         JTextField valueField = item.valueFieldMap.get(cp);
-        if (valueField == null) return 0;
+        if (valueField == null) return 50;
 
         String raw = valueField.getText().trim();
         if (raw.endsWith("%")) raw = raw.substring(0, raw.length() - 1);
