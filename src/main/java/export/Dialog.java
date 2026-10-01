@@ -194,22 +194,41 @@ final class Dialog {
         // end
 
         // Initial enable/disable state
-        boolean enabled = defaults.rankProject;
-        snapshotNamePanel.setEnabled(enabled);
-        snapshotFolderPanel.setEnabled(enabled);
-        snapshotNameField.setEnabled(enabled);
-        snapshotFolderNameField.setEnabled(enabled);
-        folderNameLabel.setEnabled(enabled);
-        snapshotNameLabel.setEnabled(enabled);
+        updateEnabled(
+            fileTypeBox, 
+            includeRankFileBox, 
+            snapshotNamePanel,
+            snapshotFolderPanel,
+            snapshotNameField,
+            snapshotFolderNameField,
+            folderNameLabel,
+            snapshotNameLabel
+        );
 
         includeRankFileBox.addActionListener(e -> {
-            boolean en = includeRankFileBox.isSelected();
-            snapshotNamePanel.setEnabled(en);
-            snapshotFolderPanel.setEnabled(en);
-            snapshotNameField.setEnabled(en);
-            snapshotFolderNameField.setEnabled(en);
-            folderNameLabel.setEnabled(en);
-            snapshotNameLabel.setEnabled(en);
+            updateEnabled(
+                fileTypeBox, 
+                includeRankFileBox, 
+                snapshotNamePanel,
+                snapshotFolderPanel,
+                snapshotNameField,
+                snapshotFolderNameField,
+                folderNameLabel,
+                snapshotNameLabel
+            );
+        });
+
+        fileTypeBox.addActionListener(e -> {
+            updateEnabled(
+                fileTypeBox, 
+                includeRankFileBox, 
+                snapshotNamePanel,
+                snapshotFolderPanel,
+                snapshotNameField,
+                snapshotFolderNameField,
+                folderNameLabel,
+                snapshotNameLabel
+            );
         });
 
         // Dialog
@@ -239,7 +258,10 @@ final class Dialog {
             opts.metadata = metadataBox.isSelected();
             opts.notes = notesBox.isSelected();
 
-            opts.rankProject = includeRankFileBox.isSelected();
+            boolean proj = 
+                    fileTypeBox.getSelectedItem() == "RANK (project file)" || 
+                    fileTypeBox.getSelectedItem() == "JSON (project file)";
+            opts.rankProject = includeRankFileBox.isSelected() && !proj;
             opts.rankFileName = snapshotNameField.getText().trim();
             opts.rankFolder = snapshotFolderNameField.getText().trim();
 
@@ -268,5 +290,28 @@ final class Dialog {
                 : "Export failed"
             );
         }
+    }
+
+    private static void updateEnabled(
+        JComboBox<String> fileTypeBox, 
+        JCheckBox includeRankFileBox, 
+        JPanel snapshotNamePanel,
+        JPanel snapshotFolderPanel,
+        JTextField snapshotNameField,
+        JTextField snapshotFolderNameField,
+        JLabel folderNameLabel,
+        JLabel snapshotNameLabel
+    ) {
+        boolean proj = 
+                fileTypeBox.getSelectedItem() == "RANK (project file)" || 
+                fileTypeBox.getSelectedItem() == "JSON (project file)";
+        boolean en = includeRankFileBox.isSelected() && !proj;
+        includeRankFileBox.setEnabled(!proj);
+        snapshotNamePanel.setEnabled(en);
+        snapshotFolderPanel.setEnabled(en);
+        snapshotNameField.setEnabled(en);
+        snapshotFolderNameField.setEnabled(en);
+        folderNameLabel.setEnabled(en);
+        snapshotNameLabel.setEnabled(en);
     }
 }
