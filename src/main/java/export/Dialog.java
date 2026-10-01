@@ -23,6 +23,8 @@ import tasks.Notify;
 
 final class Dialog {
 
+    private static final int INDENT_WIDTH = 1;
+
     static void show(JFrame frame, ExportPreferences defaults) {
 
         ExportPreferences opts = new ExportPreferences();
@@ -87,28 +89,43 @@ final class Dialog {
         });
 
         // Section checkboxes
+        JLabel sectionLabel = new JLabel("Select what to include in the export:");
+        panel.add(sectionLabel);
+
         JCheckBox rankingBox = new JCheckBox("Ranking");
         rankingBox.setSelected(defaults.ranking);
 
         JCheckBox itemsBox = new JCheckBox("Item information");
         itemsBox.setSelected(defaults.itemInfo);
 
+        JPanel includeDisabledItemsPanel = new JPanel();
         JCheckBox includeDisabledItemsBox = new JCheckBox("Include disabled items");
         includeDisabledItemsBox.setSelected(defaults.includeDisabledItems);
+        includeDisabledItemsPanel.add(Box.createHorizontalStrut(INDENT_WIDTH));
+        includeDisabledItemsPanel.add(includeDisabledItemsBox);
 
+        JPanel includeExtraInfoItemsPanel = new JPanel();
         JCheckBox includeExtraInfoItemsBox = new JCheckBox("Include extra item info");
         includeExtraInfoItemsBox.setSelected(defaults.includeExtraInfoItems);
+        includeExtraInfoItemsPanel.add(Box.createHorizontalStrut(INDENT_WIDTH));
+        includeExtraInfoItemsPanel.add(includeExtraInfoItemsBox);
 
         JCheckBox criteriaBox = new JCheckBox("Criteria information");
         criteriaBox.setSelected(defaults.critInfo);
 
+        JPanel includeDisabledCriteriaPanel = new JPanel();
         JCheckBox includeDisabledCriteriaBox = new JCheckBox("Include disabled criteria");
         includeDisabledCriteriaBox.setSelected(defaults.includeDisabledCriteria);
+        includeDisabledCriteriaPanel.add(Box.createHorizontalStrut(INDENT_WIDTH));
+        includeDisabledCriteriaPanel.add(includeDisabledCriteriaBox);
 
+        JPanel includeExtraInfoCriteriaPanel = new JPanel();
         JCheckBox includeExtraInfoCriteriaBox = new JCheckBox("Include extra criteria info");
         includeExtraInfoCriteriaBox.setSelected(defaults.includeExtraInfoCriteria);
+        includeExtraInfoCriteriaPanel.add(Box.createHorizontalStrut(INDENT_WIDTH));
+        includeExtraInfoCriteriaPanel.add(includeExtraInfoCriteriaBox);
 
-        JCheckBox metadataBox = new JCheckBox("Metadata");
+        JCheckBox metadataBox = new JCheckBox("Project information");
         metadataBox.setSelected(defaults.metadata);
 
         JCheckBox notesBox = new JCheckBox("Notes");
@@ -116,17 +133,18 @@ final class Dialog {
 
         panel.add(rankingBox);
         panel.add(itemsBox);
-        panel.add(includeDisabledItemsBox);
-        panel.add(includeExtraInfoItemsBox);
+        panel.add(includeExtraInfoItemsPanel);
+        panel.add(includeDisabledItemsPanel);
         panel.add(criteriaBox);
-        panel.add(includeDisabledCriteriaBox);
-        panel.add(includeExtraInfoCriteriaBox);
+        panel.add(includeExtraInfoCriteriaPanel);
+        panel.add(includeDisabledCriteriaPanel);
         panel.add(metadataBox);
         panel.add(notesBox);
 
         // Include .rank snapshot checkbox
         JCheckBox includeRankFileBox = new JCheckBox("Include project snapshot (.rank)");
         includeRankFileBox.setSelected(defaults.rankProject);
+        includeRankFileBox.setToolTipText("Include a .rank project file alongside the primary export.");
         panel.add(includeRankFileBox);
 
         // Snapshot name input
@@ -138,12 +156,15 @@ final class Dialog {
         snapshotNamePanel.add(snapshotNameField);
         panel.add(snapshotNamePanel);
 
-        // Snapshot folder chooser
+        // Snapshot folder name input
+        String snapshotFolderTooltip = "Name the folder housing both the primary export and the .rank snapshot.";
         JPanel snapshotFolderPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
         JLabel folderNameLabel = new JLabel("Folder name:");
+        folderNameLabel.setToolTipText(snapshotFolderTooltip);
         snapshotFolderPanel.add(folderNameLabel);
         JTextField snapshotFolderNameField = new JTextField(20);
         snapshotFolderNameField.setText(defaults.rankFolder);
+        snapshotFolderNameField.setToolTipText(snapshotFolderTooltip);
         snapshotFolderPanel.add(snapshotFolderNameField);
         panel.add(snapshotFolderPanel);
 
@@ -229,6 +250,24 @@ final class Dialog {
                 folderNameLabel,
                 snapshotNameLabel
             );
+        });
+
+        boolean i = defaults.itemInfo;
+        includeExtraInfoItemsBox.setEnabled(i);
+        includeDisabledItemsBox.setEnabled(i);
+        itemsBox.addActionListener(e -> {
+            boolean ii = itemsBox.isSelected();
+            includeExtraInfoItemsBox.setEnabled(ii);
+            includeDisabledItemsBox.setEnabled(ii);
+        });
+
+        boolean c = defaults.critInfo;
+        includeExtraInfoCriteriaBox.setEnabled(c);
+        includeDisabledCriteriaBox.setEnabled(c);
+        criteriaBox.addActionListener(e -> {
+            boolean cc = criteriaBox.isSelected();
+            includeExtraInfoCriteriaBox.setEnabled(cc);
+            includeDisabledCriteriaBox.setEnabled(cc);
         });
 
         // Dialog
