@@ -2,6 +2,7 @@ package export;
 
 import java.awt.FlowLayout;
 import java.io.File;
+import java.util.List;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -214,61 +215,104 @@ final class Dialog {
             panel.add(includeUnweightedAllCriteriaAllItemsBox);
         // end
 
-        // Initial enable/disable state
-        updateEnabled(
-            fileTypeBox, 
-            includeRankFileBox, 
-            snapshotNamePanel,
-            snapshotFolderPanel,
-            snapshotNameField,
-            snapshotFolderNameField,
-            folderNameLabel,
-            snapshotNameLabel
+        // All checkboxes that should be disabled for project-file exports
+        List<JCheckBox> exportOptionBoxes = List.of(
+            rankingBox,
+            itemsBox,
+            includeDisabledItemsBox,
+            includeExtraInfoItemsBox,
+            criteriaBox,
+            includeDisabledCriteriaBox,
+            includeExtraInfoCriteriaBox,
+            metadataBox,
+            notesBox,
+            includeWeightedEnabledBox,
+            includeWeightedAllCriteriaBox,
+            includeWeightedAllItemsBox,
+            includeWeightedAllCriteriaAllItemsBox,
+            includeUnweightedEnabledBox,
+            includeUnweightedAllCriteriaBox,
+            includeUnweightedAllItemsBox,
+            includeUnweightedAllCriteriaAllItemsBox
         );
+
+        // enable/disable states
 
         includeRankFileBox.addActionListener(e -> {
             updateEnabled(
-                fileTypeBox, 
-                includeRankFileBox, 
+                fileTypeBox,
+                includeRankFileBox,
                 snapshotNamePanel,
                 snapshotFolderPanel,
                 snapshotNameField,
                 snapshotFolderNameField,
                 folderNameLabel,
-                snapshotNameLabel
+                snapshotNameLabel,
+                exportOptionBoxes,
+                sectionLabel,
+                altRankHeader,
+                itemsBox,
+                includeExtraInfoItemsBox,
+                includeDisabledItemsBox,
+                criteriaBox,
+                includeExtraInfoCriteriaBox,
+                includeDisabledCriteriaBox
             );
         });
 
         fileTypeBox.addActionListener(e -> {
             updateEnabled(
-                fileTypeBox, 
-                includeRankFileBox, 
+                fileTypeBox,
+                includeRankFileBox,
                 snapshotNamePanel,
                 snapshotFolderPanel,
                 snapshotNameField,
                 snapshotFolderNameField,
                 folderNameLabel,
-                snapshotNameLabel
+                snapshotNameLabel,
+                exportOptionBoxes,
+                sectionLabel,
+                altRankHeader,
+                itemsBox,
+                includeExtraInfoItemsBox,
+                includeDisabledItemsBox,
+                criteriaBox,
+                includeExtraInfoCriteriaBox,
+                includeDisabledCriteriaBox
             );
         });
 
-        boolean i = defaults.itemInfo;
-        includeExtraInfoItemsBox.setEnabled(i);
-        includeDisabledItemsBox.setEnabled(i);
         itemsBox.addActionListener(e -> {
-            boolean ii = itemsBox.isSelected();
-            includeExtraInfoItemsBox.setEnabled(ii);
-            includeDisabledItemsBox.setEnabled(ii);
+            boolean i = itemsBox.isSelected();
+            includeExtraInfoItemsBox.setEnabled(i);
+            includeDisabledItemsBox.setEnabled(i);
         });
 
-        boolean c = defaults.critInfo;
-        includeExtraInfoCriteriaBox.setEnabled(c);
-        includeDisabledCriteriaBox.setEnabled(c);
         criteriaBox.addActionListener(e -> {
-            boolean cc = criteriaBox.isSelected();
-            includeExtraInfoCriteriaBox.setEnabled(cc);
-            includeDisabledCriteriaBox.setEnabled(cc);
+            boolean c = criteriaBox.isSelected();
+            includeExtraInfoCriteriaBox.setEnabled(c);
+            includeDisabledCriteriaBox.setEnabled(c);
         });
+        
+        updateEnabled(
+            fileTypeBox,
+            includeRankFileBox,
+            snapshotNamePanel,
+            snapshotFolderPanel,
+            snapshotNameField,
+            snapshotFolderNameField,
+            folderNameLabel,
+            snapshotNameLabel,
+            exportOptionBoxes,
+            sectionLabel,
+            altRankHeader,
+            itemsBox,
+            includeExtraInfoItemsBox,
+            includeDisabledItemsBox,
+            criteriaBox,
+            includeExtraInfoCriteriaBox,
+            includeDisabledCriteriaBox
+        );
 
         // Dialog
         int result = JOptionPane.showConfirmDialog(
@@ -297,9 +341,7 @@ final class Dialog {
             opts.metadata = metadataBox.isSelected();
             opts.notes = notesBox.isSelected();
 
-            boolean proj = 
-                    fileTypeBox.getSelectedItem() == "RANK (project file)" || 
-                    fileTypeBox.getSelectedItem() == "JSON (project file)";
+            boolean proj = fileTypeBox.getSelectedItem().toString().contains("(project file)");
             opts.rankProject = includeRankFileBox.isSelected() && !proj;
             opts.rankFileName = snapshotNameField.getText().trim();
             opts.rankFolder = snapshotFolderNameField.getText().trim();
@@ -332,25 +374,79 @@ final class Dialog {
     }
 
     private static void updateEnabled(
-        JComboBox<String> fileTypeBox, 
-        JCheckBox includeRankFileBox, 
+        JComboBox<String> fileTypeBox,
+        JCheckBox includeRankFileBox,
         JPanel snapshotNamePanel,
         JPanel snapshotFolderPanel,
         JTextField snapshotNameField,
         JTextField snapshotFolderNameField,
         JLabel folderNameLabel,
-        JLabel snapshotNameLabel
+        JLabel snapshotNameLabel,
+        List<JCheckBox> exportOptionBoxes,
+        JLabel sectionLabel,
+        JLabel altRankHeader,
+        JCheckBox itemsBox,
+        JCheckBox includeExtraInfoItemsBox,
+        JCheckBox includeDisabledItemsBox,
+        JCheckBox criteriaBox,
+        JCheckBox includeExtraInfoCriteriaBox,
+        JCheckBox includeDisabledCriteriaBox
     ) {
-        boolean proj = 
-                fileTypeBox.getSelectedItem() == "RANK (project file)" || 
-                fileTypeBox.getSelectedItem() == "JSON (project file)";
-        boolean en = includeRankFileBox.isSelected() && !proj;
-        includeRankFileBox.setEnabled(!proj);
-        snapshotNamePanel.setEnabled(en);
-        snapshotFolderPanel.setEnabled(en);
-        snapshotNameField.setEnabled(en);
-        snapshotFolderNameField.setEnabled(en);
-        folderNameLabel.setEnabled(en);
-        snapshotNameLabel.setEnabled(en);
+        boolean proj = fileTypeBox.getSelectedItem().toString().contains("(project file)");
+
+        // 1. PROJECT FILE MODE
+            if (proj) {
+                // Disable ALL export options
+                for (JCheckBox box : exportOptionBoxes) {
+                    box.setEnabled(false);
+                }
+
+                // Disable headers
+                sectionLabel.setEnabled(false);
+                altRankHeader.setEnabled(false);
+
+                // Disable snapshot checkbox + fields
+                includeRankFileBox.setEnabled(false);
+                snapshotNamePanel.setEnabled(false);
+                snapshotFolderPanel.setEnabled(false);
+                snapshotNameField.setEnabled(false);
+                snapshotFolderNameField.setEnabled(false);
+                folderNameLabel.setEnabled(false);
+                snapshotNameLabel.setEnabled(false);
+
+                return; // IMPORTANT: stop here
+            }
+
+        // 2. NORMAL EXPORT MODE
+            // Enable all export options
+            for (JCheckBox box : exportOptionBoxes) {
+                box.setEnabled(true);
+            }
+
+            // Enable headers
+            sectionLabel.setEnabled(true);
+            altRankHeader.setEnabled(true);
+
+        // 3. SNAPSHOT LOGIC
+            boolean snapshotEnabled = includeRankFileBox.isSelected();
+            includeRankFileBox.setEnabled(true);
+
+            snapshotNamePanel.setEnabled(snapshotEnabled);
+            snapshotFolderPanel.setEnabled(snapshotEnabled);
+            snapshotNameField.setEnabled(snapshotEnabled);
+            snapshotFolderNameField.setEnabled(snapshotEnabled);
+            folderNameLabel.setEnabled(snapshotEnabled);
+            snapshotNameLabel.setEnabled(snapshotEnabled);
+
+        // 4. ITEM SUB-CHECKBOX LOGIC
+            boolean itemsEnabled = itemsBox.isSelected();
+            includeExtraInfoItemsBox.setEnabled(itemsEnabled);
+            includeDisabledItemsBox.setEnabled(itemsEnabled);
+
+        // 5. CRITERIA SUB-CHECKBOX LOGIC
+            boolean criteriaEnabled = criteriaBox.isSelected();
+            includeExtraInfoCriteriaBox.setEnabled(criteriaEnabled);
+            includeDisabledCriteriaBox.setEnabled(criteriaEnabled);
+        // end
     }
 }
