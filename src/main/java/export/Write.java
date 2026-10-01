@@ -31,6 +31,13 @@ final class Write {
             exportFolder.mkdirs();
         }
 
+        // create project file and end early if we are creating a project file
+        boolean proj = prefs.fileType.contains("(project file)");
+        if (proj) {
+            exportSnapshot(exportFolder, prefs.fileName, prefs, frame);
+            return true;
+        }
+
         // Build full export path
         File exportFile = new File(exportFolder, prefs.fileName + "." + prefs.fileType.toLowerCase());
 
@@ -49,7 +56,7 @@ final class Write {
 
         // If export succeeded, handle snapshot if requested
         if (ok && prefs.rankProject) {
-            exportSnapshot(exportFolder, prefs, frame, false); // .rank, not .json
+            exportSnapshot(exportFolder, prefs.rankFileName, prefs, frame);
         }
 
         return ok;
@@ -112,15 +119,15 @@ final class Write {
         }
     }
 
-    private static void exportSnapshot(File exportFolder, ExportPreferences prefs, JFrame frame, boolean JSON) {
+    private static void exportSnapshot(File exportFolder, String fileName, ExportPreferences prefs, JFrame frame) {
 
-        String name = prefs.rankFileName;
+        boolean JSON = prefs.fileType.equals("JSON (project file)");
         String fileExtension = JSON ? ".json" : ".rank";
-        if (!name.toLowerCase().endsWith(fileExtension)) {
-            name += fileExtension;
+        if (!fileName.toLowerCase().endsWith(fileExtension)) {
+            fileName += fileExtension;
         }
         
-        File snapshotFile = new File(exportFolder, name);
+        File snapshotFile = new File(exportFolder, fileName);
 
         // store current values before temporarily adjusting them for the save
         final String CURRENT_FILE_CREATED = Main.fileCreated;
@@ -130,7 +137,7 @@ final class Write {
         final String TIMESTAMP = Metadata.now();
         Main.fileCreated = TIMESTAMP;
         Main.projectModified = TIMESTAMP;
-        Main.projectId = Main.projectId + "-SNAPSHOT-" + ProjectID.generate();
+        Main.projectId = Main.projectId + "-EXPORT-" + ProjectID.generate();
 
         SaveLoad.saveToFile(snapshotFile, frame, true); // effectively auto
 
