@@ -39,7 +39,12 @@ final class Write {
         }
 
         // Build full export path
-        File exportFile = new File(exportFolder, prefs.fileName + "." + prefs.fileType.toLowerCase());
+        String fileName = prefs.fileName;
+        String fileExtension = "." + prefs.fileType.toLowerCase();
+        if (!fileName.toLowerCase().endsWith(fileExtension)) {
+            fileName += fileExtension;
+        }
+        File exportFile = new File(exportFolder, fileName);
 
         boolean ok;
 
