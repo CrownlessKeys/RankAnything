@@ -5,6 +5,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 
 import app.Main;
 import metadata.Metadata;
@@ -14,21 +15,33 @@ import saveload.SaveLoad;
 // writes files
 final class Write {
 
+    // manages exports
+    // returns whether export was successful
     static boolean export(JFrame frame, ExportPreferences prefs) {
 
         File exportFolder;
 
         if (prefs.rankProject) {
             // Export into: prefs.folder / prefs.rankFolder
-            exportFolder = new File(prefs.folder, prefs.rankFolder);
+            String folder = prefs.folder.replaceAll("[<>:\"/\\\\|?*]", "").trim();
+            if (folder.isEmpty()) folder = "export";
+            String rankFolder = prefs.rankFolder.replaceAll("[<>:\"/\\\\|?*]", "").trim();
+            if (rankFolder.isEmpty()) rankFolder = "export";
+
+            exportFolder = new File(folder, rankFolder);
         } else {
             // Export directly into prefs.folder
             exportFolder = new File(prefs.folder);
         }
 
         // Ensure folder exists
-        if (!exportFolder.exists()) {
-            exportFolder.mkdirs();
+        if (!exportFolder.exists() && !exportFolder.mkdirs()) {
+            JOptionPane.showMessageDialog(frame, 
+                "Cannot create folder: " + exportFolder,
+                "Export failed",
+                JOptionPane.ERROR_MESSAGE
+            );
+            return false;
         }
 
         // create project file and end early if we are creating a project file
@@ -38,21 +51,31 @@ final class Write {
             return true;
         }
 
-        // Build full export path
+        // Build file name
         String fileName = prefs.fileName;
         String fileExtension = "." + prefs.fileType.toLowerCase();
         if (!fileName.toLowerCase().endsWith(fileExtension)) {
             fileName += fileExtension;
         }
+        fileName = fileName.replaceAll("[<>:\"/\\\\|?*]", "").trim();
+
         File exportFile = new File(exportFolder, fileName);
 
-        boolean ok;
+        // auto rename if file exists
+        File f = exportFile;
+        int counter = 1;
+        while (f.exists()) {
+            f = new File(exportFolder, "(" + counter++ + ")_" + fileName);
+        }
+        exportFile = f;
+
+        boolean success; // whether export succeeded
 
         switch (prefs.fileType.toUpperCase()) {
-            case "PDF" -> ok = PDF.exportPDF(exportFile, prefs);
-            case "HTML" -> ok = exportHTML(exportFile, prefs);
-            case "TXT" -> ok = exportTXT(exportFile, prefs);
-            case "PNG" -> ok = exportPNG(exportFile, prefs);
+            case "PDF" -> success = PDF.exportPDF(exportFile, prefs);
+            case "HTML" -> success = exportHTML(exportFile, prefs);
+            case "TXT" -> success = exportTXT(exportFile, prefs);
+            case "PNG" -> success = exportPNG(exportFile, prefs);
             default -> {
                 System.err.println("Unknown export type: " + prefs.fileType);
                 return false;
@@ -60,11 +83,12 @@ final class Write {
         }
 
         // If export succeeded, handle snapshot if requested
-        if (ok && prefs.rankProject) {
-            exportSnapshot(exportFolder, prefs.rankFileName, prefs, frame);
+        if (success && prefs.rankProject) {
+            String rankFileName = prefs.rankFileName.replaceAll("[<>:\"/\\\\|?*]", "").trim();
+            exportSnapshot(exportFolder, rankFileName, prefs, frame);
         }
 
-        return ok;
+        return success;
     }
 
     // TODO: placeholder
