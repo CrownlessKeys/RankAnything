@@ -15,6 +15,7 @@ import javax.swing.BorderFactory;
 import javax.swing.DefaultListCellRenderer;
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
+import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
@@ -103,10 +104,36 @@ public final class AutoBrowser {
         saveAsButton.setEnabled(false);
         deleteButton.setEnabled(false);
 
+        JPanel buttonPanel = new JPanel();
+        buttonPanel.add(loadButton);
+        buttonPanel.add(saveAsButton);
+        buttonPanel.add(deleteButton);
+        buttonPanel.add(settingsButton);
+
+        list.addListSelectionListener(e -> {
+            int count = list.getSelectedIndices().length;
+
+            loadButton.setEnabled(count == 1);
+            saveAsButton.setEnabled(count == 1);
+            deleteButton.setEnabled(count >= 1);
+        });
+
+        JPanel panel = new JPanel(new BorderLayout());
+        panel.add(scroll, BorderLayout.CENTER);
+        panel.add(buttonPanel, BorderLayout.SOUTH);
+
+        // create dialog
+        JDialog dialog = new JDialog(frame, "Autosaves", true);
+        dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+        dialog.setContentPane(panel);
+        dialog.pack();
+        dialog.setLocationRelativeTo(frame);
+
         loadButton.addActionListener(e -> {
             File selected = list.getSelectedValue();
             if (selected != null) {
                 SaveLoad.loadFromFile(selected, frame, true);
+                dialog.dispose();
             }
         });
 
@@ -117,6 +144,7 @@ public final class AutoBrowser {
                     File selected = list.getSelectedValue();
                     if (selected != null) {
                         SaveLoad.loadFromFile(selected, frame, true);
+                        dialog.dispose();
                     }
                 }
             }
@@ -138,30 +166,8 @@ public final class AutoBrowser {
             AutoSettings.show(frame);
         });
 
-        JPanel buttonPanel = new JPanel();
-        buttonPanel.add(loadButton);
-        buttonPanel.add(saveAsButton);
-        buttonPanel.add(deleteButton);
-        buttonPanel.add(settingsButton);
-
-        list.addListSelectionListener(e -> {
-            int count = list.getSelectedIndices().length;
-
-            loadButton.setEnabled(count == 1);
-            saveAsButton.setEnabled(count == 1);
-            deleteButton.setEnabled(count >= 1);
-        });
-
-        JPanel panel = new JPanel(new BorderLayout());
-        panel.add(scroll, BorderLayout.CENTER);
-        panel.add(buttonPanel, BorderLayout.SOUTH);
-
-        JOptionPane.showMessageDialog(
-            frame,
-            panel,
-            "Autosaves",
-            JOptionPane.PLAIN_MESSAGE
-        );
+        // Show dialog
+        dialog.setVisible(true);
     }
 
     private static final class AutosaveCellRenderer extends DefaultListCellRenderer {
