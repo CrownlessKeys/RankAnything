@@ -5,6 +5,10 @@ import java.awt.Component;
 import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.Toolkit;
+import java.awt.datatransfer.StringSelection;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 import javax.swing.BorderFactory;
 import javax.swing.Box;
@@ -60,10 +64,16 @@ final class ProjectInfo {
         nameField.setMaximumSize(new Dimension(Integer.MAX_VALUE, nameField.getPreferredSize().height));
         nameWrapper.add(nameField);
         panel.add(nameWrapper);
+        JLabel projectIdLabel = new JLabel("Project ID: " + Main.projectId);
+        projectIdLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
+        projectIdLabel.setForeground(Color.GRAY);
+        projectIdLabel.setToolTipText(Main.projectId + " (Click to copy to clipboard)");
+        projectIdLabel.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        panel.add(projectIdLabel);
         panel.add(Box.createVerticalStrut(10));
 
         // file information
-        JLabel fileLocationHeaderLabel = new JLabel("File location: ");
+        JLabel fileLocationHeaderLabel = new JLabel("File location:");
         fileLocationHeaderLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
         panel.add(fileLocationHeaderLabel);
         JLabel fileLocationLabel = new JLabel("    " + SaveLoad.getCurrentFilePath());
@@ -74,11 +84,18 @@ final class ProjectInfo {
         JLabel originalLabel = new JLabel("This file is the original copy of the project.");
         originalLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
         if (Main.isOriginal) panel.add(originalLabel);
-        JLabel projectIdLabel = new JLabel("Project ID: " + Main.projectId);
-        projectIdLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
-        projectIdLabel.setForeground(Color.GRAY);
-        panel.add(projectIdLabel);
         panel.add(Box.createVerticalStrut(10));
+
+        // copy project ID
+        projectIdLabel.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                Toolkit.getDefaultToolkit().getSystemClipboard().setContents(
+                    new StringSelection(Main.projectId),
+                    null
+                );
+            }
+        });
 
         // open file location
         fileLocationLabel.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -104,7 +121,7 @@ final class ProjectInfo {
         JLabel appVersionLabel = new JLabel("Current app version: " + Main.APP_VERSION);
         appVersionLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
         panel.add(appVersionLabel);
-        JLabel fileAppVersionLabel = new JLabel("App version this project was last saved with: " + Main.projectAppVersion);
+        JLabel fileAppVersionLabel = new JLabel("Project last saved using app version: " + Main.projectAppVersion);
         fileAppVersionLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
         panel.add(fileAppVersionLabel);
         JLabel fileFormatVersionLabel = new JLabel("Current file format version: " + Main.FILE_FORMAT_VERSION);

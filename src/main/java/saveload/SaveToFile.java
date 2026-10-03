@@ -18,8 +18,8 @@ import tasks.Notify;
 final class SaveToFile {
     static void save(File file, JFrame frame, boolean isAuto) {
         try {
-            if (!Metadata.versionMismatchWarningsSave(frame)) return;
-            if (file == SaveLoad.currentProjectFile) Metadata.checkFileName(frame);
+            if (!isAuto && !Metadata.versionMismatchWarningsSave(frame)) return;
+            if (!isAuto && file == SaveLoad.currentProjectFile) Metadata.checkFileName(frame);
 
             JSONObject root = buildProjectJSON(isAuto);
 

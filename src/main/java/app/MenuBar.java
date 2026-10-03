@@ -15,6 +15,7 @@ import autosave.AutoIndicator;
 import autosave.AutoTimer;
 import autosave.Autosave;
 import contact.Contact;
+import export.Export;
 import metadata.Metadata;
 import saveload.SaveLoad;
 import tasks.Browse;
@@ -199,6 +200,8 @@ public final class MenuBar extends JMenuBar {
             saveAsItem.addActionListener(e -> SaveLoad.saveAs(frame));
             openItem.addActionListener(e -> SaveLoad.load(frame));
             saveItem.addActionListener(e -> SaveLoad.save(frame));
+            exportItem.addActionListener(e -> Export.export());
+            printItem.addActionListener(e -> Export.print());
             openFileLocationItem.addActionListener(e -> Metadata.openFileLocation(frame));
             newProjectItem.addActionListener(e -> SaveLoad.newProject(frame));
             projectAutosavesItem.addActionListener(e -> AutoBrowser.show(

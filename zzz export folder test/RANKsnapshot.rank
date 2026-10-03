@@ -1,0 +1,131 @@
+{
+  "appVersion": "1.0.0",
+  "notes": "",
+  "criteriaCreationCounter": 9,
+  "areDisabledCriteriaHidden": true,
+  "created": "2026-09-04T23:44:28.721110800",
+  "criteria": [
+    {
+      "creationIndex": 6,
+      "name": "Criterion #6",
+      "weight": 5,
+      "enabled": false
+    },
+    {
+      "creationIndex": 7,
+      "name": "Criterion #7",
+      "weight": 5,
+      "enabled": true
+    },
+    {
+      "creationIndex": 8,
+      "name": "Criterion #8",
+      "weight": 5,
+      "enabled": true
+    },
+    {
+      "creationIndex": 9,
+      "name": "Criterion #9",
+      "weight": 5,
+      "enabled": true
+    }
+  ],
+  "areDisabledItemsHidden": false,
+  "fileFormatVersion": 1,
+  "exportPreferences": {
+    "includeExtraInfoCriteria": true,
+    "metadata": true,
+    "fileName": "PDF_but_in_a_folder",
+    "notes": true,
+    "critInfo": true,
+    "includeDisabledCriteria": true,
+    "includeUnweightedAllCriteria": true,
+    "includeUnweightedAllItems": true,
+    "itemInfo": true,
+    "includeExtraInfoItems": true,
+    "includeWeightedAllCriteria": false,
+    "includeDisabledItems": true,
+    "includeWeightedEnabled": false,
+    "folder": "C:\\Users\\danie\\Documents\\Projects\\RankAnything",
+    "rankProject": true,
+    "includeUnweightedEnabled": false,
+    "includeWeightedAllCriteriaAllItems": false,
+    "ranking": true,
+    "rankFolder": "export folder test",
+    "includeWeightedAllItems": true,
+    "includeUnweightedAllCriteriaAllItems": false,
+    "fileType": "PDF",
+    "rankFileName": "RANKsnapshot"
+  },
+  "itemsCreationCounter": 10,
+  "isOriginal": true,
+  "fileCreated": "2026-09-30T22:55:29.168849900",
+  "modified": "2026-09-30T22:55:29.168849900",
+  "isCriteriaPrecise": false,
+  "projectName": "testID",
+  "isItemsPrecise": false,
+  "items": [
+    {
+      "scores": {
+        "6": 50,
+        "7": 50,
+        "8": 50,
+        "9": 50
+      },
+      "collapsed": false,
+      "creationIndex": 6,
+      "name": "Item #6",
+      "enabled": true
+    },
+    {
+      "scores": {
+        "6": 50,
+        "7": 50,
+        "8": 50,
+        "9": 50
+      },
+      "collapsed": false,
+      "creationIndex": 7,
+      "name": "Item #7",
+      "enabled": true
+    },
+    {
+      "scores": {
+        "6": 0,
+        "7": 50,
+        "8": 50,
+        "9": 50
+      },
+      "collapsed": false,
+      "creationIndex": 8,
+      "name": "Item #8",
+      "enabled": true
+    },
+    {
+      "scores": {
+        "6": 50,
+        "7": 50,
+        "8": 50,
+        "9": 50
+      },
+      "collapsed": false,
+      "creationIndex": 9,
+      "name": "Item #9",
+      "enabled": true
+    },
+    {
+      "scores": {
+        "6": 50,
+        "7": 50,
+        "8": 50,
+        "9": 50
+      },
+      "collapsed": false,
+      "creationIndex": 10,
+      "name": "Item #10",
+      "enabled": true
+    }
+  ],
+  "rankingMode": "WEIGHTED_ENABLED",
+  "projectId": "hahafunnyid-SNAPSHOT-2d353b1f-358f-4322-8b74-0c6d748d86fd"
+}
