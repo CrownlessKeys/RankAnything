@@ -408,7 +408,12 @@ final class PDF {
             doc.close();
             return true;
 
-        } catch (IOException | DocumentException ex) {
+        } catch (IOException ex) {
+            System.err.println("PDF export failed due to an I/O error: " + ex.getMessage());
+            ex.printStackTrace();
+            return false;
+        } catch (DocumentException ex) {
+            System.err.println("PDF export failed due to a PDF document error: " + ex.getMessage());
             ex.printStackTrace();
             return false;
         }
