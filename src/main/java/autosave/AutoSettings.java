@@ -137,6 +137,11 @@ final class AutoSettings {
             c.gridx = 0; c.gridy = row++;
             panel.add(enableAutosave, c);
 
+            c.gridx = 1;
+            panel.add(new JLabel(
+                "<html>Regardless of selection, autosaving<br>will never occur if there are no<br>unsaved changes.<html>"
+            ), c);
+
             // autosave types
             c.gridx = 0; c.gridy = row++;
             panel.add(autosaveOnClose, c);
