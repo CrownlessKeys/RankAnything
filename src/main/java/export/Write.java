@@ -1,8 +1,6 @@
 package export;
 
 import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
 
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -44,20 +42,21 @@ final class Write {
             return false;
         }
 
+        // Sanitize file name
+        String fileName = prefs.fileName.replaceAll("[<>:\"/\\\\|?*]", "").trim();
+
         // create project file and end early if we are creating a project file
         boolean proj = prefs.fileType.contains("(project file)");
         if (proj) {
-            exportSnapshot(exportFolder, prefs.fileName, prefs, frame);
+            exportSnapshot(exportFolder, fileName, prefs.fileType, frame);
             return true;
         }
 
-        // Build file name
-        String fileName = prefs.fileName;
+        // add extension here if not project file
         String fileExtension = "." + prefs.fileType.toLowerCase();
         if (!fileName.toLowerCase().endsWith(fileExtension)) {
             fileName += fileExtension;
         }
-        fileName = fileName.replaceAll("[<>:\"/\\\\|?*]", "").trim();
 
         File exportFile = new File(exportFolder, fileName);
 
@@ -73,9 +72,6 @@ final class Write {
 
         switch (prefs.fileType.toUpperCase()) {
             case "PDF" -> success = PDF.exportPDF(exportFile, prefs);
-            case "HTML" -> success = exportHTML(exportFile, prefs);
-            case "TXT" -> success = exportTXT(exportFile, prefs);
-            case "PNG" -> success = exportPNG(exportFile, prefs);
             default -> {
                 System.err.println("Unknown export type: " + prefs.fileType);
                 return false;
@@ -85,72 +81,16 @@ final class Write {
         // If export succeeded, handle snapshot if requested
         if (success && prefs.rankProject) {
             String rankFileName = prefs.rankFileName.replaceAll("[<>:\"/\\\\|?*]", "").trim();
-            exportSnapshot(exportFolder, rankFileName, prefs, frame);
+            exportSnapshot(exportFolder, rankFileName, prefs.fileType, frame);
         }
 
         return success;
     }
 
-    // TODO: placeholder
-    private static boolean exportHTML(File file, ExportPreferences prefs) {
-        try {
-            FileWriter fw = new FileWriter(file);
-            fw.write("<html><head><title>Export</title></head><body>\n");
-            fw.write("<h1>Export</h1>\n");
+    private static void exportSnapshot(File exportFolder, String fileName, String fileType, JFrame frame) {
 
-            if (prefs.ranking) fw.write("<h2>Ranking</h2><p>...</p>\n");
-            if (prefs.itemInfo) fw.write("<h2>Item Information</h2><p>...</p>\n");
-            if (prefs.critInfo) fw.write("<h2>Criteria Information</h2><p>...</p>\n");
-            if (prefs.metadata) fw.write("<h2>Metadata</h2><p>...</p>\n");
-            if (prefs.notes) fw.write("<h2>Notes</h2><p>" + Main.projectNotes + "</p>\n");
-
-            fw.write("</body></html>");
-            fw.close();
-            return true;
-        } catch (IOException ex) {
-            ex.printStackTrace();
-            return false;
-        }
-    }
-
-    // TODO: placeholder
-    private static boolean exportTXT(File file, ExportPreferences prefs) {
-        try {
-            FileWriter fw = new FileWriter(file);
-
-            fw.write("Export\n");
-            fw.write("====================\n\n");
-
-            if (prefs.ranking) fw.write("Ranking:\n...\n\n");
-            if (prefs.itemInfo) fw.write("Item Information:\n...\n\n");
-            if (prefs.critInfo) fw.write("Criteria Information:\n...\n\n");
-            if (prefs.metadata) fw.write("Metadata:\n...\n\n");
-            if (prefs.notes) fw.write("Notes:\n" + Main.projectNotes + "\n\n");
-
-            fw.close();
-            return true;
-        } catch (IOException ex) {
-            ex.printStackTrace();
-            return false;
-        }
-    }
-
-    // TODO: placeholder
-    private static boolean exportPNG(File file, ExportPreferences prefs) {
-        try {
-            FileWriter fw = new FileWriter(file);
-            fw.write("PNG Export Placeholder\n");
-            fw.close();
-            return true;
-        } catch (IOException ex) {
-            ex.printStackTrace();
-            return false;
-        }
-    }
-
-    private static void exportSnapshot(File exportFolder, String fileName, ExportPreferences prefs, JFrame frame) {
-
-        boolean JSON = prefs.fileType.equals("JSON (project file)");
+        // add file extension
+        boolean JSON = fileType.equals("JSON (project file)");
         String fileExtension = JSON ? ".json" : ".rank";
         if (!fileName.toLowerCase().endsWith(fileExtension)) {
             fileName += fileExtension;
