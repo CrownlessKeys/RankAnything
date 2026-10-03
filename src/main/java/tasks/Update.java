@@ -49,7 +49,7 @@ public final class Update {
 
         Main.unsavedChanges = true;
         Main.projectDirty = true;
-        Metadata.updateWindowTitle(Main.frame);
+        Metadata.updateWindowTitle();
     }
 
     public static void updateHideDisabledItems(boolean hide) {
@@ -70,6 +70,6 @@ public final class Update {
 
         Main.unsavedChanges = true;
         Main.projectDirty = true;
-        Metadata.updateWindowTitle(Main.frame);
+        Metadata.updateWindowTitle();
     }    
 }

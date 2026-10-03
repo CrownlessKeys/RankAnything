@@ -42,7 +42,7 @@ final class Layout {
 
             Main.unsavedChanges = true;
             Main.projectDirty = true;
-            Metadata.updateWindowTitle(Main.frame);
+            Metadata.updateWindowTitle();
         };
 
         weightedToggle.addActionListener(listener);

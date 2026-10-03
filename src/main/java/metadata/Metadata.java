@@ -45,8 +45,8 @@ public final class Metadata {
         ProjectInfo.showProjectNameEditor(frame);
     }
 
-    public static void updateWindowTitle(JFrame frame) {
-        Tasks.updateWindowTitle(frame);
+    public static void updateWindowTitle() {
+        Tasks.updateWindowTitle();
     }
 
     public static void openFileLocation(JFrame frame) {

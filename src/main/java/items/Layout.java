@@ -139,7 +139,7 @@ final class Layout {
 
             Main.unsavedChanges = true;
             Main.projectDirty = true;
-            Metadata.updateWindowTitle(Main.frame);
+            Metadata.updateWindowTitle();
         });
 
         item.setMaximumSize(new Dimension(Integer.MAX_VALUE, Integer.MAX_VALUE));

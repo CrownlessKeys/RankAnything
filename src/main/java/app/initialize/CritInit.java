@@ -180,7 +180,7 @@ public final class CritInit {
 
                 Main.unsavedChanges = true;
                 Main.projectDirty = true;
-                Metadata.updateWindowTitle(Main.frame);
+                Metadata.updateWindowTitle();
             });
 
             hideDisabledCriteria.addActionListener(e -> {

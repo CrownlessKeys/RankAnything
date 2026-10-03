@@ -61,7 +61,7 @@ final class Drag {
 
                         Main.unsavedChanges = true;
                         Main.projectDirty = true;
-                        Metadata.updateWindowTitle(Main.frame);
+                        Metadata.updateWindowTitle();
                     }
                 }
 
@@ -79,7 +79,7 @@ final class Drag {
 
                         Main.unsavedChanges = true;
                         Main.projectDirty = true;
-                        Metadata.updateWindowTitle(Main.frame);
+                        Metadata.updateWindowTitle();
                     }
                 }
             }

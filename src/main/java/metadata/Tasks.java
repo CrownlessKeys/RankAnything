@@ -19,7 +19,7 @@ import saveload.SaveLoad;
 import tasks.Notify;
 
 final class Tasks {
-    static void updateWindowTitle(JFrame frame) {
+    static void updateWindowTitle() {
         String title = Main.baseWindowTitle;
 
         if (Main.projectName != null) {
@@ -30,7 +30,7 @@ final class Tasks {
 
         if (Main.unsavedChanges) title += "*";
         
-        frame.setTitle(title);
+        Main.frame.setTitle(title);
     }
 
     static String formatTimestamp(String ts) {

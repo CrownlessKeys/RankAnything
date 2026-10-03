@@ -55,7 +55,7 @@ final class Load {
             Files.writeString(temp.toPath(), empty.toString(4));
             loadFromFile(temp, frame, true); // effectively auto, for all intents and purposes
             Main.unsavedChanges = false; // except for this intent and purpose, so we fix it
-            Metadata.updateWindowTitle(frame);
+            Metadata.updateWindowTitle();
 
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -157,7 +157,7 @@ final class Load {
             Main.unsavedChanges = isAuto;
             Main.projectDirty = false;
             AutoIndicator.reset();
-            Metadata.updateWindowTitle(frame);
+            Metadata.updateWindowTitle();
             Notify.showToast(frame, "Project loaded");
 
         } catch (Exception ex) {

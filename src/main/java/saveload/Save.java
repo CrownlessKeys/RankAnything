@@ -19,7 +19,7 @@ final class Save {
 
             Main.unsavedChanges = false;
             Main.projectDirty = false;
-            Metadata.updateWindowTitle(frame);
+            Metadata.updateWindowTitle();
         }
     }
 
@@ -46,7 +46,7 @@ final class Save {
 
             Main.unsavedChanges = false;
             Main.projectDirty = false;
-            Metadata.updateWindowTitle(frame);
+            Metadata.updateWindowTitle();
 
             RecentProjects.addRecentProject(file.getAbsolutePath());
             RecentProjects.save();

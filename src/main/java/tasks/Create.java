@@ -55,7 +55,7 @@ public final class Create {
 
             Main.unsavedChanges = true;
             Main.projectDirty = true;
-            Metadata.updateWindowTitle(frame);
+            Metadata.updateWindowTitle();
         });
 
         bubble.setOnStructureChanged(() -> {
@@ -66,7 +66,7 @@ public final class Create {
 
             Main.unsavedChanges = true;
             Main.projectDirty = true;
-            Metadata.updateWindowTitle(frame);
+            Metadata.updateWindowTitle();
         });
 
         bubble.setOnCriteriaChanged(() -> {
@@ -77,7 +77,7 @@ public final class Create {
 
             Main.unsavedChanges = true;
             Main.projectDirty = true;
-            Metadata.updateWindowTitle(frame);
+            Metadata.updateWindowTitle();
         });
 
         bubble.setOnDelete(() -> {
@@ -89,7 +89,7 @@ public final class Create {
 
             Main.unsavedChanges = true;
             Main.projectDirty = true;
-            Metadata.updateWindowTitle(frame);
+            Metadata.updateWindowTitle();
         });
 
         wrapper.add(bubble);
@@ -107,7 +107,7 @@ public final class Create {
 
                 Main.unsavedChanges = true;
                 Main.projectDirty = true;
-                Metadata.updateWindowTitle(frame);
+                Metadata.updateWindowTitle();
             });
 
             cp.setOnCriteriaChanged(() -> {
@@ -118,7 +118,7 @@ public final class Create {
 
                 Main.unsavedChanges = true;
                 Main.projectDirty = true;
-                Metadata.updateWindowTitle(frame);
+                Metadata.updateWindowTitle();
             });
         }
 
@@ -135,7 +135,7 @@ public final class Create {
 
         Main.unsavedChanges = true;
         Main.projectDirty = true;
-        Metadata.updateWindowTitle(frame);
+        Metadata.updateWindowTitle();
 
         return bubble;
     }
@@ -182,7 +182,7 @@ public final class Create {
 
             Main.unsavedChanges = true;
             Main.projectDirty = true;
-            Metadata.updateWindowTitle(frame);
+            Metadata.updateWindowTitle();
         });
 
         bubble.setOnScoresChanged(() -> {
@@ -200,7 +200,7 @@ public final class Create {
 
             Main.unsavedChanges = true;
             Main.projectDirty = true;
-            Metadata.updateWindowTitle(frame);
+            Metadata.updateWindowTitle();
         });
 
         bubble.setOnNameChanged(() -> {
@@ -209,7 +209,7 @@ public final class Create {
 
             Main.unsavedChanges = true;
             Main.projectDirty = true;
-            Metadata.updateWindowTitle(frame);
+            Metadata.updateWindowTitle();
         });
 
         bubble.setOnDelete(() -> {
@@ -219,7 +219,7 @@ public final class Create {
 
             Main.unsavedChanges = true;
             Main.projectDirty = true;
-            Metadata.updateWindowTitle(frame);
+            Metadata.updateWindowTitle();
         });
 
         wrapper.add(bubble);
@@ -239,7 +239,7 @@ public final class Create {
 
         Main.unsavedChanges = true;
         Main.projectDirty = true;
-        Metadata.updateWindowTitle(frame);
+        Metadata.updateWindowTitle();
 
         return bubble;
     }

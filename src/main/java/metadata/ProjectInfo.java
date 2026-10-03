@@ -190,7 +190,7 @@ final class ProjectInfo {
 
                 Main.projectDirty = true;
                 Main.unsavedChanges = true;
-                Metadata.updateWindowTitle(frame);
+                Metadata.updateWindowTitle();
             }
         }
     }
@@ -229,7 +229,7 @@ final class ProjectInfo {
                 Main.projectNotes = area.getText();
                 Main.projectDirty = true;
                 Main.unsavedChanges = true;
-                Metadata.updateWindowTitle(frame);
+                Metadata.updateWindowTitle();
             }
         }
     }
@@ -265,7 +265,7 @@ final class ProjectInfo {
                 Main.projectName = field.getText();
                 Main.projectDirty = true;
                 Main.unsavedChanges = true;
-                Metadata.updateWindowTitle(frame);
+                Metadata.updateWindowTitle();
             }
         }
     }
