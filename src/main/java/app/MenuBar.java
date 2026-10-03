@@ -40,14 +40,14 @@ public final class MenuBar extends JMenuBar {
             JMenuItem exportItem = new JMenuItem("Export...");
             JMenuItem printItem = new JMenuItem("Print...");
             recentProjectsMenu = new JMenu("Recent projects");
-            JMenuItem unsavedProjectsItem = new JMenuItem("Unsaved projects");
+            JMenuItem unsavedProjectsItem = new JMenuItem("Unsaved projects...");
             JMenuItem openFileLocationItem = new JMenuItem("Open file location");
             JMenuItem exitItem = new JMenuItem("Exit");
             
-            JMenu autosavesMenu = new JMenu("Autosaves...");
-            JMenuItem projectAutosavesItem = new JMenuItem("Current project");
-            JMenuItem allAutosavesItem = new JMenuItem("All autosaves");
-            JMenuItem unsavedAutoItem = new JMenuItem("Unsaved projects");
+            JMenu autosavesMenu = new JMenu("Autosaves");
+            JMenuItem projectAutosavesItem = new JMenuItem("Current project...");
+            JMenuItem allAutosavesItem = new JMenuItem("All autosaves...");
+            JMenuItem unsavedAutoItem = new JMenuItem("Unsaved projects...");
             autosavesMenu.add(projectAutosavesItem);
             autosavesMenu.add(allAutosavesItem);
             autosavesMenu.add(unsavedAutoItem);
@@ -66,16 +66,20 @@ public final class MenuBar extends JMenuBar {
             allAutosavesItem.setToolTipText("View all backup save files of your projects");
             unsavedAutoItem.setToolTipText("View backup save files of projects that were never manually saved to a file");
 
+            // layout
             fileMenu.add(newProjectItem);
             fileMenu.add(openItem);
+            fileMenu.add(recentProjectsMenu);
+            fileMenu.addSeparator();
             fileMenu.add(saveItem);
             fileMenu.add(saveAsItem);
+            fileMenu.add(autosavesMenu);
+            fileMenu.add(unsavedProjectsItem);
+            fileMenu.addSeparator();
             fileMenu.add(exportItem);
             fileMenu.add(printItem);
-            fileMenu.add(autosavesMenu);
+            fileMenu.addSeparator();
             fileMenu.add(openFileLocationItem);
-            fileMenu.add(recentProjectsMenu);
-            fileMenu.add(unsavedProjectsItem);
             fileMenu.addSeparator();
             fileMenu.add(exitItem);
 
@@ -93,9 +97,9 @@ public final class MenuBar extends JMenuBar {
             JMenu projectMenu = new JMenu("Project");
             add(projectMenu);
 
-            JMenuItem projectInfoItem = new JMenuItem("Project info");
-            JMenuItem editNotesItem = new JMenuItem("Edit notes");
-            JMenuItem renameProjectItem = new JMenuItem("Rename project");
+            JMenuItem projectInfoItem = new JMenuItem("Project info...");
+            JMenuItem editNotesItem = new JMenuItem("Edit notes...");
+            JMenuItem renameProjectItem = new JMenuItem("Rename project...");
 
             projectInfoItem.setToolTipText("View information about the current project");
             editNotesItem.setToolTipText("Edit notes for the current project");
@@ -151,27 +155,27 @@ public final class MenuBar extends JMenuBar {
             JMenu helpMenu = new JMenu("Help");
             add(helpMenu);
 
-            JMenuItem musicItem = new JMenuItem("Background music");
+            JMenuItem musicItem = new JMenuItem("Background music ↗");
             musicItem.setToolTipText("Listen to some beautiful piano playing by yours truly while you rank");
             helpMenu.add(musicItem);
 
-            JMenuItem gitItem = new JMenuItem("View source code");
+            JMenuItem gitItem = new JMenuItem("View source code ↗");
             gitItem.setToolTipText("View this application's source code repository on GitHub in your web browser");
             helpMenu.add(gitItem);
             helpMenu.addSeparator();
 
-            JMenuItem bugItem = new JMenuItem("Report a bug");
+            JMenuItem bugItem = new JMenuItem("Report a bug...");
             bugItem.setToolTipText("Tell the developer about a problem or error in the application so he can work on it");
             helpMenu.add(bugItem);
 
-            JMenu contactMenu = new JMenu("Contact developer...");
-            JMenuItem bugcontactItem = new JMenuItem("Report a bug");
+            JMenu contactMenu = new JMenu("Contact developer");
+            JMenuItem bugcontactItem = new JMenuItem("Report a bug...");
             bugcontactItem.setToolTipText("Tell the developer about a problem or error in the application so he can work on it");
             contactMenu.add(bugcontactItem);
-            JMenuItem featureItem = new JMenuItem("Request a feature");
+            JMenuItem featureItem = new JMenuItem("Request a feature...");
             featureItem.setToolTipText("Let me know about any ideas you have to improve Rank Anything!");
             contactMenu.add(featureItem);
-            JMenuItem generalItem = new JMenuItem("Other");
+            JMenuItem generalItem = new JMenuItem("Other...");
             generalItem.setToolTipText("Send an email to the developer");
             contactMenu.add(generalItem);
             helpMenu.add(contactMenu);
