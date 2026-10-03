@@ -10,7 +10,7 @@ import metadata.Metadata;
 import metadata.ProjectID;
 import saveload.SaveLoad;
 
-// handles file writing
+// manages file writing
 final class Write {
 
     // manages exports
@@ -97,6 +97,14 @@ final class Write {
         }
         
         File snapshotFile = new File(exportFolder, fileName);
+        
+        // auto rename if file exists
+        File f = snapshotFile;
+        int counter = 1;
+        while (f.exists()) {
+            f = new File(exportFolder, "(" + counter++ + ")_" + fileName);
+        }
+        snapshotFile = f;
 
         // store current values before temporarily adjusting them for the save
         final String CURRENT_FILE_CREATED = Main.fileCreated;
