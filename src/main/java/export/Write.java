@@ -12,7 +12,7 @@ import metadata.Metadata;
 import metadata.ProjectID;
 import saveload.SaveLoad;
 
-// writes files
+// handles file writing
 final class Write {
 
     // manages exports
