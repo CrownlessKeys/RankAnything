@@ -67,7 +67,7 @@ final class ProjectInfo {
         JLabel projectIdLabel = new JLabel("Project ID: " + Main.projectId);
         projectIdLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
         projectIdLabel.setForeground(Color.GRAY);
-        projectIdLabel.setToolTipText(Main.projectId + " (Click to copy to clipboard)");
+        projectIdLabel.setToolTipText("(Click to copy to clipboard) " + Main.projectId);
         projectIdLabel.setCursor(new Cursor(Cursor.HAND_CURSOR));
         panel.add(projectIdLabel);
         panel.add(Box.createVerticalStrut(10));
@@ -78,7 +78,7 @@ final class ProjectInfo {
         panel.add(fileLocationHeaderLabel);
         JLabel fileLocationLabel = new JLabel("    " + SaveLoad.getCurrentFilePath());
         fileLocationLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
-        fileLocationLabel.setToolTipText(SaveLoad.getCurrentFilePath());
+        fileLocationLabel.setToolTipText("(Click to open folder) " + SaveLoad.getCurrentFilePath());
         fileLocationLabel.setCursor(new Cursor(Cursor.HAND_CURSOR));
         panel.add(fileLocationLabel);
         JLabel originalLabel = new JLabel("This file is the original copy of the project.");
