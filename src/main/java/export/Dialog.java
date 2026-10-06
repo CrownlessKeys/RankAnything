@@ -39,7 +39,10 @@ final class Dialog {
         fileTypePanel.add(new JLabel("File type:"));
 
         String[] fileTypes = {
-            "PDF", // "DOCX", "CSV", "PNG", "HTML", "MD", "TXT",
+            "PDF", // "DOCX", 
+            // "XLSX", "CSV", "TSV"
+            // "HTML", "MD", "TEX", "TXT", 
+            // "PNG", "JPG",
             "RANK (project file)", "JSON (project file)"
         };
         JComboBox<String> fileTypeBox = new JComboBox<>(fileTypes);
