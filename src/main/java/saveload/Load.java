@@ -1,11 +1,11 @@
 package saveload;
 
-import java.awt.FileDialog;
 import java.io.File;
 import java.nio.file.Files;
 
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import javax.swing.SwingUtilities;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -17,6 +17,9 @@ import autosave.AutoIndicator;
 import autosave.Autosave;
 import criteria.CriteriaPanel;
 import items.ItemsPanel;
+import javafx.application.Platform;
+import javafx.stage.FileChooser;
+import javafx.stage.FileChooser.ExtensionFilter;
 import metadata.Metadata;
 import metadata.ProjectID;
 import ranking.RankingPanel.RankingMode;
@@ -25,14 +28,50 @@ import tasks.Notify;
 
 final class Load {
     // does nothing except let the user select a file for loadFromFile() to use
-    static void load(JFrame frame) {        
-        FileDialog dialog = new FileDialog(frame, "Open Project", FileDialog.LOAD);
-        dialog.setVisible(true);
+    static void load(JFrame frame) {
+        Platform.runLater(() -> {
 
-        if (dialog.getFile() != null) {
-            File file = new File(dialog.getDirectory(), dialog.getFile());
-            loadFromFile(file, frame, false);
-        }
+            FileChooser chooser = new FileChooser();
+            chooser.setTitle("Open Project");
+
+            // Filters
+            ExtensionFilter rankFilter = new FileChooser.ExtensionFilter(
+                "RANK Project Files (*.rank)", "*.rank"
+            );
+
+            ExtensionFilter projectFilter = new FileChooser.ExtensionFilter(
+                "All Project Files (*.rank, *.json)", "*.rank", "*.json"
+            );
+
+            ExtensionFilter allFilter = new FileChooser.ExtensionFilter(
+                "All Files (*.*)", "*.*"
+            );
+
+            // Add filters
+            chooser.getExtensionFilters().addAll(rankFilter, projectFilter, allFilter);
+
+            // Make .rank the default
+            chooser.setSelectedExtensionFilter(rankFilter);
+
+            // Restore last folder
+            if (Settings.lastOpenedProjectFolder != null) {
+                File last = new File(Settings.lastOpenedProjectFolder);
+                if (last.exists()) {
+                    chooser.setInitialDirectory(last);
+                }
+            }
+
+            File selected = chooser.showOpenDialog(null);
+            if (selected != null) {
+                // Save last folder
+                Settings.lastOpenedProjectFolder = selected.getParentFile().getAbsolutePath();
+                Settings.save();
+
+                SwingUtilities.invokeLater(() ->
+                    loadFromFile(selected, frame, false)
+                );
+            }
+        });
     }
 
     static void newProject(JFrame frame) {
@@ -161,7 +200,7 @@ final class Load {
             Notify.showToast(frame, "Project loaded");
 
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(null,
+            JOptionPane.showMessageDialog(frame,
                 "Failed to load project:\n" + ex.getMessage(),
                 "Load Error",
                 JOptionPane.ERROR_MESSAGE

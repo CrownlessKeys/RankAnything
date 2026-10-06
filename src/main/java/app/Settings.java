@@ -37,6 +37,9 @@ public final class Settings {
 
     // universal default export settings
     public static ExportPreferences defaultExport;
+
+    // last opened folder for load dialog
+    public static String lastOpenedProjectFolder;
     
     // "Don't show again" settings
     public static boolean showRenameWarning;
@@ -95,6 +98,8 @@ public final class Settings {
                 );
             }
 
+            lastOpenedProjectFolder = root.optString("lastOpenedProjectFolder", null);
+
             showRenameWarning = root.optBoolean("showRenameWarning", true);
             showAutosaveDeleteWarning = root.optBoolean("showAutosaveDeleteWarning", true);
 
@@ -125,6 +130,8 @@ public final class Settings {
 
             root.put("defaultExport", defaultExport.toJSON());
 
+            root.put("lastOpenedProjectFolder", lastOpenedProjectFolder);
+
             root.put("showRenameWarning", showRenameWarning);
             root.put("showAutosaveDeleteWarning", showAutosaveDeleteWarning);
 
@@ -139,16 +146,11 @@ public final class Settings {
     }
 
     public static void restoreDefaults(JFrame frame) {
-        
-        Object[] params = {
-            "This will reset ALL settings to their default values.",
-            "Are you sure you want to continue?",
-        };
 
         int result = JOptionPane.showConfirmDialog(
             frame,
-            params,
-            "Restore Default Settings",
+            "<html>This will reset ALL settings to<br>their default values. Are you<br>sure you want to continue?</html>",
+            "Restore default settings",
             JOptionPane.OK_CANCEL_OPTION,
             JOptionPane.WARNING_MESSAGE
         );
