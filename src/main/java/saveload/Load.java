@@ -63,10 +63,6 @@ final class Load {
 
             File selected = chooser.showOpenDialog(null);
             if (selected != null) {
-                // Save last folder
-                Settings.lastOpenedProjectFolder = selected.getParentFile().getAbsolutePath();
-                Settings.save();
-
                 SwingUtilities.invokeLater(() ->
                     loadFromFile(selected, frame, false)
                 );
@@ -184,10 +180,15 @@ final class Load {
             Main.rankingPanel.repaint();
 
             if (!isAuto) {
+                Settings.lastOpenedProjectFolder = file.getParentFile().getAbsolutePath();
+                Settings.save();
+
                 SaveLoad.currentProjectFile = file;
+
                 RecentProjects.addRecentProject(file.getAbsolutePath());
                 RecentProjects.save();
                 RecentProjects.updateRecentProjectsMenu(frame);
+                
                 Autosave.checkForNewerAutosave(frame);
             } else if (isDifferentProject) {
                 SaveLoad.currentProjectFile = null;

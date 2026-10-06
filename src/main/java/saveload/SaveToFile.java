@@ -10,6 +10,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import app.Main;
+import app.Settings;
 import criteria.CriteriaPanel;
 import items.ItemsPanel;
 import metadata.Metadata;
@@ -29,9 +30,14 @@ final class SaveToFile {
                 fw.write(root.toString(2));
             }
 
-            SaveLoad.currentProjectFile = file;
-            
-            if (!isAuto) Notify.showToast(frame, "Project saved");
+            if (!isAuto) {
+                SaveLoad.currentProjectFile = file;
+                
+                Settings.lastOpenedProjectFolder = file.getParent();
+                Settings.save();
+
+                Notify.showToast(frame, "Project saved");
+            }
 
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(frame,

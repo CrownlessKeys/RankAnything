@@ -24,7 +24,7 @@ final class AutoSettings {
     static void show(JFrame frame) {
 
         JCheckBox enableAutosave = new JCheckBox(
-            "Enable Autosave",
+            "Enable autosave",
             Settings.autosaveOnClose || Settings.autosavePeriodically
         );
         enableAutosave.setToolTipText(
@@ -37,7 +37,7 @@ final class AutoSettings {
 
         String intervalTooltip = "Set the interval at which backup save files of your project are automatically created.";
 
-        JLabel intervalLabel = new JLabel("Autosave Interval:");
+        JLabel intervalLabel = new JLabel("Autosave interval:");
         intervalLabel.setToolTipText(intervalTooltip);
 
         // Minutes spinner
@@ -68,7 +68,7 @@ final class AutoSettings {
         JCheckBox maxPerProjectUnlimited = new JCheckBox("Unlimited");
         maxPerProjectUnlimited.setSelected(Settings.autosaveUnlimitedPerProject);
         String maxPerProjectTooltip = "Set the maximum number of backup save files to keep for each project. The oldest autosaves will be deleted when this limit is exceeded.";
-        JLabel maxPerProjectLabel = new JLabel("Max Autosaves Per Project:");
+        JLabel maxPerProjectLabel = new JLabel("Max autosaves per project:");
         maxPerProjectSpinner.setToolTipText(maxPerProjectTooltip);
         maxPerProjectUnlimited.setToolTipText(maxPerProjectTooltip);
         maxPerProjectLabel.setToolTipText(maxPerProjectTooltip);
@@ -85,13 +85,13 @@ final class AutoSettings {
         JCheckBox maxTotalUnlimited = new JCheckBox("Unlimited");
         maxTotalUnlimited.setSelected(Settings.autosaveUnlimitedTotal);
         String maxTotalTooltip = "Set the maximum number of backup save files to keep in total. The oldest autosaves will be deleted when this limit is exceeded.";
-        JLabel maxTotalLabel = new JLabel("Max Autosaves Total:");
+        JLabel maxTotalLabel = new JLabel("Max autosaves total:");
         maxTotalSpinner.setToolTipText(maxTotalTooltip);
         maxTotalUnlimited.setToolTipText(maxTotalTooltip);
         maxTotalLabel.setToolTipText(maxTotalTooltip);
 
         JCheckBox autosaveOnClose = new JCheckBox(
-            "Autosave on Project Close",
+            "Autosave on project close",
             Settings.autosaveOnClose
         );
         autosaveOnClose.setToolTipText(
@@ -99,14 +99,14 @@ final class AutoSettings {
         );
 
         JCheckBox autosavePeriodically = new JCheckBox(
-            "Autosave Periodically",
+            "Autosave periodically",
             Settings.autosavePeriodically
         );
         autosavePeriodically.setToolTipText(
             "Enable or disable the automatic creation of backup save files of your project periodically (see below)."
         );
 
-        JButton viewAutosaves = new JButton("View All Autosaves");
+        JButton viewAutosaves = new JButton("View all autosaves");
         viewAutosaves.addActionListener(e -> AutoBrowser.show(
             frame, 
             null, 
@@ -114,7 +114,7 @@ final class AutoSettings {
         ));
         viewAutosaves.setToolTipText("View an interactive list of all autosave files for all projects.");
 
-        JButton openFolder = new JButton("Open Autosave Folder");
+        JButton openFolder = new JButton("Open autosave folder");
         openFolder.addActionListener(e -> {
             try {
                 Desktop.getDesktop().open(Main.AUTOSAVE_DIR);
@@ -238,7 +238,7 @@ final class AutoSettings {
         int result = JOptionPane.showConfirmDialog(
             frame,
             panel,
-            "Autosave Settings",
+            "Autosave settings",
             JOptionPane.OK_CANCEL_OPTION,
             JOptionPane.PLAIN_MESSAGE
         );
