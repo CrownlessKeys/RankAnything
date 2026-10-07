@@ -79,7 +79,7 @@ public final class Browse {
             // 1. Error message label
             JLabel messageLabel = new JLabel(
                 "<html>Could not open webpage.<br>" + message 
-                + "<br><br>You can still copy and paste the link to open it manually."
+                + "<br><br>You can still copy and paste the link to open it manually.</html>"
             );
             messageLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
             mainPanel.add(messageLabel);
