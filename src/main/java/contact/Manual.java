@@ -54,6 +54,7 @@ final class Manual {
             JTextArea projectArea = new JTextArea(project, 10, 40);
             projectArea.setLineWrap(true);
             projectArea.setWrapStyleWord(true);
+            projectArea.setEditable(false);
 
             JScrollPane projectScroll = new JScrollPane(projectArea);
 
@@ -69,7 +70,7 @@ final class Manual {
             copyProject.setToolTipText("Copy \"Project JSON\" field");
             copyProject.addActionListener(e -> {
                 Toolkit.getDefaultToolkit().getSystemClipboard()
-                    .setContents(new StringSelection(projectArea.getText()), null);
+                        .setContents(new StringSelection(projectArea.getText()), null);
             });
 
             projectRow.add(new JLabel("Project JSON:"));
@@ -89,6 +90,7 @@ final class Manual {
             JTextArea settingsArea = new JTextArea(settings, 10, 40);
             settingsArea.setLineWrap(true);
             settingsArea.setWrapStyleWord(true);
+            settingsArea.setEditable(false);
 
             JScrollPane settingsScroll = new JScrollPane(settingsArea);
 
@@ -104,7 +106,7 @@ final class Manual {
             copySettings.setToolTipText("Copy \"User Settings JSON\" field");
             copySettings.addActionListener(e -> {
                 Toolkit.getDefaultToolkit().getSystemClipboard()
-                    .setContents(new StringSelection(settingsArea.getText()), null);
+                        .setContents(new StringSelection(settingsArea.getText()), null);
             });
 
             settingsRow.add(new JLabel("User Settings JSON:"));
@@ -124,6 +126,7 @@ final class Manual {
             JTextArea systemArea = new JTextArea(system, 10, 40);
             systemArea.setLineWrap(true);
             systemArea.setWrapStyleWord(true);
+            systemArea.setEditable(false);
 
             JScrollPane systemScroll = new JScrollPane(systemArea);
 
@@ -139,7 +142,7 @@ final class Manual {
             copySystem.setToolTipText("Copy \"System information\" field");
             copySystem.addActionListener(e -> {
                 Toolkit.getDefaultToolkit().getSystemClipboard()
-                    .setContents(new StringSelection(systemArea.getText()), null);
+                        .setContents(new StringSelection(systemArea.getText()), null);
             });
 
             systemRow.add(new JLabel("System information:"));
