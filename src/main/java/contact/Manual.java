@@ -5,16 +5,16 @@ import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.awt.datatransfer.StringSelection;
 
+import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JDialog;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
-import javax.swing.JTextField;
 
 import app.Main;
 
@@ -23,266 +23,143 @@ final class Manual {
         "src/main/resources/iconmonstr-copy-lined.png"
     );
 
-    static void manualBugReport(String subject, String body) {
-        String DEV_EMAIL = Contact.DEV_EMAIL;
+    static void manualBugReport(String project, String settings, String system) {
+        // TODO: modal info popup to inform user what is about to happen
+        showTextFields(project, settings, system);
+    }
+
+    // shows the text fields for the user to copy and paste
+    private static void showTextFields(String project, String settings, String system) {
 
         // Main panel
             JPanel panel = new JPanel();
             panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+            panel.setBorder(BorderFactory.createEmptyBorder(15, 15, 15, 15));
 
         // Explanation
-            JLabel explanation = new JLabel(
-                "Please send the following message to the email address below."
+            JLabel explanation = new JLabel("<html>"
+                + "Please copy and paste the text blocks below into their matching fields on the Google Form. In most<br>"
+                + "cases, only \"Project JSON\" will need to be added manually, but the other sections are included here<br>"
+                + "in case they too were excluded.</html>"
             );
             explanation.setAlignmentX(Component.LEFT_ALIGNMENT);
             panel.add(explanation);
             panel.add(Box.createVerticalStrut(10));
 
-        // Email field
-            JPanel emailRow = new JPanel();
-            emailRow.setLayout(new BoxLayout(emailRow, BoxLayout.X_AXIS));
-            emailRow.setAlignmentX(Component.LEFT_ALIGNMENT);
+        // Project field
+            JPanel projectRow = new JPanel();
+            projectRow.setLayout(new BoxLayout(projectRow, BoxLayout.X_AXIS));
+            projectRow.setAlignmentX(Component.LEFT_ALIGNMENT);
 
-            JTextField emailField = new JTextField(DEV_EMAIL);
-            emailField.setEditable(false);
+            JTextArea projectArea = new JTextArea(project, 10, 40);
+            projectArea.setLineWrap(true);
+            projectArea.setWrapStyleWord(true);
 
-            JButton copyEmail = new JButton(copyIcon);
-            copyEmail.setMaximumSize(new Dimension (
-                copyEmail.getPreferredSize().height, 
-                copyEmail.getPreferredSize().height
+            JScrollPane projectScroll = new JScrollPane(projectArea);
+
+            JButton copyProject = new JButton(copyIcon);
+            copyProject.setMaximumSize(new Dimension (
+                copyProject.getPreferredSize().height, 
+                copyProject.getPreferredSize().height
             ));
-            copyEmail.setPreferredSize(new Dimension (
-                copyEmail.getPreferredSize().height, 
-                copyEmail.getPreferredSize().height
+            copyProject.setPreferredSize(new Dimension (
+                copyProject.getPreferredSize().height, 
+                copyProject.getPreferredSize().height
             ));
-            copyEmail.setToolTipText("Copy email address");
-            copyEmail.addActionListener(e -> {
-                Toolkit.getDefaultToolkit().getSystemClipboard().setContents(
-                    new StringSelection(DEV_EMAIL), 
-                    null
-                );
-            });
-
-            emailRow.add(new JLabel("Email: "));
-            emailRow.add(Box.createHorizontalStrut(15));
-            emailRow.add(emailField);
-            emailRow.add(Box.createHorizontalStrut(5));
-            emailRow.add(copyEmail);
-
-            panel.add(emailRow);
-            panel.add(Box.createVerticalStrut(10));
-
-        // Subject field
-            JPanel subjectRow = new JPanel();
-            subjectRow.setLayout(new BoxLayout(subjectRow, BoxLayout.X_AXIS));
-            subjectRow.setAlignmentX(Component.LEFT_ALIGNMENT);
-
-            JTextField subjectField = new JTextField(subject);
-
-            JButton copySubject = new JButton(copyIcon);
-            copySubject.setMaximumSize(new Dimension (
-                copySubject.getPreferredSize().height, 
-                copySubject.getPreferredSize().height
-            ));
-            copySubject.setPreferredSize(new Dimension (
-                copySubject.getPreferredSize().height, 
-                copySubject.getPreferredSize().height
-            ));
-            copySubject.setToolTipText("Copy subject");
-            copySubject.addActionListener(e -> {
+            copyProject.setToolTipText("Copy \"Project JSON\" field");
+            copyProject.addActionListener(e -> {
                 Toolkit.getDefaultToolkit().getSystemClipboard()
-                    .setContents(new StringSelection(subjectField.getText()), null);
+                    .setContents(new StringSelection(projectArea.getText()), null);
             });
 
-            subjectRow.add(new JLabel("Subject: "));
-            subjectRow.add(Box.createHorizontalStrut(15));
-            subjectRow.add(subjectField);
-            subjectRow.add(Box.createHorizontalStrut(5));
-            subjectRow.add(copySubject);
+            projectRow.add(new JLabel("Project JSON:"));
+            projectRow.add(Box.createHorizontalStrut(15));
+            projectRow.add(projectScroll);
+            projectRow.add(Box.createHorizontalStrut(5));
+            projectRow.add(copyProject);
 
-            panel.add(subjectRow);
+            panel.add(projectRow);
             panel.add(Box.createVerticalStrut(10));
 
-        // Body field
-            JPanel bodyRow = new JPanel();
-            bodyRow.setLayout(new BoxLayout(bodyRow, BoxLayout.X_AXIS));
-            bodyRow.setAlignmentX(Component.LEFT_ALIGNMENT);
+        // Settings field
+            JPanel settingsRow = new JPanel();
+            settingsRow.setLayout(new BoxLayout(settingsRow, BoxLayout.X_AXIS));
+            settingsRow.setAlignmentX(Component.LEFT_ALIGNMENT);
 
-            JTextArea bodyArea = new JTextArea(body, 10, 40);
-            bodyArea.setLineWrap(true);
-            bodyArea.setWrapStyleWord(true);
+            JTextArea settingsArea = new JTextArea(settings, 10, 40);
+            settingsArea.setLineWrap(true);
+            settingsArea.setWrapStyleWord(true);
 
-            JScrollPane bodyScroll = new JScrollPane(bodyArea);
+            JScrollPane settingsScroll = new JScrollPane(settingsArea);
 
-            JButton copyBody = new JButton(copyIcon);
-            copyBody.setMaximumSize(new Dimension (
-                copyBody.getPreferredSize().height, 
-                copyBody.getPreferredSize().height
+            JButton copySettings = new JButton(copyIcon);
+            copySettings.setMaximumSize(new Dimension (
+                copySettings.getPreferredSize().height, 
+                copySettings.getPreferredSize().height
             ));
-            copyBody.setPreferredSize(new Dimension (
-                copyBody.getPreferredSize().height, 
-                copyBody.getPreferredSize().height
+            copySettings.setPreferredSize(new Dimension (
+                copySettings.getPreferredSize().height, 
+                copySettings.getPreferredSize().height
             ));
-            copyBody.setToolTipText("Copy message body");
-            copyBody.addActionListener(e -> {
+            copySettings.setToolTipText("Copy \"User Settings JSON\" field");
+            copySettings.addActionListener(e -> {
                 Toolkit.getDefaultToolkit().getSystemClipboard()
-                    .setContents(new StringSelection(bodyArea.getText()), null);
+                    .setContents(new StringSelection(settingsArea.getText()), null);
             });
 
-            bodyRow.add(new JLabel("Message: "));
-            bodyRow.add(Box.createHorizontalStrut(15));
-            bodyRow.add(bodyScroll);
-            bodyRow.add(Box.createHorizontalStrut(5));
-            bodyRow.add(copyBody);
+            settingsRow.add(new JLabel("User Settings JSON:"));
+            settingsRow.add(Box.createHorizontalStrut(15));
+            settingsRow.add(settingsScroll);
+            settingsRow.add(Box.createHorizontalStrut(5));
+            settingsRow.add(copySettings);
 
-            panel.add(bodyRow);
+            panel.add(settingsRow);
             panel.add(Box.createVerticalStrut(10));
 
-        // Show dialog
-        JOptionPane.showMessageDialog(
-            Main.frame,
-            panel,
-            "Manual bug report",
-            JOptionPane.INFORMATION_MESSAGE
-        );
-    }
+        // System field
+            JPanel systemRow = new JPanel();
+            systemRow.setLayout(new BoxLayout(systemRow, BoxLayout.X_AXIS));
+            systemRow.setAlignmentX(Component.LEFT_ALIGNMENT);
 
-    static void manualFeatureRequest() {
-        String DEV_EMAIL = Contact.DEV_EMAIL;
+            JTextArea systemArea = new JTextArea(system, 10, 40);
+            systemArea.setLineWrap(true);
+            systemArea.setWrapStyleWord(true);
 
-        JPanel panel = new JPanel();
-        panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+            JScrollPane systemScroll = new JScrollPane(systemArea);
 
-        JLabel explanation = new JLabel(
-            "<html>Please send your message to the email address below.<br>You can also copy the subject line to let me know what the email is about!</html>"
-        );
-        explanation.setAlignmentX(Component.LEFT_ALIGNMENT);
-        panel.add(explanation);
-        panel.add(Box.createVerticalStrut(10));
-
-        // Email row
-            JPanel emailRow = new JPanel();
-            emailRow.setLayout(new BoxLayout(emailRow, BoxLayout.X_AXIS));
-            emailRow.setAlignmentX(Component.LEFT_ALIGNMENT);
-
-            JTextField emailField = new JTextField(DEV_EMAIL);
-            emailField.setEditable(false);
-
-            JButton copyEmail = new JButton(copyIcon);
-            copyEmail.setMaximumSize(new Dimension (
-                copyEmail.getPreferredSize().height, 
-                copyEmail.getPreferredSize().height
+            JButton copySystem = new JButton(copyIcon);
+            copySystem.setMaximumSize(new Dimension (
+                copySystem.getPreferredSize().height, 
+                copySystem.getPreferredSize().height
             ));
-            copyEmail.setPreferredSize(new Dimension (
-                copyEmail.getPreferredSize().height, 
-                copyEmail.getPreferredSize().height
+            copySystem.setPreferredSize(new Dimension (
+                copySystem.getPreferredSize().height, 
+                copySystem.getPreferredSize().height
             ));
-            copyEmail.setToolTipText("Copy email address");
-            copyEmail.addActionListener(e -> {
+            copySystem.setToolTipText("Copy \"System information\" field");
+            copySystem.addActionListener(e -> {
                 Toolkit.getDefaultToolkit().getSystemClipboard()
-                    .setContents(new StringSelection(DEV_EMAIL), null);
+                    .setContents(new StringSelection(systemArea.getText()), null);
             });
 
-            emailRow.add(new JLabel("Email: "));
-            emailRow.add(Box.createHorizontalStrut(15));
-            emailRow.add(emailField);
-            emailRow.add(Box.createHorizontalStrut(5));
-            emailRow.add(copyEmail);
+            systemRow.add(new JLabel("System information:"));
+            systemRow.add(Box.createHorizontalStrut(15));
+            systemRow.add(systemScroll);
+            systemRow.add(Box.createHorizontalStrut(5));
+            systemRow.add(copySystem);
 
-            panel.add(emailRow);
+            panel.add(systemRow);
             panel.add(Box.createVerticalStrut(10));
 
-        // Subject row
-            JPanel subjectRow = new JPanel();
-            subjectRow.setLayout(new BoxLayout(subjectRow, BoxLayout.X_AXIS));
-            subjectRow.setAlignmentX(Component.LEFT_ALIGNMENT);
-
-            String subjectText = "Rank Anything: Feature Request";
-            JTextField subjectField = new JTextField(subjectText);
-
-            JButton copySubject = new JButton(copyIcon);
-            copySubject.setMaximumSize(new Dimension (
-                copySubject.getPreferredSize().height, 
-                copySubject.getPreferredSize().height
-            ));
-            copySubject.setPreferredSize(new Dimension (
-                copySubject.getPreferredSize().height, 
-                copySubject.getPreferredSize().height
-            ));
-            copySubject.setToolTipText("Copy subject line");
-            copySubject.addActionListener(e -> {
-                Toolkit.getDefaultToolkit().getSystemClipboard().setContents(
-                    new StringSelection(subjectField.getText()), 
-                    null
-                );
-            });
-
-            subjectRow.add(new JLabel("Subject: "));
-            subjectRow.add(Box.createHorizontalStrut(15));
-            subjectRow.add(subjectField);
-            subjectRow.add(Box.createHorizontalStrut(5));
-            subjectRow.add(copySubject);
-
-            panel.add(subjectRow);
-            panel.add(Box.createVerticalStrut(10));
-
-        JOptionPane.showMessageDialog(
-            Main.frame,
-            panel,
-            "Manual feature request",
-            JOptionPane.INFORMATION_MESSAGE
-        );
-    }
-
-    static void manualContact() {
-        String DEV_EMAIL = Contact.DEV_EMAIL;
-
-        JPanel panel = new JPanel();
-        panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
-
-        JLabel explanation = new JLabel(
-            "Please send your message to the email address below."
-        );
-        explanation.setAlignmentX(Component.LEFT_ALIGNMENT);
-        panel.add(explanation);
-        panel.add(Box.createVerticalStrut(10));
-
-        JPanel emailRow = new JPanel();
-        emailRow.setLayout(new BoxLayout(emailRow, BoxLayout.X_AXIS));
-        emailRow.setAlignmentX(Component.LEFT_ALIGNMENT);
-
-        JTextField emailField = new JTextField(DEV_EMAIL);
-        emailField.setEditable(false);
-
-        JButton copyEmail = new JButton(copyIcon);
-        copyEmail.setMaximumSize(new Dimension (
-            copyEmail.getPreferredSize().height, 
-            copyEmail.getPreferredSize().height
-        ));
-        copyEmail.setPreferredSize(new Dimension (
-            copyEmail.getPreferredSize().height, 
-            copyEmail.getPreferredSize().height
-        ));
-        copyEmail.setToolTipText("Copy email address");
-        copyEmail.addActionListener(e -> {
-            Toolkit.getDefaultToolkit().getSystemClipboard()
-                .setContents(new StringSelection(DEV_EMAIL), null);
-        });
-
-        emailRow.add(new JLabel("Email: "));
-        emailRow.add(Box.createHorizontalStrut(15));
-        emailRow.add(emailField);
-        emailRow.add(Box.createHorizontalStrut(5));
-        emailRow.add(copyEmail);
-
-        panel.add(emailRow);
-        panel.add(Box.createVerticalStrut(10));
-
-        JOptionPane.showMessageDialog(
-            Main.frame,
-            panel,
-            "Manual contact",
-            JOptionPane.INFORMATION_MESSAGE
-        );
+            // Show dialog (modeless so the webpage can open immediately)
+            JDialog dialog = new JDialog(
+                Main.frame, 
+                "Copy and paste fields for Bug Report Google Form", 
+                false // false for modeless
+            );
+            dialog.setContentPane(panel);
+            dialog.pack();
+            dialog.setLocationRelativeTo(Main.frame);
+            dialog.setVisible(true);
     }
 }

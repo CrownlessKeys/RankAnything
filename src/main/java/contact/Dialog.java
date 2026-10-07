@@ -109,7 +109,8 @@ public final class Dialog {
             try {
                 String notIncluded = URLEncoder.encode("Not included", StandardCharsets.UTF_8);
 
-                String project = URLEncoder.encode(SaveLoad.buildProjectJSON().toString(4), StandardCharsets.UTF_8);
+                String rawProject = SaveLoad.buildProjectJSON().toString(4);
+                String project = URLEncoder.encode(rawProject, StandardCharsets.UTF_8);
                 
                 String rawSettings = "";
                 try {
@@ -158,13 +159,18 @@ public final class Dialog {
                     url = BUG_GOOGLE_FORM_URL;
                 }
 
+                if (tooLong) Manual.manualBugReport(
+                    includeProject.isSelected() ? rawProject : "Not included",
+                    includeSettings.isSelected() ? rawSettings : "Not included",
+                    includeSystem.isSelected() ? rawSystem : "Not included"
+                );
+                
                 Browse.openWebpage(Main.frame, url);
-                if (tooLong) Manual.manualBugReport(null, null);
 
             } catch (Exception ex) {
                 ex.printStackTrace();
             }
-            
+
             dialog.dispose();
         });
 
