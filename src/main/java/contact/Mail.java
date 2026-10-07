@@ -57,8 +57,8 @@ final class Mail {
         String steps, // steps to reproduce
         String expected, // expected behavior
         String actual, // actual behavior
-        boolean includeProject, // user project file AS ATTACHMENT
-        boolean includeSettings, // user Settings.json AS ATTACHMENT
+        boolean includeProject, // user project file 
+        boolean includeSettings, // user Settings.json 
         boolean includeSystemInfo, // OS, Java version, and Rank Anything version
         boolean reply, // does the user want a follow-up
         boolean manual // manual email vs open email app

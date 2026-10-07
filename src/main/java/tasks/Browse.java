@@ -8,9 +8,14 @@ import java.net.URISyntaxException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
 public final class Browse {
+    
+    private static final ImageIcon copyIcon = new ImageIcon(
+        "src/main/resources/iconmonstr-copy-lined.png"
+    );
 
     // Initialize an official logger for this class
     private static final Logger LOGGER = Logger.getLogger(Browse.class.getName());

@@ -1,6 +1,14 @@
 package contact;
 
+import java.awt.Color;
 import java.awt.Component;
+import java.awt.Cursor;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.io.IOException;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
 import java.util.function.Consumer;
 
 import javax.swing.BorderFactory;
@@ -12,90 +20,55 @@ import javax.swing.JComponent;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTextArea;
 
 import app.Main;
+import saveload.SaveLoad;
+import tasks.Browse;
 
-final class Dialog {
+public final class Dialog {
+
+    private static final String BUG_GOOGLE_FORM_URL =
+            "https://docs.google.com/forms/d/e/1FAIpQLSdLaiEjGqzWIU1LatuD9p38J1OW1XYiNI_WaQI4KTFxhEbZlg/viewform?usp=pp_url";
+
     static void showBugReportDialog() {
 
-        // Create dialog
         JDialog dialog = new JDialog(Main.frame, "Report a bug", true);
         dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 
         JPanel panel = new JPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
-        panel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+        panel.setBorder(BorderFactory.createEmptyBorder(12, 12, 12, 12));
 
-        // Helper to left-align rows
         Consumer<JComponent> left = c -> c.setAlignmentX(Component.LEFT_ALIGNMENT);
 
         // Title
         JLabel title = new JLabel(
-            "<html>Please describe the issue.<br>All fields are optional, but including more information helps me solve the problem.<br>You will be able to review everything included in the email before sending.</html>"
+            "<html>Please select what information you would like to include<br>"
+            +     "in the report. Including more information helps me solve<br>"
+            +     "the problem. Thank you!<br><br>"
+            +     "Press <b>OK</b> to open the Google Form.</html>"
         );
         left.accept(title);
         panel.add(title);
         panel.add(Box.createVerticalStrut(10));
 
-        // Description
-        panel.add(new JLabel("Bug description:"));
-        JTextArea descriptionArea = new JTextArea(4, 40);
-        descriptionArea.setLineWrap(true);
-        descriptionArea.setWrapStyleWord(true);
-        JScrollPane descriptionScroll = new JScrollPane(descriptionArea);
-        left.accept(descriptionScroll);
-        panel.add(descriptionScroll);
-        panel.add(Box.createVerticalStrut(10));
-
-        // Steps
-        panel.add(new JLabel("Steps to reproduce:"));
-        JTextArea stepsArea = new JTextArea(4, 40);
-        stepsArea.setLineWrap(true);
-        stepsArea.setWrapStyleWord(true);
-        JScrollPane stepsScroll = new JScrollPane(stepsArea);
-        left.accept(stepsScroll);
-        panel.add(stepsScroll);
-        panel.add(Box.createVerticalStrut(10));
-
-        // Expected
-        panel.add(new JLabel("Expected behavior:"));
-        JTextArea expectedArea = new JTextArea(3, 40);
-        expectedArea.setLineWrap(true);
-        expectedArea.setWrapStyleWord(true);
-        JScrollPane expectedScroll = new JScrollPane(expectedArea);
-        left.accept(expectedScroll);
-        panel.add(expectedScroll);
-        panel.add(Box.createVerticalStrut(10));
-
-        // Actual
-        panel.add(new JLabel("Actual behavior:"));
-        JTextArea actualArea = new JTextArea(3, 40);
-        actualArea.setLineWrap(true);
-        actualArea.setWrapStyleWord(true);
-        JScrollPane actualScroll = new JScrollPane(actualArea);
-        left.accept(actualScroll);
-        panel.add(actualScroll);
-        panel.add(Box.createVerticalStrut(10));
-
         // Checkboxes
-        JCheckBox includeProject = new JCheckBox("Include your current project information");
-        includeProject.setSelected(true); // default
-        JCheckBox includeSettings = new JCheckBox("Include your current Rank Anything settings");
-        includeSettings.setSelected(true); // default
-        JCheckBox includeSystemInfo = new JCheckBox("Include basic system information");
-        includeSystemInfo.setSelected(true); // default
-        JCheckBox requestReply = new JCheckBox("I would like a follow-up response");
-        requestReply.setSelected(true); // default
+        JCheckBox includeProject = new JCheckBox("Include current project information");
+        includeProject.setSelected(true);
+
+        JCheckBox includeSettings = new JCheckBox("<html>Include <i>Rank Anything</i> settings</html>");
+        includeSettings.setSelected(true);
+
+        JCheckBox includeSystem = new JCheckBox("Include basic system information");
+        includeSystem.setSelected(true);
+
         left.accept(includeProject);
         left.accept(includeSettings);
-        left.accept(includeSystemInfo);
-        left.accept(requestReply);
+        left.accept(includeSystem);
+
         panel.add(includeProject);
         panel.add(includeSettings);
-        panel.add(includeSystemInfo);
-        panel.add(requestReply);
+        panel.add(includeSystem);
         panel.add(Box.createVerticalStrut(15));
 
         // Buttons
@@ -103,134 +76,78 @@ final class Dialog {
         buttonRow.setLayout(new BoxLayout(buttonRow, BoxLayout.X_AXIS));
         left.accept(buttonRow);
 
-        JButton openMail = new JButton("Open email app");
-        JButton manual = new JButton("Report manually");
+        JButton ok = new JButton("OK");
         JButton cancel = new JButton("Cancel");
 
-        buttonRow.add(openMail);
-        buttonRow.add(Box.createHorizontalStrut(10));
-        buttonRow.add(manual);
+        buttonRow.add(Box.createHorizontalGlue());
+        buttonRow.add(ok);
         buttonRow.add(Box.createHorizontalStrut(10));
         buttonRow.add(cancel);
+        buttonRow.add(Box.createHorizontalGlue());
 
         panel.add(buttonRow);
+        panel.add(Box.createVerticalStrut(10));
 
-        // Button actions
-        openMail.addActionListener(e -> {
-            Mail.bugReport(
-                descriptionArea.getText().trim(),
-                stepsArea.getText().trim(),
-                expectedArea.getText().trim(),
-                actualArea.getText().trim(),
-                includeProject.isSelected(),
-                includeSettings.isSelected(),
-                includeSystemInfo.isSelected(),
-                requestReply.isSelected(),
-                false // manual = false
-            );
-            dialog.dispose();
+        // Legacy link
+        JLabel legacy = new JLabel("<html><i>Send by email instead</i></html>");
+        legacy.setForeground(new Color(120, 120, 120));
+        legacy.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+        left.accept(legacy);
+
+        legacy.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                dialog.dispose();
+                LegacyDialog.showBugReportDialog();
+            }
         });
 
-        manual.addActionListener(e -> {
-            Mail.bugReport(
-                descriptionArea.getText().trim(),
-                stepsArea.getText().trim(),
-                expectedArea.getText().trim(),
-                actualArea.getText().trim(),
-                includeProject.isSelected(),
-                includeSettings.isSelected(),
-                includeSystemInfo.isSelected(),
-                requestReply.isSelected(),
-                true // manual = true
-            );
-            dialog.dispose();
-        });
+        panel.add(legacy);
 
-        cancel.addActionListener(e -> dialog.dispose());
+        // OK button → open Google Form with encoded parameters
+        ok.addActionListener(e -> {
+            try {
+                String notIncluded = URLEncoder.encode("Not included", StandardCharsets.UTF_8);
 
-        dialog.setContentPane(panel);
-        dialog.pack();
-        dialog.setLocationRelativeTo(Main.frame);
-        dialog.setVisible(true);
-    }
+                String project = URLEncoder.encode(SaveLoad.buildProjectJSON().toString(4), StandardCharsets.UTF_8);
+                
+                String rawSettings = "";
+                try {
+                    rawSettings = Files.readString(Main.SETTINGS_FILE.toPath());
+                } catch (IOException ex) {}
 
-    static void showContactDialog() {
+                String rawRecentProjects = "";
+                try {
+                    rawRecentProjects = Files.readString(Main.RECENT_PROJECTS_FILE.toPath());
+                } catch (IOException ex) {}
 
-        JDialog dialog = new JDialog(Main.frame, "Contact developer", true);
-        dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+                String rawCombinedSettings = rawSettings + "\n\n" + rawRecentProjects;
+                String settings = URLEncoder.encode(rawCombinedSettings, StandardCharsets.UTF_8);
 
-        JPanel panel = new JPanel();
-        panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
-        panel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+                String rawSystem = """
+                    App version: %s
+                    File format version: %s
+                    Java version: %s
+                    OS: %s %s
+                """.formatted(
+                    Main.APP_VERSION, 
+                    Main.FILE_FORMAT_VERSION,
+                    System.getProperty("java.version"), 
+                    System.getProperty("os.name"), 
+                    System.getProperty("os.version")
+                );
+                String system = URLEncoder.encode(rawSystem, StandardCharsets.UTF_8);
 
-        // Buttons
-        JButton openMail = new JButton("Open email app");
-        JButton manual = new JButton("Email manually");
-        JButton cancel = new JButton("Cancel");
+                String url = BUG_GOOGLE_FORM_URL
+                        + "&entry.593604431=" + (includeProject.isSelected() ? project : notIncluded)
+                        + "&entry.783400744=" + (includeSettings.isSelected() ? settings : notIncluded)
+                        + "&entry.1751666920=" + (includeSystem.isSelected() ? system : notIncluded);
 
-        JPanel row = new JPanel();
-        row.setLayout(new BoxLayout(row, BoxLayout.X_AXIS));
-
-        row.add(openMail);
-        row.add(Box.createHorizontalStrut(10));
-        row.add(manual);
-        row.add(Box.createHorizontalStrut(10));
-        row.add(cancel);
-
-        panel.add(row);
-
-        // Actions
-        openMail.addActionListener(e -> {
-            Mail.contactGeneral();
-            dialog.dispose();
-        });
-
-        manual.addActionListener(e -> {
-            Manual.manualContact();
-            dialog.dispose();
-        });
-
-        cancel.addActionListener(e -> dialog.dispose());
-
-        dialog.setContentPane(panel);
-        dialog.pack();
-        dialog.setLocationRelativeTo(Main.frame);
-        dialog.setVisible(true);
-    }
-
-    static void showFeatureDialog() {
-
-        JDialog dialog = new JDialog(Main.frame, "Request a feature", true);
-        dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-
-        JPanel panel = new JPanel();
-        panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
-        panel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
-
-        // Buttons
-        JButton openMail = new JButton("Open email app");
-        JButton manual = new JButton("Email manually");
-        JButton cancel = new JButton("Cancel");
-
-        JPanel row = new JPanel();
-        row.setLayout(new BoxLayout(row, BoxLayout.X_AXIS));
-
-        row.add(openMail);
-        row.add(Box.createHorizontalStrut(10));
-        row.add(manual);
-        row.add(Box.createHorizontalStrut(10));
-        row.add(cancel);
-
-        panel.add(row);
-
-        // Actions
-        openMail.addActionListener(e -> {
-            Mail.contactFeatureRequest();
-            dialog.dispose();
-        });
-
-        manual.addActionListener(e -> {
-            Manual.manualFeatureRequest();
+                Browse.openWebpage(Main.frame, url);
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
+            
             dialog.dispose();
         });
 
