@@ -123,15 +123,15 @@ final class Mail {
 
         if (!manual && body.length() > 1800) {
             emailTooLong();
-            Manual.manualBugReport(subject, body);
+            LegacyManual.manualBugReport(subject, body);
             return;
         }
 
         if (manual) {
-            Manual.manualBugReport(subject, body);
+            LegacyManual.manualBugReport(subject, body);
         } else if (!Mail.openEmail(subject, body)) {
             emailFailed();
-            Manual.manualBugReport(subject, body);
+            LegacyManual.manualBugReport(subject, body);
         }
     }
 
@@ -142,7 +142,7 @@ final class Mail {
 
         if (!Mail.openEmail(subject, body)) {
             emailFailed();
-            Manual.manualFeatureRequest();
+            LegacyManual.manualFeatureRequest();
         }
     }
 
@@ -153,7 +153,7 @@ final class Mail {
 
         if (!Mail.openEmail(subject, body)) {
             emailFailed();
-            Manual.manualContact();
+            LegacyManual.manualContact();
         }
     }
 

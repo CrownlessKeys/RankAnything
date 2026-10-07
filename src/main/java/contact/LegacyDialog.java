@@ -186,7 +186,7 @@ final class LegacyDialog {
         });
 
         manual.addActionListener(e -> {
-            Manual.manualContact();
+            LegacyManual.manualContact();
             dialog.dispose();
         });
 
@@ -230,7 +230,7 @@ final class LegacyDialog {
         });
 
         manual.addActionListener(e -> {
-            Manual.manualFeatureRequest();
+            LegacyManual.manualFeatureRequest();
             dialog.dispose();
         });
 

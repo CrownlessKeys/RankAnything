@@ -143,23 +143,24 @@ public final class Dialog {
                         + "&entry.783400744=" + (includeSettings.isSelected() ? settings : notIncluded)
                         + "&entry.1751666920=" + (includeSystem.isSelected() ? system : notIncluded);
                 
+                boolean tooLong = false;
                 if (url.length() > 8000) {
                     url = BUG_GOOGLE_FORM_URL
                             + "&entry.783400744=" + (includeSettings.isSelected() ? settings : notIncluded)
                             + "&entry.1751666920=" + (includeSystem.isSelected() ? system : notIncluded);
-                    // TODO: Copy and paste JSON manually
+                    tooLong = true;
                 }
                 if (url.length() > 8000) {
                     url = BUG_GOOGLE_FORM_URL
                             + "&entry.1751666920=" + (includeSystem.isSelected() ? system : notIncluded);
-                    // TODO: Copy and paste JSON manually
                 }
                 if (url.length() > 8000) {
                     url = BUG_GOOGLE_FORM_URL;
-                    // TODO: Copy and paste JSON manually
                 }
 
                 Browse.openWebpage(Main.frame, url);
+                if (tooLong) Manual.manualBugReport(null, null);
+
             } catch (Exception ex) {
                 ex.printStackTrace();
             }
