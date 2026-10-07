@@ -130,14 +130,14 @@ final class Load {
             // Load criteria
             for (int i = 0; i < criteriaArray.length(); i++) {
                 JSONObject obj = criteriaArray.getJSONObject(i);
-                CriteriaPanel cp = Create.createCriterion(obj, frame);
+                CriteriaPanel cp = Create.createCriterion(obj);
                 cp.refreshExtraInfo();
             }
 
             // Load items
             for (int i = 0; i < itemsArray.length(); i++) {
                 JSONObject obj = itemsArray.getJSONObject(i);
-                ItemsPanel ip = Create.createItem(obj, frame);
+                ItemsPanel ip = Create.createItem(obj);
 
                 JSONObject scores = obj.getJSONObject("scores");
                 for (CriteriaPanel cp : Main.criteriaList) {

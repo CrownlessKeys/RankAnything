@@ -188,7 +188,7 @@ public final class CritInit {
                 Main.updateHideDisabledCriteria(hide);
             });
 
-            addCriterionButton.addActionListener(e -> Create.createCriterion(null, Main.frame));
+            addCriterionButton.addActionListener(e -> Create.createCriterion(null));
 
             disableAllButton.addActionListener(e -> {
                 SelectAll.enableAllCriteria(disabled);

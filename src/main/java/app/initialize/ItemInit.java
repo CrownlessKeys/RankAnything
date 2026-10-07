@@ -196,7 +196,7 @@ public final class ItemInit {
         });
 
         addItemButton.addActionListener(e -> {
-            Create.createItem(null, Main.frame);
+            Create.createItem(null);
         });
 
         disableAllButton.addActionListener(e -> {

@@ -4,7 +4,6 @@ import java.awt.Component;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
-import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 import org.json.JSONObject;
@@ -16,7 +15,7 @@ import metadata.Metadata;
 
 public final class Create {
 
-    public static CriteriaPanel createCriterion(JSONObject data, JFrame frame) {
+    public static CriteriaPanel createCriterion(JSONObject data) {
         
         JPanel wrapper = new JPanel();
         wrapper.setLayout(new BoxLayout(wrapper, BoxLayout.Y_AXIS));
@@ -140,7 +139,7 @@ public final class Create {
         return bubble;
     }
 
-    public static ItemsPanel createItem(JSONObject data, JFrame frame) {
+    public static ItemsPanel createItem(JSONObject data) {
         
         JPanel wrapper = new JPanel();
         wrapper.setLayout(new BoxLayout(wrapper, BoxLayout.Y_AXIS));
