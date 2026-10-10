@@ -20,7 +20,7 @@ import saveload.SaveLoad;
 public final class LayoutInit {
     public static void build() {
 
-        JFrame frame = new JFrame("Rank Anything — " + Main.projectName);
+        JFrame frame = new JFrame(Main.baseWindowTitle + " — " + Main.projectName);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(900, 600);
 

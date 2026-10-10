@@ -161,12 +161,12 @@ final class Mail {
         JOptionPane.showMessageDialog(
             Main.frame,
             """
-                Rank Anything could not open your email app.
+                Your default email application could not be opened.
 
                 This usually happens when:
                 • No default mail app is set
-                • Only webmail (Gmail/Outlook.com) is used
-                • Windows is set to open mailto links in a browser
+                • Only webmail (such as Gmail or Outlook.com) is used
+                • The system is set to open mail links in a browser
 
                 You can still email the developer manually.
                 Please select "OK" to proceed with this.

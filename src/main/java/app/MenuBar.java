@@ -182,7 +182,7 @@ public final class MenuBar extends JMenuBar {
             bugcontactItem.setToolTipText("Tell the developer about a problem or error in the application so he can work on it");
             contactMenu.add(bugcontactItem);
             JMenuItem featureItem = new JMenuItem("Request a feature...");
-            featureItem.setToolTipText("Let me know about any ideas you have to improve Rank Anything!");
+            featureItem.setToolTipText("<html>Let me know about any ideas you have to improve <i>Rank Anything</i>!</html>");
             contactMenu.add(featureItem);
             JMenuItem generalItem = new JMenuItem("Other...");
             generalItem.setToolTipText("Send an email to the developer");

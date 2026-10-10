@@ -82,7 +82,7 @@ final class LegacyDialog {
         // Checkboxes
         JCheckBox includeProject = new JCheckBox("Include your current project information");
         includeProject.setSelected(true); // default
-        JCheckBox includeSettings = new JCheckBox("Include your current Rank Anything settings");
+        JCheckBox includeSettings = new JCheckBox("<html>Include your current <i>Rank Anything</i> settings</html>");
         includeSettings.setSelected(true); // default
         JCheckBox includeSystemInfo = new JCheckBox("Include basic system information");
         includeSystemInfo.setSelected(true); // default
