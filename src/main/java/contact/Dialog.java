@@ -29,6 +29,8 @@ public final class Dialog {
 
     private static final String BUG_GOOGLE_FORM_URL =
             "https://docs.google.com/forms/d/e/1FAIpQLSdLaiEjGqzWIU1LatuD9p38J1OW1XYiNI_WaQI4KTFxhEbZlg/viewform?usp=pp_url";
+    private static final String FEATURE_GOOGLE_FORM_URL =
+            "https://docs.google.com/forms/d/e/1FAIpQLSf9Q9YgWxZ4R2crhSDNzdYNRmWZ88m3Tc5a7DeynDGdF4idzA/viewform?usp=header";
 
     static void showBugReportDialog() {
 
@@ -172,6 +174,72 @@ public final class Dialog {
                 ex.printStackTrace();
             }
 
+            dialog.dispose();
+        });
+
+        cancel.addActionListener(e -> dialog.dispose());
+
+        dialog.setContentPane(panel);
+        dialog.pack();
+        dialog.setLocationRelativeTo(Main.frame);
+        dialog.setVisible(true);
+    }
+
+    static void showFeatureRequestDialog() {
+
+        JDialog dialog = new JDialog(Main.frame, "Request a feature", true);
+        dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+
+        JPanel panel = new JPanel();
+        panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+        panel.setBorder(BorderFactory.createEmptyBorder(12, 12, 12, 12));
+
+        Consumer<JComponent> left = c -> c.setAlignmentX(Component.LEFT_ALIGNMENT);
+
+        // Title
+        JLabel title = new JLabel(
+            "<html>Press <b>OK</b> to open the Google Form.</html>"
+        );
+        left.accept(title);
+        panel.add(title);
+        panel.add(Box.createVerticalStrut(10));
+
+        // Buttons
+        JPanel buttonRow = new JPanel();
+        buttonRow.setLayout(new BoxLayout(buttonRow, BoxLayout.X_AXIS));
+        left.accept(buttonRow);
+
+        JButton ok = new JButton("OK");
+        JButton cancel = new JButton("Cancel");
+
+        buttonRow.add(Box.createHorizontalGlue());
+        buttonRow.add(ok);
+        buttonRow.add(Box.createHorizontalStrut(10));
+        buttonRow.add(cancel);
+        buttonRow.add(Box.createHorizontalGlue());
+
+        panel.add(buttonRow);
+        panel.add(Box.createVerticalStrut(10));
+
+        // Legacy link
+        JLabel legacy = new JLabel("<html><i>Send by email instead</i></html>");
+        legacy.setForeground(new Color(120, 120, 120));
+        legacy.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+        left.accept(legacy);
+
+        legacy.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                dialog.dispose();
+                LegacyDialog.showFeatureDialog();
+            }
+        });
+
+        panel.add(legacy);
+
+        // OK button → open Google Form
+        ok.addActionListener(e -> {
+            Browse.openWebpage(Main.frame, FEATURE_GOOGLE_FORM_URL);
             dialog.dispose();
         });
 

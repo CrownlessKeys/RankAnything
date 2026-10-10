@@ -9,7 +9,7 @@ public final class Contact {
     }
 
     public static void requestFeature() {
-        LegacyDialog.showFeatureDialog();
+        Dialog.showFeatureRequestDialog();
     }
 
     public static void generalContact() {
