@@ -263,7 +263,7 @@ public final class MenuBar extends JMenuBar {
 
         // Help
             musicItem.addActionListener(e -> Browse.openWebpage(frame, "https://YouTube.com/@CrownlessKeys"));
-            gitItem.addActionListener(e -> Browse.openWebpage(frame, "https://github.com/HyruleWarrior001/RankAnything"));
+            gitItem.addActionListener(e -> Browse.openWebpage(frame, "https://github.com/CrownlessKeys/RankAnything"));
 
             bugItem.addActionListener(e -> Contact.reportBug());
             bugcontactItem.addActionListener(e -> Contact.reportBug());
