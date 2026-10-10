@@ -71,8 +71,6 @@ final class Load {
     }
 
     static void newProject(JFrame frame) {
-        if (Settings.autosaveOnClose) Autosave.autosave(frame);
-
         try {
             // Create a temporary empty project file
             File temp = File.createTempFile("empty_project", ".rank");
@@ -96,7 +94,34 @@ final class Load {
             ex.printStackTrace();
             JOptionPane.showMessageDialog(frame,
                 "Failed to create new project:\n" + ex.getMessage(),
-                "New Project Error",
+                "New project error",
+                JOptionPane.ERROR_MESSAGE
+            );
+        }
+    }
+
+    static void reloadProject(JFrame frame) {
+        try {
+            // Create a temporary current project file
+            File temp = File.createTempFile("temp_project", ".rank");
+            temp.deleteOnExit();
+
+            // create temporary current project JSON
+            JSONObject proj = SaveToFile.buildProjectJSON(true); // effectively auto, for all intents and purposes
+            boolean unsaved = Main.unsavedChanges; // store temporarily
+            boolean dirty = Main.projectDirty;
+
+            Files.writeString(temp.toPath(), proj.toString(4));
+            loadFromFile(temp, frame, true); // effectively auto, for all intents and purposes
+            Main.unsavedChanges = unsaved; // except for these intents and purposes, so we fix it
+            Main.projectDirty = dirty;
+            Metadata.updateWindowTitle();
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            JOptionPane.showMessageDialog(frame,
+                "Failed to reload project:\n" + ex.getMessage(),
+                "Reload project error",
                 JOptionPane.ERROR_MESSAGE
             );
         }
@@ -203,7 +228,7 @@ final class Load {
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(frame,
                 "Failed to load project:\n" + ex.getMessage(),
-                "Load Error",
+                "Load error",
                 JOptionPane.ERROR_MESSAGE
             );
         }

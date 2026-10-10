@@ -26,6 +26,10 @@ public final class SaveLoad {
         Load.newProject(frame);
     }
 
+    public static void reloadProject(JFrame frame) {
+        Load.reloadProject(frame);
+    }
+
     public static void loadFromFile(File file, JFrame frame, boolean isAuto) {
         Load.loadFromFile(file, frame, isAuto);
     }

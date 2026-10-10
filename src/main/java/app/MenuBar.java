@@ -100,19 +100,26 @@ public final class MenuBar extends JMenuBar {
             JMenuItem projectInfoItem = new JMenuItem("Project info...");
             JMenuItem editNotesItem = new JMenuItem("Edit notes...");
             JMenuItem renameProjectItem = new JMenuItem("Rename project...");
+            JMenuItem reloadProjectItem = new JMenuItem("Reload project");
 
             projectInfoItem.setToolTipText("View information about the current project");
             editNotesItem.setToolTipText("Edit notes for the current project");
             renameProjectItem.setToolTipText("Rename the current project");
+            reloadProjectItem.setToolTipText(
+                "<html>Reload the current state of the project as if you had<br>saved and then loaded it. This can help fix bugs.</html>"
+            );
 
             projectMenu.add(projectInfoItem);
             projectMenu.addSeparator();
             projectMenu.add(renameProjectItem);
             projectMenu.add(editNotesItem);
+            projectMenu.addSeparator();
+            projectMenu.add(reloadProjectItem);
             
             projectInfoItem.setAccelerator(KeyStroke.getKeyStroke("control I"));
             editNotesItem.setAccelerator(KeyStroke.getKeyStroke("control E"));
-            renameProjectItem.setAccelerator(KeyStroke.getKeyStroke("control R"));
+            renameProjectItem.setAccelerator(KeyStroke.getKeyStroke("F2"));
+            reloadProjectItem.setAccelerator(KeyStroke.getKeyStroke("control R"));
 
         // SETTINGS MENU
             JMenu settingsMenu = new JMenu("Settings");
@@ -120,8 +127,10 @@ public final class MenuBar extends JMenuBar {
 
             autosaveToggle = new JCheckBoxMenuItem("Enable autosave");
             autosaveToggle.setSelected(Settings.autosavePeriodically || Settings.autosaveOnClose);
-            autosaveToggle.setToolTipText(
-                "Enable or disable the automatic creation of backup save files of your project periodically and when closing the project with unsaved changes."
+            autosaveToggle.setToolTipText( "<html>"
+                + "Enable or disable the automatic creation of backup save<br>"
+                + "files of your project periodically and when closing the<br>"
+                + "project with unsaved changes.</html>"
             );
             settingsMenu.add(autosaveToggle);
 
@@ -230,6 +239,7 @@ public final class MenuBar extends JMenuBar {
             projectInfoItem.addActionListener(e -> Metadata.showProjectInfoDialog(frame));
             editNotesItem.addActionListener(e -> Metadata.showNotesEditor(frame));
             renameProjectItem.addActionListener(e -> Metadata.showProjectNameEditor(frame));
+            reloadProjectItem.addActionListener(e -> SaveLoad.reloadProject(frame));
 
         // Settings
             autosaveToggle.addActionListener(e -> {
