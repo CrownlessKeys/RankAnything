@@ -12,6 +12,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
@@ -23,9 +24,11 @@ final class Manual {
         "src/main/resources/iconmonstr-copy-lined.png"
     );
 
-    static void manualBugReport(String project, String settings, String system) {
-        // TODO: modal info popup to inform user what is about to happen
+    // returns false if user cancels
+    static boolean manualBugReport(String project, String settings, String system) {
+        if (!showExplanation()) return false;
         showTextFields(project, settings, system);
+        return true;
     }
 
     // shows the text fields for the user to copy and paste
@@ -40,7 +43,7 @@ final class Manual {
             JLabel explanation = new JLabel("<html>"
                 + "Please copy and paste the text blocks below into their matching fields on the Google Form. In most<br>"
                 + "cases, only \"Project JSON\" will need to be added manually, but the other sections are included here<br>"
-                + "in case they too were excluded.</html>"
+                + "in case they too had to be excluded.</html>"
             );
             explanation.setAlignmentX(Component.LEFT_ALIGNMENT);
             panel.add(explanation);
@@ -154,15 +157,30 @@ final class Manual {
             panel.add(systemRow);
             panel.add(Box.createVerticalStrut(10));
 
-            // Show dialog (modeless so the webpage can open immediately)
-            JDialog dialog = new JDialog(
-                Main.frame, 
-                "Copy and paste fields for Bug Report Google Form", 
-                false // false for modeless
-            );
-            dialog.setContentPane(panel);
-            dialog.pack();
-            dialog.setLocationRelativeTo(Main.frame);
-            dialog.setVisible(true);
+        // Show dialog (modeless so the webpage can open immediately)
+        JDialog dialog = new JDialog(
+            Main.frame, 
+            "Copy and paste fields for Bug Report Google Form", 
+            false // false for modeless
+        );
+        dialog.setContentPane(panel);
+        dialog.pack();
+        dialog.setLocationRelativeTo(Main.frame);
+        dialog.setVisible(true);
+    }
+
+    // returns false if user cancels
+    private static boolean showExplanation() {
+        int choice = JOptionPane.showConfirmDialog(
+            Main.frame, "<html>"
+            + "Your data couldn’t be added to the Google Form automatically due to its size.<br>"
+            + "After pressing OK, the form will open along with a window containing the text<br>"
+            + "you’ll need to copy and paste into the matching fields.</html>",
+            "Manual input required",
+            JOptionPane.OK_CANCEL_OPTION,
+            JOptionPane.INFORMATION_MESSAGE
+        );
+
+        return choice == JOptionPane.OK_OPTION;
     }
 }

@@ -159,13 +159,14 @@ public final class Dialog {
                     url = BUG_GOOGLE_FORM_URL;
                 }
 
-                if (tooLong) Manual.manualBugReport(
+                boolean proceed = true;
+                if (tooLong) proceed = Manual.manualBugReport(
                     includeProject.isSelected() ? rawProject : "Not included",
                     includeSettings.isSelected() ? rawSettings : "Not included",
                     includeSystem.isSelected() ? rawSystem : "Not included"
                 );
                 
-                Browse.openWebpage(Main.frame, url);
+                if (proceed) Browse.openWebpage(Main.frame, url);
 
             } catch (Exception ex) {
                 ex.printStackTrace();
