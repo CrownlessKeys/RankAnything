@@ -15,12 +15,13 @@ import app.MenuBar;
 import app.Settings;
 import autosave.AutoTimer;
 import autosave.Autosave;
+import metadata.Metadata;
 import saveload.SaveLoad;
 
 public final class LayoutInit {
     public static void build() {
 
-        JFrame frame = new JFrame(Main.baseWindowTitle + " — " + Main.projectName);
+        JFrame frame = new JFrame();
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(900, 600);
 
@@ -98,5 +99,6 @@ public final class LayoutInit {
         });
 
         Main.frame = frame;
+        Metadata.updateWindowTitle();
     }
 }

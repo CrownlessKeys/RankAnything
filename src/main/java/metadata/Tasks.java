@@ -20,17 +20,19 @@ import tasks.Notify;
 
 final class Tasks {
     static void updateWindowTitle() {
-        String title = Main.baseWindowTitle;
+        StringBuilder title = new StringBuilder();
 
-        if (Main.projectName != null) {
-            title += " — " + Main.projectName;
+        if (Main.unsavedChanges) title.append("• ");
+
+        if (Main.projectName != null && !Main.projectName.trim().isEmpty()) {
+            title.append(Main.projectName);
         } else {
-            title += " — Untitled";
+            title.append("Untitled");
         }
 
-        if (Main.unsavedChanges) title += "*";
+        title.append(" | Rank Anything");
         
-        Main.frame.setTitle(title);
+        Main.frame.setTitle(title.toString());
     }
 
     static String formatTimestamp(String ts) {
@@ -38,7 +40,7 @@ final class Tasks {
 
         try {
             LocalDateTime dt = LocalDateTime.parse(ts);
-            DateTimeFormatter fmt = DateTimeFormatter.ofPattern("MMMM d, yyyy — h:mm:ss a");
+            DateTimeFormatter fmt = DateTimeFormatter.ofPattern("MMMM d, yyyy, h:mm a");
             return dt.format(fmt);
         } catch (Exception ex) {
             return ts; // fallback

@@ -53,7 +53,7 @@ final class Rows {
         BigDecimal rounded = s.score.setScale(0, RoundingMode.HALF_UP);
         BigDecimal precise = s.score.setScale(15, RoundingMode.HALF_UP);
 
-        mainLine.setText(rank + ". " + s.item.getItemName() + " — " + rounded + "%");
+        mainLine.setText(rank + ". " + s.item.getItemName() + " (" + rounded + "%)");
         preciseLine.setText("(" + precise.toPlainString() + "%)");
     }
 

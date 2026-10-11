@@ -51,7 +51,6 @@ public final class Main {
     public static boolean unsavedChanges = false; // for manual save
 
     public static JFrame frame;
-    public static String baseWindowTitle = "Rank Anything";
 
     // metadata
     private static final String STARTUP_TIMESTAMP = Metadata.now();

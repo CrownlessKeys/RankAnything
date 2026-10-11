@@ -475,7 +475,7 @@ final class PDF {
             String precise = precise(r.score);
 
             Paragraph mainLine = new Paragraph(
-                rank + ". " + r.itemName + " — " + rounded + "%", headerFont
+                rank + ". " + r.itemName + " (" + rounded + "%)", headerFont
             );
             mainLine.setSpacingAfter(SMALL_GAP);
 
