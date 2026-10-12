@@ -2,9 +2,9 @@
 Version 1.0.0-beta.1  
 Created by Daniel Murad
 
-Rank Anything is a mathematical ranking tool designed to compare and evaluate options of any kind using weighted criteria. Assign importance values, score each item, and view a clear, data-driven ranking.
+*Rank Anything* is a mathematical ranking tool designed to compare and evaluate options of any kind using weighted criteria. Assign importance values, score each item, and view a clear, data-driven ranking.
 
-Whether you're choosing colleges, comparing basketball players, evaluating job offers, scoring items in your favorite game, planning courses, judging chess openings, or organizing ideas, Rank Anything gives you a structured way to analyze options using your own subjective preferences or objective scoring systems.
+Whether you're choosing colleges, comparing basketball players, evaluating job offers, scoring items in your favorite game, planning courses, judging chess openings, or organizing ideas, *Rank Anything* gives you a structured way to analyze options using your own subjective preferences or objective scoring systems.
 
 In decision‑making, it helps reveal what you truly want.
 In objective scoring, it provides a consistent, mathematical framework for Ranking Anything (see what I did there?).
@@ -30,7 +30,7 @@ This is a beta release intended for testing, feedback, and refinement.
 
 ## Installation
 
-Rank Anything is available in multiple formats:
+*Rank Anything* is available in multiple formats:
 
 - **Windows:** MSI installer  
 - **macOS:** DMG package  
@@ -42,7 +42,7 @@ Download links will be added once the public release is available.
 
 ## How It Works
 
-Rank Anything uses weighted scoring to help you compare options fairly:
+*Rank Anything* uses weighted scoring to help you compare options fairly:
 
 1. Create criteria and items
 2. Assign each criterion a weight (importance)  
@@ -57,7 +57,7 @@ A full User Guide is available inside the app.
 
 ## Privacy
 
-Rank Anything does not automatically collect or transmit any personal data.  
+*Rank Anything* does not automatically collect or transmit any personal data.  
 Users may optionally submit diagnostic information when reporting bugs.
 
 ---

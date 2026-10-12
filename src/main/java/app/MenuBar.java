@@ -191,6 +191,8 @@ public final class MenuBar extends JMenuBar {
             helpMenu.add(contactMenu);
             helpMenu.addSeparator();
 
+            JMenuItem guideItem = new JMenuItem("User Guide");
+            helpMenu.add(guideItem);
             JMenuItem aboutItem = new JMenuItem("About");
             helpMenu.add(aboutItem);
         // end
@@ -281,7 +283,8 @@ public final class MenuBar extends JMenuBar {
             featureItem.addActionListener(e -> Contact.requestFeature());
             generalItem.addActionListener(e -> Contact.generalContact());
 
-            aboutItem.addActionListener(e -> About.show(frame));
+            guideItem.addActionListener(e -> About.showGuide(frame));
+            aboutItem.addActionListener(e -> About.showAbout(frame));
         // end
     }
 
