@@ -40,14 +40,14 @@ public final class MenuBar extends JMenuBar {
             JMenuItem exportItem = new JMenuItem("Export...");
             JMenuItem printItem = new JMenuItem("Print...");
             recentProjectsMenu = new JMenu("Recent projects");
-            JMenuItem unsavedProjectsItem = new JMenuItem("Unsaved projects");
+            JMenuItem unsavedProjectsItem = new JMenuItem("Unsaved projects...");
             JMenuItem openFileLocationItem = new JMenuItem("Open file location");
             JMenuItem exitItem = new JMenuItem("Exit");
             
             JMenu autosavesMenu = new JMenu("Autosaves");
-            JMenuItem projectAutosavesItem = new JMenuItem("Current project");
-            JMenuItem allAutosavesItem = new JMenuItem("All autosaves");
-            JMenuItem unsavedAutoItem = new JMenuItem("Unsaved projects");
+            JMenuItem projectAutosavesItem = new JMenuItem("Current project...");
+            JMenuItem allAutosavesItem = new JMenuItem("All autosaves...");
+            JMenuItem unsavedAutoItem = new JMenuItem("Unsaved projects...");
             autosavesMenu.add(projectAutosavesItem);
             autosavesMenu.add(allAutosavesItem);
             autosavesMenu.add(unsavedAutoItem);
@@ -135,7 +135,7 @@ public final class MenuBar extends JMenuBar {
             );
             settingsMenu.add(autosaveToggle);
 
-            JMenuItem autosaveSettingsItem = new JMenuItem("Autosave settings");
+            JMenuItem autosaveSettingsItem = new JMenuItem("Autosave settings...");
             settingsMenu.add(autosaveSettingsItem);
             settingsMenu.addSeparator();
 
@@ -146,7 +146,7 @@ public final class MenuBar extends JMenuBar {
             );
             settingsMenu.add(preciseSlidersToggle);
 
-            JMenuItem defaultProjectSettingsItem = new JMenuItem("Default project settings");
+            JMenuItem defaultProjectSettingsItem = new JMenuItem("Default project settings...");
             settingsMenu.add(defaultProjectSettingsItem);
             settingsMenu.addSeparator();
 
