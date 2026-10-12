@@ -20,7 +20,7 @@ Version %s<br><br>
 Created by Daniel Murad<br><br>
 
 Rank Anything is a mathematical ranking tool designed to compare and<br>
-rank options of any kind using weighted criteria. Assign importance<br>
+evaluate options of any kind using weighted criteria. Assign importance<br>
 values, score each item, and view a clear, data-driven ranking.<br><br>
 
 This beta version is provided for evaluation and feedback.<br>

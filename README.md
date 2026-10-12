@@ -1,0 +1,81 @@
+# Rank Anything
+Version 1.0.0-beta.1  
+Created by Daniel Murad
+
+Rank Anything is a mathematical ranking tool designed to compare and evaluate options of any kind using weighted criteria. Assign importance values, score each item, and view a clear, data-driven ranking.
+
+Whether you're choosing colleges, comparing basketball players, evaluating job offers, scoring items in your favorite game, planning courses, judging chess openings, or organizing ideas, Rank Anything gives you a structured way to analyze options using your own subjective preferences or objective scoring systems.
+
+In decision‑making, it helps reveal what you truly want.
+In objective scoring, it provides a consistent, mathematical framework for Ranking Anything (see what I did there?).
+
+This is a beta release intended for testing, feedback, and refinement.
+
+---
+
+## Features
+
+- Create custom criteria with adjustable weights  
+- Score items based on how close they come to the perfect or ideal item in each category  
+- View rankings calculated by mathematically combining the weights and scores  
+- Switch between ranking modes  
+- Save and load project files to come back to them later
+- Export or print results
+- Periodic autosaving, allowing you to restore an older version
+- Autosave unsaved changes on project close to prevent loss of data
+- Optional Google Form submission for bug reports  
+- Fully offline: no accounts, no automatic data collection
+
+---
+
+## Installation
+
+Rank Anything is available in multiple formats:
+
+- **Windows:** MSI installer  
+- **macOS:** DMG package  
+- **Cross‑platform:** runnable JAR  
+
+Download links will be added once the public release is available.
+
+---
+
+## How It Works
+
+Rank Anything uses weighted scoring to help you compare options fairly:
+
+1. Create criteria and items
+2. Assign each criterion a weight (importance)  
+3. Score each item under each criterion (percent of perfection)
+4. View the final ranking based on weighted totals  
+5. Change ranking modes to see how things would change if all criteria were enabled, or if weights were not considered, etc.
+6. Make adjustments and watch rankings update in real time
+
+A full User Guide is available inside the app.
+
+---
+
+## Privacy
+
+Rank Anything does not automatically collect or transmit any personal data.  
+Users may optionally submit diagnostic information when reporting bugs.
+
+---
+
+## Contributing
+
+This project is currently in beta testing.  
+Feedback, bug reports, and suggestions are welcome.
+
+---
+
+## Copyright
+
+© 2026 Daniel Murad. All rights reserved.  
+
+---
+
+## Contact
+
+For questions or feedback, please reach out to:  
+**crownlesskeys@gmail.com**
