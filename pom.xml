@@ -7,7 +7,7 @@
 
     <groupId>com.rankanything</groupId>
     <artifactId>rankanything</artifactId>
-    <version>1.0.0</version>
+    <version>1.0.0-beta.1</version>
     <packaging>jar</packaging>
 
     <name>RankAnything</name>

@@ -57,6 +57,7 @@ public final class MenuBar extends JMenuBar {
             saveItem.setToolTipText("Save the current project");
             saveAsItem.setToolTipText("Save the current project to a new file");
             exportItem.setToolTipText("Export the results of your project to a viewable file");
+            printItem.setToolTipText("Print the results of your project");
             recentProjectsMenu.setToolTipText("Open a recently opened project");
             unsavedProjectsItem.setToolTipText("Recover a project that was never manually saved to a file");
             openFileLocationItem.setToolTipText("Open the location of the current project file");
@@ -170,7 +171,7 @@ public final class MenuBar extends JMenuBar {
 
             JMenuItem gitItem = new JMenuItem("View source code ↗");
             gitItem.setToolTipText("View this application's source code repository on GitHub in your web browser");
-            helpMenu.add(gitItem);
+            // helpMenu.add(gitItem);
             helpMenu.addSeparator();
 
             JMenuItem bugItem = new JMenuItem("Report a bug...");
@@ -279,6 +280,8 @@ public final class MenuBar extends JMenuBar {
             bugcontactItem.addActionListener(e -> Contact.reportBug());
             featureItem.addActionListener(e -> Contact.requestFeature());
             generalItem.addActionListener(e -> Contact.generalContact());
+
+            aboutItem.addActionListener(e -> About.show(frame));
         // end
     }
 

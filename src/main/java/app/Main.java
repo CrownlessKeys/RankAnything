@@ -59,7 +59,7 @@ public final class Main {
     public static String projectCreated = STARTUP_TIMESTAMP;
     public static String fileCreated = "Project not saved";
     public static String projectModified = STARTUP_TIMESTAMP;
-    public static final String APP_VERSION = "1.0.0";
+    public static final String APP_VERSION = "1.0.0-beta.1";
     public static String projectAppVersion = APP_VERSION;
     public static final int FILE_FORMAT_VERSION = 1;
     public static int projectFileFormatVersion = FILE_FORMAT_VERSION;
