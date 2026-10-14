@@ -4,8 +4,10 @@ import java.awt.datatransfer.DataFlavor;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.File;
+import java.net.URL;
 import java.util.List;
 
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JSplitPane;
 import javax.swing.TransferHandler;
@@ -24,6 +26,15 @@ public final class LayoutInit {
         JFrame frame = new JFrame();
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(900, 600);
+
+        // app icon for program window
+        URL iconURL = Main.class.getResource("/appIcon.png");
+        if (iconURL != null) {
+            ImageIcon icon = new ImageIcon(iconURL);
+            frame.setIconImage(icon.getImage());
+        } else {
+            System.err.println("Could not find appIcon.png in resources.");
+        }
 
         // drag-and-drop file opening
         frame.setTransferHandler(new TransferHandler() {

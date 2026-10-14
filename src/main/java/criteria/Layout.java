@@ -25,8 +25,7 @@ import javax.swing.event.DocumentListener;
 import app.Main;
 
 final class Layout {
-    private Layout() {
-    }
+    private Layout() {}
 
     static void build(CriteriaPanel cp) {
         final boolean[] userIsTyping = { false };
