@@ -22,13 +22,17 @@ import javafx.application.Platform;
 import metadata.Metadata;
 import metadata.ProjectID;
 import ranking.RankingPanel;
+import saveload.SaveLoad;
 import tasks.Count;
 import tasks.Update;
 
 public final class Main {
+
+    // lists of all criteria and items
     public static final List<ItemsPanel> itemsList = new ArrayList<>();
     public static final List<CriteriaPanel> criteriaList = new ArrayList<>();
 
+    // the three main panels and their scroll panes
     public static RankingPanel rankingPanel;
     public static JPanel criteriaPanel;
     public static JPanel itemsPanel;
@@ -36,21 +40,24 @@ public final class Main {
     public static JScrollPane criteriaScroll;
     public static JScrollPane itemsScroll;
 
+    // panels holding criteria and items
     public static JPanel criteriaRow;
     public static JPanel itemsRow;
 
+    // toggles at top of criteria and items panels
     public static JCheckBox preciseToggleCriteria;
     public static JCheckBox preciseToggleItems;
     public static JCheckBox hideDisabledCriteria;
     public static JCheckBox hideDisabledItems;
     
+    // how many criteria and items have been created
     public static int criteriaCreationCounter = 0;
     public static int itemsCreationCounter = 0;
 
     public static boolean projectDirty = false; // for autosave
     public static boolean unsavedChanges = false; // for manual save
 
-    public static JFrame frame;
+    public static JFrame frame; // the program window
 
     // metadata
     private static final String STARTUP_TIMESTAMP = Metadata.now();
@@ -89,10 +96,20 @@ public final class Main {
         }
     }
 
+    // for launching by double-clicking a .rank file
+    public static String fileToOpen = null;
+
     public static void main(String[] args) {
+
+        // ff launched by double-clicking a .rank file
+        if (args.length > 0) {
+            fileToOpen = args[0];
+        }
+
         Platform.startup(() -> {}); // Start JavaFX
         Settings.load();
         RecentProjects.load();
+
         SwingUtilities.invokeLater(() -> {
             RankInit.build();
             CritInit.build();
@@ -100,6 +117,11 @@ public final class Main {
             LayoutInit.build();
             AutoTimer.start(frame);
             AutoIndicator.updateText();
+
+            // if a file was passed, load it now
+            if (fileToOpen != null) {
+                SaveLoad.loadFromFile(new File(fileToOpen), frame, false);
+            }
         });
     }
 
