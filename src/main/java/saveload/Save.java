@@ -37,7 +37,7 @@ final class Save {
 
             // Filters
             ExtensionFilter rankFilter = new ExtensionFilter(
-                "RANK Project File (*.rank)", "*.rank"
+                "Rank Anything Project File (*.rank)", "*.rank"
             );
 
             ExtensionFilter allFilter = new ExtensionFilter(

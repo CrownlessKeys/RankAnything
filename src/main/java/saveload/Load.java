@@ -36,7 +36,7 @@ final class Load {
 
             // Filters
             ExtensionFilter rankFilter = new FileChooser.ExtensionFilter(
-                "RANK Project Files (*.rank)", "*.rank"
+                "Rank Anything Project Files (*.rank)", "*.rank"
             );
 
             ExtensionFilter projectFilter = new FileChooser.ExtensionFilter(
