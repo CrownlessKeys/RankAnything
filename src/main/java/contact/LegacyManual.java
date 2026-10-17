@@ -20,7 +20,7 @@ import app.Main;
 
 final class LegacyManual {
     private static final ImageIcon copyIcon = new ImageIcon(
-        "src/main/resources/iconmonstr-copy-lined.png"
+        LegacyManual.class.getResource("/iconmonstr-copy-lined.png")
     );
 
     static void manualBugReport(String subject, String body) {

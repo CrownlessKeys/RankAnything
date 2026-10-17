@@ -21,7 +21,7 @@ import app.Main;
 
 final class Manual {
     private static final ImageIcon copyIcon = new ImageIcon(
-        "src/main/resources/iconmonstr-copy-lined.png"
+        Manual.class.getResource("/iconmonstr-copy-lined.png")
     );
 
     // returns false if user cancels

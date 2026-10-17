@@ -24,7 +24,7 @@ import javax.swing.SwingUtilities;
 public final class Browse {
     
     private static final ImageIcon copyIcon = new ImageIcon(
-        "src/main/resources/iconmonstr-copy-lined.png"
+        Browse.class.getResource("/iconmonstr-copy-lined.png")
     );
 
     // Initialize an official logger for this class

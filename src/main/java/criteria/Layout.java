@@ -91,7 +91,10 @@ final class Layout {
             }
         });
 
-        ImageIcon trashIcon = new ImageIcon("src/main/resources/iconmonstr-trash-can-filled.png");
+        ImageIcon trashIcon = new ImageIcon(
+            Layout.class.getResource("/iconmonstr-trash-can-filled.png")
+        );
+
         JButton deleteButton = new JButton(trashIcon);
         deleteButton.setPreferredSize(new Dimension(24, 24));
         deleteButton.setMaximumSize(new Dimension(24, 24));
