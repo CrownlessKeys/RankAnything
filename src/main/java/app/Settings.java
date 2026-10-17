@@ -17,33 +17,33 @@ import ranking.RankingPanel.RankingMode;
 public final class Settings {
 
     // miscellaneous settings
-    public static boolean autoRenameFiles;
+    public static boolean autoRenameFiles = true;
 
     // autosave settings
-    public static int autosaveIntervalSeconds;
-    public static int autosaveMaxPerProject;
-    public static boolean autosaveUnlimitedPerProject;
-    public static int autosaveMaxTotal;
-    public static boolean autosaveUnlimitedTotal;
-    public static boolean autosaveOnClose;
-    public static boolean autosavePeriodically;
+    public static int autosaveIntervalSeconds = 5 * 60;
+    public static int autosaveMaxPerProject = 10;
+    public static boolean autosaveUnlimitedPerProject = false;
+    public static int autosaveMaxTotal = 100;
+    public static boolean autosaveUnlimitedTotal = true;
+    public static boolean autosaveOnClose = true;
+    public static boolean autosavePeriodically = true;
 
     // default project settings
-    public static boolean preciseSlidersCriteria;
-    public static boolean preciseSlidersItems;
-    public static boolean hideDisabledCriteria;
-    public static boolean hideDisabledItems;
-    public static RankingMode rankingMode;
+    public static boolean preciseSlidersCriteria = false;
+    public static boolean preciseSlidersItems = false;
+    public static boolean hideDisabledCriteria = false;
+    public static boolean hideDisabledItems = false;
+    public static RankingMode rankingMode = RankingMode.WEIGHTED_ENABLED;
 
     // universal default export settings
-    public static ExportPreferences defaultExport;
+    public static ExportPreferences defaultExport = new ExportPreferences();
 
     // last opened folder for load dialog
-    public static String lastOpenedProjectFolder;
+    public static String lastOpenedProjectFolder = null;
     
     // "Don't show again" settings
-    public static boolean showRenameWarning;
-    public static boolean showAutosaveDeleteWarning;
+    public static boolean showRenameWarning = true;
+    public static boolean showAutosaveDeleteWarning = true;
 
     public static void load() {
         try {
@@ -54,54 +54,45 @@ public final class Settings {
             }
 
             String json = Files.readString(file.toPath(), StandardCharsets.UTF_8);
+            
+            // handle completely empty or whitespace-only files gracefully
+            if (json.trim().isEmpty()) {
+                json = "{}";
+            }
+            
             JSONObject root = new JSONObject(json);
 
-            autoRenameFiles = root.optBoolean("autoRenameFiles", true);
+            autoRenameFiles = root.optBoolean("autoRenameFiles", autoRenameFiles);
             
-            autosaveIntervalSeconds = root.optInt("autosaveIntervalSeconds", 5 * 60);
-            autosaveMaxPerProject = root.optInt("autosaveMaxPerProject", 10);
-            autosaveUnlimitedPerProject = root.optBoolean("autosaveUnlimitedPerProject", false);
-            autosaveMaxTotal = root.optInt("autosaveMaxTotal", 100);
-            autosaveUnlimitedTotal = root.optBoolean("autosaveUnlimitedTotal", true);
-            autosaveOnClose = root.optBoolean("autosaveOnClose", true);
-            autosavePeriodically = root.optBoolean("autosavePeriodically", true);
+            autosaveIntervalSeconds = root.optInt("autosaveIntervalSeconds", autosaveIntervalSeconds);
+            autosaveMaxPerProject = root.optInt("autosaveMaxPerProject", autosaveMaxPerProject);
+            autosaveUnlimitedPerProject = root.optBoolean("autosaveUnlimitedPerProject", autosaveUnlimitedPerProject);
+            autosaveMaxTotal = root.optInt("autosaveMaxTotal", autosaveMaxTotal);
+            autosaveUnlimitedTotal = root.optBoolean("autosaveUnlimitedTotal", autosaveUnlimitedTotal);
+            autosaveOnClose = root.optBoolean("autosaveOnClose", autosaveOnClose);
+            autosavePeriodically = root.optBoolean("autosavePeriodically", autosavePeriodically);
 
-            preciseSlidersCriteria = root.optBoolean("preciseSlidersCriteria", false);
-            preciseSlidersItems = root.optBoolean("preciseSlidersItems", false);
-            hideDisabledCriteria = root.optBoolean("hideDisabledCriteria", false);
-            hideDisabledItems = root.optBoolean("hideDisabledItems", false);
-            String rankingModeStr = root.optString("rankingMode", RankingMode.WEIGHTED_ENABLED.name()); 
+            preciseSlidersCriteria = root.optBoolean("preciseSlidersCriteria", preciseSlidersCriteria);
+            preciseSlidersItems = root.optBoolean("preciseSlidersItems", preciseSlidersItems);
+            hideDisabledCriteria = root.optBoolean("hideDisabledCriteria", hideDisabledCriteria);
+            hideDisabledItems = root.optBoolean("hideDisabledItems", hideDisabledItems);
+            
+            String rankingModeStr = root.optString("rankingMode", rankingMode.name()); 
             try {
                 rankingMode = RankingMode.valueOf(rankingModeStr);
             } catch (IllegalArgumentException e) {
-                rankingMode = RankingMode.WEIGHTED_ENABLED; // default if invalid
+                // keep default
             }
 
             // universal most recent export preferences
-            if (root.has("defaultExport")) {
+            if (root.has("defaultExport") && !root.isNull("defaultExport")) {
                 defaultExport = ExportPreferences.fromJSON(root.getJSONObject("defaultExport"));
-            } else {
-                // sensible defaults
-                defaultExport = new ExportPreferences(
-                    true,
-                    true, false, false,
-                    true, false, false,
-                    true,
-                    true,
-                    "PDF",
-                    "",
-                    "",
-                    false,
-                    "",
-                    "",
-                    false, false, false, false, false, false, false, false
-                );
             }
 
-            lastOpenedProjectFolder = root.optString("lastOpenedProjectFolder", null);
+            lastOpenedProjectFolder = root.optString("lastOpenedProjectFolder", lastOpenedProjectFolder);
 
-            showRenameWarning = root.optBoolean("showRenameWarning", true);
-            showAutosaveDeleteWarning = root.optBoolean("showAutosaveDeleteWarning", true);
+            showRenameWarning = root.optBoolean("showRenameWarning", showRenameWarning);
+            showAutosaveDeleteWarning = root.optBoolean("showAutosaveDeleteWarning", showAutosaveDeleteWarning);
 
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -128,15 +119,17 @@ public final class Settings {
             root.put("hideDisabledItems", hideDisabledItems);
             root.put("rankingMode", rankingMode.name());
 
-            root.put("defaultExport", defaultExport.toJSON());
+            root.put("defaultExport", defaultExport != null ? defaultExport.toJSON() : JSONObject.NULL);
 
-            root.put("lastOpenedProjectFolder", lastOpenedProjectFolder);
+            root.put("lastOpenedProjectFolder", lastOpenedProjectFolder != null ? lastOpenedProjectFolder : JSONObject.NULL);
 
             root.put("showRenameWarning", showRenameWarning);
             root.put("showAutosaveDeleteWarning", showAutosaveDeleteWarning);
 
             File file = Main.SETTINGS_FILE;
-            file.getParentFile().mkdirs(); // ensure directory exists
+            if (file.getParentFile() != null) {
+                file.getParentFile().mkdirs(); // ensure directory exists
+            }
 
             Files.writeString(file.toPath(), root.toString(4), StandardCharsets.UTF_8);
 
@@ -146,7 +139,7 @@ public final class Settings {
     }
 
     public static void restoreDefaults(JFrame frame) {
-
+        
         int result = JOptionPane.showConfirmDialog(
             frame,
             "<html>This will reset ALL settings to<br>their default values. Are you<br>sure you want to continue?</html>",

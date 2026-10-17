@@ -33,7 +33,37 @@ public final class ExportPreferences {
     public boolean includeUnweightedAllItems;
     public boolean includeUnweightedAllCriteriaAllItems;
 
+    private void setDefaults() {
+        this.ranking = true;
+        this.itemInfo = true; 
+            this.includeDisabledItems = false; 
+            this.includeExtraInfoItems = false;
+        this.critInfo = true; 
+            this.includeDisabledCriteria = false; 
+            this.includeExtraInfoCriteria = false;
+        this.metadata = true;
+        this.notes = true;
+
+        this.fileType = "PDF";
+        this.fileName = "";
+        this.folder = "";
+
+        this.rankProject = false;
+        this.rankFileName = "";
+        this.rankFolder = "";
+
+        this.includeWeightedEnabled = false;
+        this.includeWeightedAllCriteria = false;
+        this.includeWeightedAllItems = false;
+        this.includeWeightedAllCriteriaAllItems = false;
+        this.includeUnweightedEnabled = false;
+        this.includeUnweightedAllCriteria = false;
+        this.includeUnweightedAllItems = false;
+        this.includeUnweightedAllCriteriaAllItems = false;
+    }
+
     public ExportPreferences() {
+        setDefaults();
     }
 
     public ExportPreferences(
@@ -93,6 +123,11 @@ public final class ExportPreferences {
     public ExportPreferences(
         ExportPreferences e
     ) {
+        if (e == null) {
+            setDefaults();
+            return;
+        }
+
         this.ranking = e.ranking;
         this.itemInfo = e.itemInfo; 
             this.includeDisabledItems = e.includeDisabledItems; 
@@ -124,23 +159,25 @@ public final class ExportPreferences {
     public JSONObject toJSON() {
         JSONObject obj = new JSONObject();
 
+        // primitive types are completely safe
         obj.put("ranking", ranking);
         obj.put("itemInfo", itemInfo); 
-            obj.put("includeDisabledItems", includeDisabledItems); 
-            obj.put("includeExtraInfoItems", includeExtraInfoItems);
+        obj.put("includeDisabledItems", includeDisabledItems); 
+        obj.put("includeExtraInfoItems", includeExtraInfoItems);
         obj.put("critInfo", critInfo); 
-            obj.put("includeDisabledCriteria", includeDisabledCriteria); 
-            obj.put("includeExtraInfoCriteria", includeExtraInfoCriteria);
+        obj.put("includeDisabledCriteria", includeDisabledCriteria); 
+        obj.put("includeExtraInfoCriteria", includeExtraInfoCriteria);
         obj.put("metadata", metadata);
         obj.put("notes", notes);
 
-        obj.put("fileType", fileType);
-        obj.put("fileName", fileName);
-        obj.put("folder", folder);
+        // these ones are less safe
+        obj.put("fileType", fileType != null ? fileType : "PDF");
+        obj.put("fileName", fileName != null ? fileName : "");
+        obj.put("folder", folder != null ? folder : "");
 
         obj.put("rankProject", rankProject);
-        obj.put("rankFileName", rankFileName);
-        obj.put("rankFolder", rankFolder);
+        obj.put("rankFileName", rankFileName != null ? rankFileName : "");
+        obj.put("rankFolder", rankFolder != null ? rankFolder : "");
 
         obj.put("includeWeightedEnabled", includeWeightedEnabled);
         obj.put("includeWeightedAllCriteria", includeWeightedAllCriteria);
@@ -157,32 +194,36 @@ public final class ExportPreferences {
     public static ExportPreferences fromJSON(JSONObject obj) {
         ExportPreferences p = new ExportPreferences();
 
-        p.ranking = obj.optBoolean("ranking", true);
-        p.itemInfo = obj.optBoolean("itemInfo", true); 
-            p.includeDisabledItems = obj.optBoolean("includeDisabledItems", false); 
-            p.includeExtraInfoItems = obj.optBoolean("includeExtraInfoItems", false);
-        p.critInfo = obj.optBoolean("critInfo", true); 
-            p.includeDisabledCriteria = obj.optBoolean("includeDisabledCriteria", false); 
-            p.includeExtraInfoCriteria = obj.optBoolean("includeExtraInfoCriteria", false);
-        p.metadata = obj.optBoolean("metadata", true);
-        p.notes = obj.optBoolean("notes", true);
+        if (obj == null) {
+            return p;
+        }
 
-        p.fileType = obj.optString("fileType", "PDF");
-        p.fileName = obj.optString("fileName", "");
-        p.folder = obj.optString("folder", "");
+        p.ranking = obj.optBoolean("ranking", p.ranking);
+        p.itemInfo = obj.optBoolean("itemInfo", p.itemInfo); 
+            p.includeDisabledItems = obj.optBoolean("includeDisabledItems", p.includeDisabledItems); 
+            p.includeExtraInfoItems = obj.optBoolean("includeExtraInfoItems", p.includeExtraInfoItems);
+        p.critInfo = obj.optBoolean("critInfo", p.critInfo); 
+            p.includeDisabledCriteria = obj.optBoolean("includeDisabledCriteria", p.includeDisabledCriteria); 
+            p.includeExtraInfoCriteria = obj.optBoolean("includeExtraInfoCriteria", p.includeExtraInfoCriteria);
+        p.metadata = obj.optBoolean("metadata", p.metadata);
+        p.notes = obj.optBoolean("notes", p.notes);
 
-        p.rankProject = obj.optBoolean("rankProject", false);
-        p.rankFileName = obj.optString("rankFileName", "");
-        p.rankFolder = obj.optString("rankFolder", "");
+        p.fileType = obj.optString("fileType", p.fileType);
+        p.fileName = obj.optString("fileName", p.fileName);
+        p.folder = obj.optString("folder", p.folder);
 
-        p.includeWeightedEnabled = obj.optBoolean("includeWeightedEnabled", false);
-        p.includeWeightedAllCriteria = obj.optBoolean("includeWeightedAllCriteria", false);
-        p.includeWeightedAllItems = obj.optBoolean("includeWeightedAllItems", false);
-        p.includeWeightedAllCriteriaAllItems = obj.optBoolean("includeWeightedAllCriteriaAllItems", false);
-        p.includeUnweightedEnabled = obj.optBoolean("includeUnweightedEnabled", false);
-        p.includeUnweightedAllCriteria = obj.optBoolean("includeUnweightedAllCriteria", false);
-        p.includeUnweightedAllItems = obj.optBoolean("includeUnweightedAllItems", false);
-        p.includeUnweightedAllCriteriaAllItems = obj.optBoolean("includeUnweightedAllCriteriaAllItems", false);
+        p.rankProject = obj.optBoolean("rankProject", p.rankProject);
+        p.rankFileName = obj.optString("rankFileName", p.rankFileName);
+        p.rankFolder = obj.optString("rankFolder", p.rankFolder);
+
+        p.includeWeightedEnabled = obj.optBoolean("includeWeightedEnabled", p.includeWeightedEnabled);
+        p.includeWeightedAllCriteria = obj.optBoolean("includeWeightedAllCriteria", p.includeWeightedAllCriteria);
+        p.includeWeightedAllItems = obj.optBoolean("includeWeightedAllItems", p.includeWeightedAllItems);
+        p.includeWeightedAllCriteriaAllItems = obj.optBoolean("includeWeightedAllCriteriaAllItems", p.includeWeightedAllCriteriaAllItems);
+        p.includeUnweightedEnabled = obj.optBoolean("includeUnweightedEnabled", p.includeUnweightedEnabled);
+        p.includeUnweightedAllCriteria = obj.optBoolean("includeUnweightedAllCriteria", p.includeUnweightedAllCriteria);
+        p.includeUnweightedAllItems = obj.optBoolean("includeUnweightedAllItems", p.includeUnweightedAllItems);
+        p.includeUnweightedAllCriteriaAllItems = obj.optBoolean("includeUnweightedAllCriteriaAllItems", p.includeUnweightedAllCriteriaAllItems);
 
         return p;
     }
