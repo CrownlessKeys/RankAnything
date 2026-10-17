@@ -101,7 +101,7 @@ public final class Main {
 
     public static void main(String[] args) {
 
-        // ff launched by double-clicking a .rank file
+        // if launched by double-clicking a .rank file
         if (args.length > 0) {
             fileToOpen = args[0];
         }
