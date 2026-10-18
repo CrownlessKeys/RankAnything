@@ -118,19 +118,50 @@
             </properties>
         </profile>
 
-        <!-- AUTOMATIC PROFILE 2: Environment Tweaks for macOS Hosts -->
+        <!-- AUTOMATIC PROFILE 2A: Environment Tweaks for Apple Silicon (M1/M2/M3) Macs -->
         <profile>
-            <id>os-mac</id>
+            <id>os-mac-arm64</id>
             <activation>
                 <os>
                     <family>mac</family>
+                    <arch>aarch64</arch>
+                </os>
+            </activation>
+            <properties>
+                <javafx.platform>mac-aarch64</javafx.platform>
+            </properties>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-shade-plugin</artifactId>
+                        <configuration>
+                            <filters>
+                                <filter>
+                                    <artifact>org.openjfx:*</artifact>
+                                    <excludes>
+                                        <exclude>**</exclude>
+                                    </excludes>
+                                </filter>
+                            </filters>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+
+        <!-- AUTOMATIC PROFILE 2B: Environment Tweaks for Legacy Intel Macs -->
+        <profile>
+            <id>os-mac-x86_64</id>
+            <activation>
+                <os>
+                    <family>mac</family>
+                    <arch>x86_64</arch>
                 </os>
             </activation>
             <properties>
                 <javafx.platform>mac</javafx.platform>
             </properties>
-
-            <!-- mac-only override: exclude JavaFX from shaded JAR -->
             <build>
                 <plugins>
                     <plugin>
