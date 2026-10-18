@@ -21,4 +21,4 @@ jpackage --type dmg `
 
 Rename-Item `
     -Path "target/installer/Rank Anything-1.9.1.dmg" `
-    -NewName "Rank-Anything-Installer-1.0.0-beta.1.dmg"
+    -NewName "Rank-Anything-1.0.0-beta.1.dmg"
