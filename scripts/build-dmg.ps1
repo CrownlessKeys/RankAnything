@@ -11,7 +11,7 @@ jpackage --type dmg `
     --main-jar rankanything-1.0.0-beta.1.jar `
     --main-class app.Main `
     --name "Rank Anything" `
-    --app-version "0.9.1" `
+    --app-version "1.9.1" `
     --vendor "Crownless Keys" `
     --module-path target/javafx-modules `
     --add-modules javafx.controls,javafx.graphics,java.desktop,java.logging `
@@ -20,5 +20,5 @@ jpackage --type dmg `
     --dest target/installer
 
 Rename-Item `
-    -Path "target/installer/Rank Anything-0.9.1.dmg" `
+    -Path "target/installer/Rank Anything-1.9.1.dmg" `
     -NewName "Rank-Anything-Installer-1.0.0-beta.1.dmg"
