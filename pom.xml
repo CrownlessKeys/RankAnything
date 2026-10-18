@@ -140,7 +140,9 @@
                             <filters>
                                 <filter>
                                     <artifact>org.openjfx:*</artifact>
-                                    <exclude>true</exclude>
+                                    <excludes>
+                                        <exclude>**</exclude>
+                                    </excludes>
                                 </filter>
                             </filters>
                         </configuration>
