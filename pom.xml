@@ -129,6 +129,24 @@
             <properties>
                 <javafx.platform>mac</javafx.platform>
             </properties>
+
+            <!-- mac-only override: exclude JavaFX from shaded JAR -->
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-shade-plugin</artifactId>
+                        <configuration>
+                            <filters>
+                                <filter>
+                                    <artifact>org.openjfx:*</artifact>
+                                    <exclude>true</exclude>
+                                </filter>
+                            </filters>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
         </profile>
         
         <!-- EXPLICIT PROFILE 3: Staging Layout for jpackage Native Installers -->
