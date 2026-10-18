@@ -2,11 +2,11 @@
 Version 1.0.0-beta.1  
 Created by Daniel Murad
 
-*Rank Anything* is a mathematical ranking tool designed to compare and evaluate options of any kind using weighted criteria. Assign importance values, score each item, and view a clear, data-driven ranking.
+*Rank Anything* is a polished desktop application built in Java and Swing. It is a mathematical ranking tool designed to compare and evaluate options of any kind using weighted criteria. Assign importance values, score each item, and view a clear, data-driven ranking. It features a responsive, real‑time ranking engine that updates instantly as you adjust sliders, making complex decisions feel intuitive and interactive.
 
-Whether you're choosing colleges, comparing basketball players, evaluating job offers, scoring items in your favorite game, planning courses, judging chess openings, or organizing ideas, *Rank Anything* gives you a structured way to analyze options using your own subjective preferences or objective scoring systems.
+Originally inspired by a ranking system I created years ago on the iOS Shortcuts app, *Rank Anything* has evolved into a full desktop tool both for structured decision‑making and objective analysis. Whether you're choosing colleges, comparing basketball players, evaluating job offers, scoring items in your favorite game, planning courses, judging chess openings, or organizing ideas, *Rank Anything* gives you a structured way to analyze options using your own subjective preferences or objective scoring systems.
 
-In decision‑making, it helps reveal what you truly want.
+In decision‑making, it helps reveal what you truly want.  
 In objective scoring, it provides a consistent, mathematical framework for Ranking Anything (see what I did there?).
 
 This is a beta release intended for testing, feedback, and refinement.
@@ -15,15 +15,15 @@ This is a beta release intended for testing, feedback, and refinement.
 
 ## Features
 
-- Create custom criteria with adjustable weights  
-- Score items based on how close they come to the perfect or ideal item in each category  
-- View rankings calculated by mathematically combining the weights and scores  
-- Switch between ranking modes  
-- Save and load project files to come back to them later
-- Export or print results
-- Periodic autosaving, allowing you to restore an older version
+- Dynamic and polished UI architecture that updates mathematical rankings in real time as sliders are adjusted
+- Alternative ranking modes allow users to experiment with larger-scale changes
+- Custom project file architecture including a unique file extension, save/load features, and system file association
+- Export results to an organized, structured, and detailed PDF, as well as direct-to-print integration
+- Periodic autosaving, allowing users to restore an older version
 - Autosave unsaved changes on project close to prevent loss of data
-- Optional Google Form submission for bug reports  
+- Bug-reporting system with the option to automatically fill Google Form with project and settings info as JSONs
+- Cross-platform compatibility across Windows, macOS, and any OS running Java
+- A full, detailed User Guide involving tips and explanations available inside the app
 - Fully offline: no accounts, no automatic data collection
 
 ---
