@@ -23,3 +23,7 @@ jpackage --type msi `
     --icon appIcon.ico `
     --file-associations fileassoc.properties `
     --dest target/installer
+
+Rename-Item `
+    -Path "target/installer/Rank Anything-0.9.1.msi" `
+    -NewName "Rank-Anything-Installer-1.0.0-beta.1.msi"
