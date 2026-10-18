@@ -15,7 +15,7 @@ jpackage --type dmg `
     --vendor "Crownless Keys" `
     --module-path target/javafx-modules `
     --add-modules javafx.controls,javafx.graphics,java.desktop,java.logging `
-    --icon appIcon.icns `
+    --icon icons/appIcon.icns `
     --file-associations fileassoc.properties `
     --dest target/installer
 
