@@ -20,7 +20,7 @@ jpackage --type msi `
     --win-shortcut `
     --win-menu `
     --win-shortcut-prompt `
-    --icon appIcon.ico `
+    --icon icons/appIcon.ico `
     --file-associations fileassoc.properties `
     --dest target/installer
 
