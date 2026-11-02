@@ -175,7 +175,7 @@ final class ProjectInfo {
         int result = JOptionPane.showConfirmDialog(
             frame,
             scroll,
-            "Project Info",
+            "Project info",
             JOptionPane.OK_CANCEL_OPTION,
             JOptionPane.PLAIN_MESSAGE
         );
@@ -219,7 +219,7 @@ final class ProjectInfo {
         int result = JOptionPane.showConfirmDialog(
             frame,
             scroll,
-            "Edit Project Notes",
+            "Edit project notes",
             JOptionPane.OK_CANCEL_OPTION,
             JOptionPane.PLAIN_MESSAGE
         );
@@ -255,7 +255,7 @@ final class ProjectInfo {
         int result = JOptionPane.showConfirmDialog(
             frame,
             field,
-            "Edit Project Name",
+            "Edit project name",
             JOptionPane.OK_CANCEL_OPTION,
             JOptionPane.PLAIN_MESSAGE
         );
