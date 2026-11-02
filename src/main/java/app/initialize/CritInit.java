@@ -32,6 +32,13 @@ public final class CritInit {
         criteriaPanel.setBackground(criteriaPanelColor); 
         criteriaPanel.setOpaque(true);
         
+        // row for the criteria
+            JPanel criteriaRow = new JPanel();
+            criteriaRow.setLayout(new BoxLayout(criteriaRow, BoxLayout.Y_AXIS));
+            criteriaRow.setBackground(criteriaPanelColor);
+            criteriaRow.setOpaque(true);
+            criteriaRow.setAlignmentX(Component.LEFT_ALIGNMENT);
+
         // Row for the Add Criterion Button
             JButton addCriterionButton = new JButton("Add criterion");
 
@@ -145,13 +152,6 @@ public final class CritInit {
             criteriaHeader.add(Box.createVerticalStrut(10));
             criteriaHeader.add(selectAllRow);
             criteriaHeader.add(Box.createVerticalStrut(10));
-    
-        // row for the criteria
-            JPanel criteriaRow = new JPanel();
-            criteriaRow.setLayout(new BoxLayout(criteriaRow, BoxLayout.Y_AXIS));
-            criteriaRow.setBackground(criteriaPanelColor);
-            criteriaRow.setOpaque(true);
-            criteriaRow.setAlignmentX(Component.LEFT_ALIGNMENT);
 
         // layout
             criteriaPanel.add(criteriaHeader);
@@ -170,12 +170,12 @@ public final class CritInit {
                 boolean reverse = criteriaReverseCheck.isSelected();
 
                 switch (mode) {
-                    case "Alphabetical" -> Sort.sortCriteriaAlphabetically(reverse, criteriaPanel);
-                    case "By weight" -> Sort.sortCriteriaByWeight(reverse, criteriaPanel);
-                    case "By scores" -> Sort.sortCriteriaByAverageScore(reverse, criteriaPanel);
-                    case "By variance" -> Sort.sortCriteriaByScoreVariance(reverse, criteriaPanel);
-                    case "By creation" -> Sort.sortCriteriaByCreationIndex(reverse, criteriaPanel);
-                    case "Disabled last" -> Sort.sortCriteriaDisabledLast(reverse, criteriaPanel);
+                    case "Alphabetical" -> Sort.sortCriteriaAlphabetically(reverse, criteriaRow);
+                    case "By weight" -> Sort.sortCriteriaByWeight(reverse, criteriaRow);
+                    case "By scores" -> Sort.sortCriteriaByAverageScore(reverse, criteriaRow);
+                    case "By variance" -> Sort.sortCriteriaByScoreVariance(reverse, criteriaRow);
+                    case "By creation" -> Sort.sortCriteriaByCreationIndex(reverse, criteriaRow);
+                    case "Disabled last" -> Sort.sortCriteriaDisabledLast(reverse, criteriaRow);
                 }
 
                 Main.unsavedChanges = true;
