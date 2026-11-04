@@ -137,8 +137,8 @@ public final class RecentProjects {
     }
 
     private static String shortenFileName(String name) {
-        int maxStart = 20;   // characters to keep at the start
-        int maxEnd = 8;      // characters to keep at the end ("rank")
+        int maxStart = 25;   // characters to keep at the start
+        int maxEnd = 9;      // characters to keep at the end (including ".rank")
 
         if (name.length() <= maxStart + maxEnd + 3) {
             return name; // no need to shorten
