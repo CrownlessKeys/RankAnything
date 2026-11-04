@@ -1,7 +1,7 @@
 package export;
 
 import java.awt.Desktop;
-import java.awt.HeadlessException;
+import java.awt.print.PrinterJob;
 import java.io.File;
 import java.io.IOException;
 
@@ -12,6 +12,10 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+
+import org.apache.pdfbox.Loader;
+import org.apache.pdfbox.pdmodel.PDDocument;
+import org.apache.pdfbox.printing.PDFPageable;
 
 import app.Main;
 import app.Settings;
@@ -202,13 +206,17 @@ final class Print {
     }
 
     private static void print(JFrame frame, ExportPreferences prefs) {
+        File tempPDF = null;
+        boolean generationSuccessful = false;
+
         try {
             // Create temporary PDF
-            File tempPDF = File.createTempFile("print_", ".pdf");
+            tempPDF = File.createTempFile("print_", ".pdf");
             tempPDF.deleteOnExit();
 
-            boolean ok = PDF.exportPDF(tempPDF, prefs);
-            if (!ok) {
+            // generate PDF
+            generationSuccessful = PDF.exportPDF(tempPDF, prefs);
+            if (!generationSuccessful) {
                 JOptionPane.showMessageDialog(
                     frame,
                     "Could not generate PDF for printing.",
@@ -218,23 +226,27 @@ final class Print {
                 return;
             }
 
-            // Check if printing is supported
-            if (!Desktop.isDesktopSupported() || !Desktop.getDesktop().isSupported(Desktop.Action.PRINT)) {
-                JOptionPane.showMessageDialog(frame, """
-                        Printing is not supported on this system.
-                        Opening the PDF instead.
-                    """,
-                    "Print Error",
-                    JOptionPane.WARNING_MESSAGE
-                );
-                Desktop.getDesktop().open(tempPDF);
-                return;
+            // Check basic desktop support capabilities
+            if (!Desktop.isDesktopSupported()) {
+                throw new UnsupportedOperationException("Desktop environment operations not supported.");
             }
 
-            // Try printing
-            try {
-                Desktop.getDesktop().print(tempPDF);
-            } catch (IOException ex) {
+            // try sending the document to the OS print center
+            try (PDDocument document = Loader.loadPDF(tempPDF)) {
+                PrinterJob job = PrinterJob.getPrinterJob();
+                job.setJobName("Print Job - " + tempPDF.getName());
+                job.setPageable(new PDFPageable(document));
+
+                if (job.printDialog()) {
+                    job.print();
+                } else {
+                    System.out.println("Print job cancelled by user.");
+                }
+            }
+
+        } catch (Exception ex) {
+            // only offer to open the PDF if it actually generated successfully
+            if (generationSuccessful && tempPDF != null && tempPDF.exists() && Desktop.isDesktopSupported()) {
                 JOptionPane.showMessageDialog(frame, """
                         Printing was unsuccessful.
                         Opening the PDF instead.
@@ -242,16 +254,21 @@ final class Print {
                     "Print Error",
                     JOptionPane.ERROR_MESSAGE
                 );
-                Desktop.getDesktop().open(tempPDF);
+                
+                try {
+                    Desktop.getDesktop().open(tempPDF);
+                } catch (IOException ioEx) {
+                    JOptionPane.showMessageDialog(frame, "PDF opening unsuccessful.", "Print Error", JOptionPane.ERROR_MESSAGE);
+                }
+            } else {
+                // if it failed during file creation or PDF generation
+                JOptionPane.showMessageDialog(
+                    frame, 
+                    "An unexpected error occurred while preparing the document:\n" + ex.getMessage(), 
+                    "Print Error", 
+                    JOptionPane.ERROR_MESSAGE
+                );
             }
-
-        } catch (HeadlessException | IOException | SecurityException ex) {
-            JOptionPane.showMessageDialog(
-                frame,
-                "Printing failed:\n" + ex.getMessage(),
-                "Print Error",
-                JOptionPane.ERROR_MESSAGE
-            );
         }
     }
 }

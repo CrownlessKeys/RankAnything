@@ -50,6 +50,13 @@
             <artifactId>openpdf</artifactId>
             <version>1.3.30</version>
         </dependency>
+
+        <!-- for print dialog -->
+        <dependency>
+            <groupId>org.apache.pdfbox</groupId>
+            <artifactId>pdfbox</artifactId>
+            <version>3.0.3</version>
+        </dependency>
     </dependencies>
 
     <build>
