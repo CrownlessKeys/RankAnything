@@ -18,18 +18,18 @@ final class Write {
     static boolean export(JFrame frame, ExportPreferences prefs) {
 
         File exportFolder;
+        File baseFolder = new File(prefs.folder);
 
         if (prefs.rankProject) {
-            // Export into: prefs.folder / prefs.rankFolder
-            String folder = prefs.folder.replaceAll("[<>:\"/\\\\|?*]", "").trim();
-            if (folder.isEmpty()) folder = "export";
+            // sanitize the sub-folder name typing, not the parent path
             String rankFolder = prefs.rankFolder.replaceAll("[<>:\"/\\\\|?*]", "").trim();
             if (rankFolder.isEmpty()) rankFolder = "export";
 
-            exportFolder = new File(folder, rankFolder);
+            // links base folder with the safe sub-folder name
+            exportFolder = new File(baseFolder, rankFolder);
         } else {
-            // Export directly into prefs.folder
-            exportFolder = new File(prefs.folder);
+            // export directly into the selected parent folder
+            exportFolder = baseFolder;
         }
 
         // Ensure folder exists
@@ -44,6 +44,7 @@ final class Write {
 
         // Sanitize file name
         String fileName = prefs.fileName.replaceAll("[<>:\"/\\\\|?*]", "").trim();
+        if (fileName.isEmpty()) fileName = "untitled"; // fallback to avoid empty file names
 
         // create project file and end early if we are creating a project file
         boolean proj = prefs.fileType.contains("(project file)");
@@ -81,6 +82,7 @@ final class Write {
         // If export succeeded, handle snapshot if requested
         if (success && prefs.rankProject) {
             String rankFileName = prefs.rankFileName.replaceAll("[<>:\"/\\\\|?*]", "").trim();
+            if (rankFileName.isEmpty()) rankFileName = "snapshot"; // fallback
             exportSnapshot(exportFolder, rankFileName, prefs.fileType, frame);
         }
 
