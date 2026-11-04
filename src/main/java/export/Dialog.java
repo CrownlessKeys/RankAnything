@@ -63,7 +63,7 @@ final class Dialog {
         JPanel locationPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
         locationPanel.add(new JLabel("Export location:"));
         JTextField locationField = new JTextField(20);
-        locationField.setText(defaults.folder);
+        locationField.setText(defaults.folder.isBlank() ? Settings.lastOpenedProjectFolder : defaults.folder);
         JButton chooseLocationBtn = new JButton("Browse...");
         locationPanel.add(locationField);
         locationPanel.add(chooseLocationBtn);
