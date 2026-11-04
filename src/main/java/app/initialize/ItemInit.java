@@ -38,6 +38,13 @@ public final class ItemInit {
         itemsScroll.getVerticalScrollBar().setUnitIncrement(16);
         itemsScroll.getHorizontalScrollBar().setUnitIncrement(16);
 
+        // row for the items
+            JPanel itemsRow = new JPanel();
+            itemsRow.setLayout(new BoxLayout(itemsRow, BoxLayout.Y_AXIS));
+            itemsRow.setBackground(itemsPanelColor);
+            itemsRow.setOpaque(true);
+            itemsRow.setAlignmentX(Component.LEFT_ALIGNMENT);
+
         // Row for Add Item button
             JButton addItemButton = new JButton("Add item");
 
@@ -151,13 +158,6 @@ public final class ItemInit {
             itemsHeader.add(Box.createVerticalStrut(10));
             itemsHeader.add(selectAllRow);
             itemsHeader.add(Box.createVerticalStrut(10));
-    
-        // row for the items
-            JPanel itemsRow = new JPanel();
-            itemsRow.setLayout(new BoxLayout(itemsRow, BoxLayout.Y_AXIS));
-            itemsRow.setBackground(itemsPanelColor);
-            itemsRow.setOpaque(true);
-            itemsRow.setAlignmentX(Component.LEFT_ALIGNMENT);
 
         // layout
             itemsPanel.add(itemsHeader);
@@ -176,13 +176,13 @@ public final class ItemInit {
             String mode = (String)itemSortDropdown.getSelectedItem();
 
             switch (mode) {
-                case "Alphabetical" -> Sort.sortItemsAlphabetically(reverse, itemsPanel);
-                case "By ranking" -> Sort.sortItemsByRanking(reverse, itemsPanel, Main.rankingPanel);
-                case "By best score" -> Sort.sortItemsByHighestScore(reverse, itemsPanel);
-                case "By worst score" -> Sort.sortItemsByLowestScore(reverse, itemsPanel);
-                case "By variance" -> Sort.sortItemsByScoreVariance(reverse, itemsPanel);
-                case "By creation" -> Sort.sortItemsByCreationIndex(reverse, itemsPanel);
-                case "Disabled last" -> Sort.sortItemsDisabledLast(reverse, itemsPanel);
+                case "Alphabetical" -> Sort.sortItemsAlphabetically(reverse, itemsRow);
+                case "By ranking" -> Sort.sortItemsByRanking(reverse, itemsRow, Main.rankingPanel);
+                case "By best score" -> Sort.sortItemsByHighestScore(reverse, itemsRow);
+                case "By worst score" -> Sort.sortItemsByLowestScore(reverse, itemsRow);
+                case "By variance" -> Sort.sortItemsByScoreVariance(reverse, itemsRow);
+                case "By creation" -> Sort.sortItemsByCreationIndex(reverse, itemsRow);
+                case "Disabled last" -> Sort.sortItemsDisabledLast(reverse, itemsRow);
             }
 
             Main.unsavedChanges = true;
