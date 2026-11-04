@@ -33,7 +33,7 @@ public final class Update {
 
     public static void updateHideDisabledCriteria(boolean hide) {
 
-        for (Component c : Main.criteriaPanel.getComponents()) {
+        for (Component c : Main.criteriaRow.getComponents()) {
             if (c instanceof JPanel wrapper &&
                 wrapper.getComponentCount() > 0 &&
                 wrapper.getComponent(0) instanceof CriteriaPanel cp) {
@@ -54,7 +54,7 @@ public final class Update {
 
     public static void updateHideDisabledItems(boolean hide) {
 
-        for (Component c : Main.itemsPanel.getComponents()) {
+        for (Component c : Main.itemsRow.getComponents()) {
             if (c instanceof JPanel wrapper &&
                 wrapper.getComponentCount() > 0 &&
                 wrapper.getComponent(0) instanceof ItemsPanel ip) {
