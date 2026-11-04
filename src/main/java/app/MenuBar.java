@@ -171,7 +171,7 @@ public final class MenuBar extends JMenuBar {
 
             JMenuItem gitItem = new JMenuItem("View source code ↗");
             gitItem.setToolTipText("View this application's source code repository on GitHub in your web browser");
-            // helpMenu.add(gitItem);
+            helpMenu.add(gitItem);
             helpMenu.addSeparator();
 
             JMenuItem bugItem = new JMenuItem("Report a bug...");
